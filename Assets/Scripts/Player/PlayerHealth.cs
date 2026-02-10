@@ -15,7 +15,7 @@ public class PlayerHealth : MonoBehaviour
     //一个改变生命值的方法
     public void changeHealth(int changeamount)
     {
-        currentHealth += changeamount;
+        currentHealth -= changeamount;
         animatorHealth.Play("HealthText");
         healthText.text = currentHealth + "/" + maxHealth;
         if (currentHealth<=0)

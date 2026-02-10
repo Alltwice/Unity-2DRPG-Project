@@ -13,8 +13,6 @@ GameObject:
   - component: {fileID: 647316523491119150}
   - component: {fileID: 1135093063581409969}
   - component: {fileID: 5530058952814060104}
-  - component: {fileID: 7453544722582645530}
-  - component: {fileID: 8807800710280041529}
   m_Layer: 0
   m_Name: Enemy_Torch
   m_TagString: Untagged
@@ -182,28 +180,3 @@ CapsuleCollider2D:
   m_Offset: {x: 0.031236649, y: -0.24988806}
   m_Size: {x: 0.6885338, y: 0.688534}
   m_Direction: 0
---- !u!114 &7453544722582645530
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2454530970229374425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a47a9a6f4297bb246987b935ea7398c5, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyCombat
---- !u!114 &8807800710280041529
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2454530970229374425}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 12919fb486063d44ea6f36c37cbafc5d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::EnemyMovement
-  speed: 0
