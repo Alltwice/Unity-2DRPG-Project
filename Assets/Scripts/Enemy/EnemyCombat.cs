@@ -3,16 +3,21 @@ using UnityEngine;
 
 public class EnemyCombat : MonoBehaviour
 {
-    private PlayerHealth pHp;
-    private int collisionDamage;
     public Transform attackPoint;
     public float attackRange;
     public LayerMask playerLayer;
+    public float attackFroce;
+    public float stunTime;
+
+    private PlayerHealth pHp;
+    private PlayerController pC;
+    private int collisionDamage;
     //得到玩家的脚本
 
     private void Start()
     {
         pHp = GameObject.Find("Warrior_Player").GetComponent<PlayerHealth>();
+        pC = GameObject.Find("Warrior_Player").GetComponent<PlayerController>();
     }
     //碰撞时引用脚本中的方法并传入伤害值
     private void OnCollisionEnter2D(Collision2D collision)
@@ -36,6 +41,7 @@ public class EnemyCombat : MonoBehaviour
         {
             collisionDamage = 1;
             pHp.changeHealth(-collisionDamage);
+            pC.AttackBack(gameObject,attackFroce,stunTime);
         }
     }
 }

@@ -14469,12 +14469,20 @@ PrefabInstance:
       value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 7453544722582645530, guid: 49650f007eff7914c8f37e1754782133, type: 3}
+      propertyPath: stunTime
+      value: 0.2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7453544722582645530, guid: 49650f007eff7914c8f37e1754782133, type: 3}
+      propertyPath: attackFroce
+      value: 5
+      objectReference: {fileID: 0}
+    - target: {fileID: 7453544722582645530, guid: 49650f007eff7914c8f37e1754782133, type: 3}
       propertyPath: attackPoint
       value: 
       objectReference: {fileID: 442078315}
     - target: {fileID: 7453544722582645530, guid: 49650f007eff7914c8f37e1754782133, type: 3}
       propertyPath: attackRange
-      value: 0.7
+      value: 0.8
       objectReference: {fileID: 0}
     - target: {fileID: 7453544722582645530, guid: 49650f007eff7914c8f37e1754782133, type: 3}
       propertyPath: playerLayer.m_Bits
@@ -14486,7 +14494,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8807800710280041529, guid: 49650f007eff7914c8f37e1754782133, type: 3}
       propertyPath: attackRange
-      value: 1.3
+      value: 1.2
       objectReference: {fileID: 0}
     - target: {fileID: 8807800710280041529, guid: 49650f007eff7914c8f37e1754782133, type: 3}
       propertyPath: detectRange
@@ -14603,6 +14611,30 @@ PrefabInstance:
       propertyPath: m_Name
       value: Player UI
       objectReference: {fileID: 0}
+    - target: {fileID: 6515579171018982436, guid: bcef5ed520377ff45a3923c1849916c5, type: 3}
+      propertyPath: m_text
+      value: 100/100
+      objectReference: {fileID: 0}
+    - target: {fileID: 6515579171018982436, guid: bcef5ed520377ff45a3923c1849916c5, type: 3}
+      propertyPath: m_fontSize
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6515579171018982436, guid: bcef5ed520377ff45a3923c1849916c5, type: 3}
+      propertyPath: m_fontStyle
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6515579171018982436, guid: bcef5ed520377ff45a3923c1849916c5, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 60
+      objectReference: {fileID: 0}
+    - target: {fileID: 6515579171018982436, guid: bcef5ed520377ff45a3923c1849916c5, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 512
+      objectReference: {fileID: 0}
+    - target: {fileID: 6515579171018982436, guid: bcef5ed520377ff45a3923c1849916c5, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -14665,9 +14697,17 @@ PrefabInstance:
       value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 6776257000315021224, guid: 649ed31d08354684ea6e7dfbfd9ef918, type: 3}
+      propertyPath: maxHealth
+      value: 30
+      objectReference: {fileID: 0}
+    - target: {fileID: 6776257000315021224, guid: 649ed31d08354684ea6e7dfbfd9ef918, type: 3}
       propertyPath: healthText
       value: 
       objectReference: {fileID: 1290955525}
+    - target: {fileID: 6776257000315021224, guid: 649ed31d08354684ea6e7dfbfd9ef918, type: 3}
+      propertyPath: currentHealth
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 6776257000315021224, guid: 649ed31d08354684ea6e7dfbfd9ef918, type: 3}
       propertyPath: animatorHealth
       value: 

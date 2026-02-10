@@ -2,7 +2,6 @@ using UnityEngine;
 
 public class EnemyMovement : MonoBehaviour
 {
-    //ÄãºÃ
     private Rigidbody2D rg;
     private GameObject player;
     private Vector2 direction;
@@ -34,11 +33,11 @@ public class EnemyMovement : MonoBehaviour
     }
     void Update()
     {
-        CheakPlayer();
         if (attackCooldownTimer > 0)
         {
             attackCooldownTimer -= Time.deltaTime;
         }
+        CheakPlayer();
         if (enemyStage == EnemyStage.chase)
         {
             Chase();
@@ -62,12 +61,13 @@ public class EnemyMovement : MonoBehaviour
         Collider2D[] hit = Physics2D.OverlapCircleAll(detectPosition.position, detectRange, detectLayer);
         if (hit.Length > 0)
         {
-            if (Vector2.Distance(player.transform.position, transform.position) <= attackRange && attackCooldownTimer <= 0)
+            if (Vector2.Distance(player.transform.position, transform.position) <= attackRange&& attackCooldownTimer <= 0)
             {
                 attackCooldownTimer = attackCooldown;
+                rg.linearVelocity = Vector2.zero;
                 ChangeStage(EnemyStage.attact);
             }
-            else if (Vector2.Distance(player.transform.position, transform.position) > attackRange)
+            else if (Vector2.Distance(player.transform.position, transform.position) > attackRange&&enemyStage!=EnemyStage.attact)
             {
                 ChangeStage(EnemyStage.chase);
             }
