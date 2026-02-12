@@ -4,20 +4,21 @@ public class EnemyTorch : MonoBehaviour
 {
     //基础属性
     public float moveSpeed;
-    public float attackDetectRange;
-    public Vector2 attackRange;
     public int damage;
     public float attackFroce;
     public float stunTime;
-    public Transform attackPoint;
     //需求组件
     [HideInInspector] public Animator am;
     [HideInInspector] public Rigidbody2D rg;
     [HideInInspector] public GameObject player;
-    //感知范围
+    //感知/攻击范围
     public Transform detectPoint;
     public float detectRange;
     public LayerMask detectLayer;
+    public Transform attackPoint;
+    public Vector2 attackRange;
+    public float attackDetectRange;
+    public LayerMask attackLayer;
     //状态
     private EnemyStateMachine currentState;
     [HideInInspector] public EnemyIdleState idleState;
@@ -38,15 +39,15 @@ public class EnemyTorch : MonoBehaviour
     //感知能力
     public void CheakPlayer()
     {
-        Collider2D[] hit = Physics2D.OverlapCircleAll(detectPoint.position, detectRange, detectLayer);
-        if (hit.Length > 0)
+        Collider2D[] cheak = Physics2D.OverlapCircleAll(detectPoint.position, detectRange, detectLayer);
+        if (cheak.Length > 0)
         {
             if (Vector2.Distance(player.transform.position, transform.position) <= attackDetectRange)
             {
                 rg.linearVelocity = Vector2.zero;
                 ChangeState(combatState);
             }
-            else if (Vector2.Distance(player.transform.position, transform.position) > attackDetectRange)
+            else if (Vector2.Distance(player.transform.position, transform.position) > attackDetectRange&&currentState!=combatState)
             {
                 ChangeState(chaseState);
             }
@@ -59,11 +60,10 @@ public class EnemyTorch : MonoBehaviour
     //攻击能力
     public void Attack()
     {
-        Collider2D[] hit = Physics2D.OverlapBoxAll(transform.position, attackRange, detectLayer);
+        Collider2D[] hit = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, attackLayer);
         if (hit.Length > 0)
         {
             player.GetComponent<PlayerHealth>().changeHealth(damage);
-            player.GetComponent<PlayerController>().AttackBack(gameObject, attackFroce, stunTime);
         }
     }
     private void Awake()
@@ -93,6 +93,12 @@ public class EnemyTorch : MonoBehaviour
     {
         currentState?.OnExit();
         currentState = newState;
+        currentState?.OnEnter();
+    }
+    public void amEventChangeStateIdle()
+    {
+        currentState?.OnExit();
+        currentState = idleState;
         currentState?.OnEnter();
     }
 }

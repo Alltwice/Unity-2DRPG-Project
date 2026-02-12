@@ -10,12 +10,10 @@ public class EnemyCombatState : EnemyStateMachine
 
     protected Animator am;
     protected Rigidbody2D rg;
-    protected GameObject player;
     public override void OnEnter()
     {
         am = torch.am;
         rg = torch.rg;
-        player = torch.player;
         rg.linearVelocity = Vector2.zero;
         am.SetBool("isAttack", true);
     }

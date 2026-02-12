@@ -9,7 +9,6 @@ public class EnemyChaseState : EnemyStateMachine
     {
         this.torch = torch;
     }
-
     protected Animator am;
     protected Rigidbody2D rg;
     protected GameObject player;
@@ -26,11 +25,10 @@ public class EnemyChaseState : EnemyStateMachine
     {
         torch.CheakPlayer();
     }
-
     public override void OnFixedUpdate()
     {
         if (player.transform.position.x < torch.transform.position.x && faceDirection > 0 ||
-              player.transform.position.x > torch.transform.position.x && faceDirection < 0)
+        player.transform.position.x > torch.transform.position.x && faceDirection < 0)
         {
             faceDirection *= -1;
             torch.transform.localScale = new Vector3(faceDirection, torch.transform.localScale.y, torch.transform.localScale.z);

@@ -1202,7 +1202,7 @@ Transform:
   m_GameObject: {fileID: 442078314}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.8, y: 0, z: 0}
+  m_LocalPosition: {x: 0.5, y: 0, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -3405,6 +3405,25 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01614664b831546d2ae94a42149d80ac, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Unity.InputSystem::UnityEngine.InputSystem.UI.InputSystemUIInputModule
+  m_SendPointerHoverToParent: 1
+  m_MoveRepeatDelay: 0.5
+  m_MoveRepeatRate: 0.1
+  m_XRTrackingOrigin: {fileID: 0}
+  m_ActionsAsset: {fileID: 0}
+  m_PointAction: {fileID: 0}
+  m_MoveAction: {fileID: 0}
+  m_SubmitAction: {fileID: 0}
+  m_CancelAction: {fileID: 0}
+  m_LeftClickAction: {fileID: 0}
+  m_MiddleClickAction: {fileID: 0}
+  m_RightClickAction: {fileID: 0}
+  m_ScrollWheelAction: {fileID: 0}
+  m_TrackedDevicePositionAction: {fileID: 0}
+  m_TrackedDeviceOrientationAction: {fileID: 0}
+  m_DeselectOnBackgroundClick: 1
+  m_PointerBehavior: 0
+  m_CursorLockBehavior: 0
+  m_ScrollDeltaPerTick: 6
 --- !u!114 &666429068
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11257,18 +11276,21 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyTorch
   moveSpeed: 3.5
-  attackDetectRange: 1.3
-  attackRange: {x: 0.8, y: 2}
   damage: 1
   attackFroce: 8
   stunTime: 0.2
-  attackPoint: {fileID: 442078315}
   am: {fileID: 0}
   rg: {fileID: 0}
   player: {fileID: 0}
   detectPoint: {fileID: 1152822836}
   detectRange: 3.5
   detectLayer:
+    serializedVersion: 2
+    m_Bits: 8
+  attackPoint: {fileID: 442078315}
+  attackRange: {x: 1.3, y: 2.5}
+  attackDetectRange: 1.2
+  attackLayer:
     serializedVersion: 2
     m_Bits: 8
 --- !u!1 &900808706
@@ -12095,7 +12117,7 @@ Transform:
   m_GameObject: {fileID: 1152822835}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 2, y: 0, z: 0}
+  m_LocalPosition: {x: 1, y: 0, z: 0}
   m_LocalScale: {x: -1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -14307,6 +14329,11 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &1913793927 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4158812008718796655, guid: 649ed31d08354684ea6e7dfbfd9ef918, type: 3}
+  m_PrefabInstance: {fileID: 7620928348514599341}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &2010370307
 GameObject:
   m_ObjectHideFlags: 0
@@ -14428,6 +14455,35 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 3288553142648373784, guid: 649ed31d08354684ea6e7dfbfd9ef918, type: 3}
   m_PrefabInstance: {fileID: 7620928348514599341}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &2865071708995672275
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913793927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0755c8639ec6a5b408a2c3bd9bad1dcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerWarrior
+  moveSpeed: 5
+  am: {fileID: 0}
+  rg: {fileID: 0}
+  inputActions: {fileID: 0}
+--- !u!114 &2865071708995672281
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1913793927}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8ee680e7bf432e54d85eec79951644bf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::InputManager
+  MoveInput: {x: 0, y: 0}
 --- !u!1001 &5465786065248603219
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14747,10 +14803,21 @@ PrefabInstance:
       propertyPath: animatorHealth
       value: 
       objectReference: {fileID: 1290955527}
-    m_RemovedComponents: []
+    - target: {fileID: 7965530172553051205, guid: 649ed31d08354684ea6e7dfbfd9ef918, type: 3}
+      propertyPath: speed
+      value: 5
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 7965530172553051205, guid: 649ed31d08354684ea6e7dfbfd9ef918, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4158812008718796655, guid: 649ed31d08354684ea6e7dfbfd9ef918, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2865071708995672275}
+    - targetCorrespondingSourceObject: {fileID: 4158812008718796655, guid: 649ed31d08354684ea6e7dfbfd9ef918, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 2865071708995672281}
   m_SourcePrefab: {fileID: 100100000, guid: 649ed31d08354684ea6e7dfbfd9ef918, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

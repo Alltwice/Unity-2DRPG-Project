@@ -1,6 +1,15 @@
 2D俯视角RPG游戏，为YouTube博主的跟做项目学习复现理解→https://www.youtube.com/playlist?list=PLSR2vNOypvs5yLsbqZc0e6RdqNnP1eGIc
 
 更新日志中重复技术栈进行略写
+2026/2/12
+-[优化]-
+-将角色状态使用状态模式控制
+-将输入系统替换为新版基于事件驱动的Input System
+
+2026/2/10
+-[优化]-
+-彻底重构了敌人FSM，从简单枚举到状态模式控制
+-优化了Overlap的检测范围，并用Gizmos实现了范围可视化调试
 
 2026/2/8
 -[优化]-
