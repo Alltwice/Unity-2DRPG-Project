@@ -7,7 +7,7 @@ public class PlayerUnderAttackState : PlayerStateMachine
     protected Animator am;
     protected Rigidbody2D rg;
     protected PlayerWarrior playerWarrior;
-    protected InputManager inputActions;
+    protected InputManger inputActions;
     protected EnemyTorch torch;
     public PlayerUnderAttackState(PlayerWarrior playerWarrior)
     {

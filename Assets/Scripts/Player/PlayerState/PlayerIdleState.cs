@@ -5,7 +5,7 @@ public class PlayerIdleState:PlayerStateMachine
     protected Animator am;
     protected Rigidbody2D rg;
     protected PlayerWarrior playerWarrior;
-    protected InputManager inputActions;
+    protected InputManger inputActions;
     public PlayerIdleState(PlayerWarrior playerWarrior)
     {
         this.playerWarrior = playerWarrior;
@@ -31,13 +31,13 @@ public class PlayerIdleState:PlayerStateMachine
 
     public override void OnUpdate()
     {
-        if (playerWarrior.isbacking == true)
+        if (inputActions.moveInput!=Vector2.zero)
         {
-            return;
+            playerWarrior.ChangeState(playerWarrior.moveState);
         }
-        if (inputActions.MoveInput!=Vector2.zero)
+        if(inputActions.isAttack==true)
         {
-            playerWarrior.changeState(playerWarrior.moveState);
+            playerWarrior.ChangeState(playerWarrior.attackState);
         }
     }
 }

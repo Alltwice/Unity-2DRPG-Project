@@ -1,10 +1,11 @@
 using UnityEngine;
 
-public class InputManager : MonoBehaviour
+public class InputManger : MonoBehaviour
 {
     private PlayerAction input;
 
-    public Vector2 MoveInput;
+    public Vector2 moveInput;
+    public bool isAttack;
 
     private void Awake()
     {
@@ -12,12 +13,16 @@ public class InputManager : MonoBehaviour
 
         input.Player.Move.performed += ctx =>
         {
-            MoveInput = ctx.ReadValue<Vector2>();
+            moveInput = ctx.ReadValue<Vector2>();
         };
 
         input.Player.Move.canceled += ctx =>
         {
-            MoveInput = Vector2.zero;
+            moveInput = Vector2.zero;
+        };
+        input.Player.Attack.performed += ctx =>
+        {
+            isAttack = true;
         };
     }
     public void OnEnable()

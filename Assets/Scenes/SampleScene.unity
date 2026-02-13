@@ -363,6 +363,37 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
+--- !u!1 &256093165
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 256093166}
+  m_Layer: 0
+  m_Name: AttackPoint
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &256093166
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 256093165}
+  serializedVersion: 2
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 0.8, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 2865071708995672274}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &287197495
 GameObject:
   m_ObjectHideFlags: 0
@@ -1186,7 +1217,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 442078315}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: AttackPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -2729,6 +2760,58 @@ TilemapCollider2D:
   m_MaximumTileChangeCount: 1000
   m_ExtrusionFactor: 0
   m_UseDelaunayMesh: 0
+--- !u!1 &614482723
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 614482725}
+  - component: {fileID: 614482724}
+  m_Layer: 0
+  m_Name: PlayerDataManger
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!114 &614482724
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614482723}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd7a662c14e2b5340b9d7de172b452a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDateManger
+  moveSpeed: 5
+  damage: 1
+  isbacking: 0
+  attackPoint: {fileID: 256093166}
+  attackRange: {x: 1.2, y: 2}
+  attackLayer:
+    serializedVersion: 2
+    m_Bits: 64
+--- !u!4 &614482725
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 614482723}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 16.27268, y: 3.83826, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &614878441
 GameObject:
   m_ObjectHideFlags: 0
@@ -11293,6 +11376,20 @@ MonoBehaviour:
   attackLayer:
     serializedVersion: 2
     m_Bits: 8
+--- !u!114 &845224615
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 181161238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3d38937a3aaca7e42a403168540df3ed, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  currentHealth: 5
+  maxHealth: 5
 --- !u!1 &900808706
 GameObject:
   m_ObjectHideFlags: 0
@@ -12101,7 +12198,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1152822836}
-  m_Layer: 0
+  m_Layer: 6
   m_Name: DetectionPoint
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -14467,7 +14564,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0755c8639ec6a5b408a2c3bd9bad1dcf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerWarrior
-  moveSpeed: 5
   am: {fileID: 0}
   rg: {fileID: 0}
   inputActions: {fileID: 0}
@@ -14483,7 +14579,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8ee680e7bf432e54d85eec79951644bf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::InputManager
-  MoveInput: {x: 0, y: 0}
+  moveInput: {x: 0, y: 0}
+  isAttack: 0
 --- !u!1001 &5465786065248603219
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -14503,6 +14600,10 @@ PrefabInstance:
     - target: {fileID: 2454530970229374425, guid: 49650f007eff7914c8f37e1754782133, type: 3}
       propertyPath: m_Name
       value: Enemy_Torch
+      objectReference: {fileID: 0}
+    - target: {fileID: 2454530970229374425, guid: 49650f007eff7914c8f37e1754782133, type: 3}
+      propertyPath: m_Layer
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 3715379667721937641, guid: 49650f007eff7914c8f37e1754782133, type: 3}
       propertyPath: m_LocalScale.x
@@ -14609,6 +14710,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 2454530970229374425, guid: 49650f007eff7914c8f37e1754782133, type: 3}
       insertIndex: -1
       addedObject: {fileID: 845224610}
+    - targetCorrespondingSourceObject: {fileID: 2454530970229374425, guid: 49650f007eff7914c8f37e1754782133, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 845224615}
   m_SourcePrefab: {fileID: 100100000, guid: 49650f007eff7914c8f37e1754782133, type: 3}
 --- !u!1001 &6080644898413672464
 PrefabInstance:
@@ -14810,7 +14914,10 @@ PrefabInstance:
     m_RemovedComponents:
     - {fileID: 7965530172553051205, guid: 649ed31d08354684ea6e7dfbfd9ef918, type: 3}
     m_RemovedGameObjects: []
-    m_AddedGameObjects: []
+    m_AddedGameObjects:
+    - targetCorrespondingSourceObject: {fileID: 3288553142648373784, guid: 649ed31d08354684ea6e7dfbfd9ef918, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 256093166}
     m_AddedComponents:
     - targetCorrespondingSourceObject: {fileID: 4158812008718796655, guid: 649ed31d08354684ea6e7dfbfd9ef918, type: 3}
       insertIndex: -1
@@ -14829,3 +14936,4 @@ SceneRoots:
   - {fileID: 5465786065248603219}
   - {fileID: 6080644898413672464}
   - {fileID: 666429069}
+  - {fileID: 614482725}

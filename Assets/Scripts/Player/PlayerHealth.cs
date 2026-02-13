@@ -22,5 +22,9 @@ public class PlayerHealth : MonoBehaviour
         {
             gameObject.SetActive(false);
         }
+        else if (currentHealth > maxHealth)
+        {
+            currentHealth = maxHealth;
+        }
     }
 }
