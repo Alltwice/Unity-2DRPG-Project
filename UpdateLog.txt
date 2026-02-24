@@ -1,4 +1,7 @@
-2D俯视角RPG游戏，为YouTube博主的跟做项目学习复现理解→https://www.youtube.com/playlist?list=PLSR2vNOypvs5yLsbqZc0e6RdqNnP1eGIc
+2026/2/24
+-[新增]-
+-使用柏林噪声生成随机战斗场景
+-利用对象池并单独使用一个生成管理器完成敌人生成效果
 
 2026/2/13
 -[新增]-

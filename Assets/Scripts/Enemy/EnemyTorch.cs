@@ -1,4 +1,5 @@
 using UnityEngine;
+using UnityEngine.InputSystem.EnhancedTouch;
 
 public class EnemyTorch : MonoBehaviour
 {
@@ -11,6 +12,7 @@ public class EnemyTorch : MonoBehaviour
     [HideInInspector] public Animator am;
     [HideInInspector] public Rigidbody2D rg;
     [HideInInspector] public GameObject player;
+    private EnemyHealth enemyHealth;
     //感知/攻击范围
     public Transform detectPoint;
     public float detectRange;
@@ -24,7 +26,7 @@ public class EnemyTorch : MonoBehaviour
     [HideInInspector] public EnemyIdleState idleState;
     [HideInInspector] public EnemyChaseState chaseState;
     [HideInInspector] public EnemyCombatState combatState;
-
+    [HideInInspector] public EnemyDieState dieState;
     //感知范围显示
     private void OnDrawGizmosSelected()
     {
@@ -39,22 +41,30 @@ public class EnemyTorch : MonoBehaviour
     //感知能力
     public void CheakPlayer()
     {
-        Collider2D[] cheak = Physics2D.OverlapCircleAll(detectPoint.position, detectRange, detectLayer);
-        if (cheak.Length > 0)
+        if(enemyHealth.isDie==true)
         {
-            if (Vector2.Distance(player.transform.position, transform.position) <= attackDetectRange)
-            {
-                rg.linearVelocity = Vector2.zero;
-                ChangeState(combatState);
-            }
-            else if (Vector2.Distance(player.transform.position, transform.position) > attackDetectRange&&currentState!=combatState)
-            {
-                ChangeState(chaseState);
-            }
+            Debug.Log("确认死亡状态");
+            ChangeState(dieState);
         }
         else
         {
-            ChangeState(idleState);
+            Collider2D[] cheak = Physics2D.OverlapCircleAll(detectPoint.position, detectRange, detectLayer);
+            if (cheak.Length > 0)
+            {
+                if (Vector2.Distance(player.transform.position, transform.position) <= attackDetectRange)
+                {
+                    rg.linearVelocity = Vector2.zero;
+                    ChangeState(combatState);
+                }
+                else if (Vector2.Distance(player.transform.position, transform.position) > attackDetectRange && currentState != combatState)
+                {
+                    ChangeState(chaseState);
+                }
+            }
+            else
+            {
+                ChangeState(idleState);
+            }
         }
     }
     //攻击能力
@@ -66,14 +76,21 @@ public class EnemyTorch : MonoBehaviour
             player.GetComponent<PlayerHealth>().changeHealth(damage);
         }
     }
+    //死亡
+    public void Die()
+    {
+        gameObject.SetActive(false);
+    }
     private void Awake()
     {
         am = GetComponent<Animator>();
         rg = GetComponent<Rigidbody2D>();
         player = GameObject.Find("Warrior_Player");
+        enemyHealth = GetComponent<EnemyHealth>();
         idleState = new EnemyIdleState(this);
         chaseState = new EnemyChaseState(this);
         combatState = new EnemyCombatState(this);
+        dieState = new EnemyDieState(this);
     }
     void Start()
     {
