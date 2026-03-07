@@ -9,14 +9,14 @@ public class EnemyHealth : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+        UIManger.Instance.EnemyHealthChange(maxHealth, currentHealth);
     }
     public void ChangeHealth(int changeHealth)
     {
-        Debug.Log("造成伤害了");
         currentHealth -= changeHealth;
+        UIManger.Instance.EnemyHealthChange(maxHealth, currentHealth);
         if (currentHealth <= 0)
         {
-            Debug.Log("死了");
             isDie = true;
         }
         else if(currentHealth>maxHealth)

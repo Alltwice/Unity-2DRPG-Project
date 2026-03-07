@@ -1,47 +1,90 @@
 using NUnit.Framework;
 using TMPro;
-using Unity.AppUI.UI;
-using Unity.Mathematics;
 using UnityEngine;
 using UnityEngine.UI;
-using UnityEngine.UIElements;
-using Slider = UnityEngine.UI.Slider;
-using Text = Unity.AppUI.UI.Text;
 
 public class UIManger : MonoBehaviour
 {
+    // 单例实例
+    public static UIManger Instance { get; private set; }
+
+    // 可在 Inspector 绑定（也保留了原有 field）
     public InputManger input;
     public GameObject pauseUI;
     public AudioSource BGM;
     public Slider BGMSilder;
+    public Slider playerHealthSilder;
+    public Slider enemyHealthSilder;
     public TMP_Text BGMText;
     public int Percent;
+
     private void Awake()
     {
+        // 单例初始化
+        if (Instance != null && Instance != this)
+        {
+            Destroy(gameObject);
+            return;
+        }
+        Instance = this;
         input = GetComponent<InputManger>();
-        BGM = GameObject.Find("Cameras").GetComponent<AudioSource>();
+        BGM = GameObject.Find("Cameras")?.GetComponent<AudioSource>();
     }
+
     private void Start()
     {
-        BGMSilder.value = BGM.volume;
+        if (BGMSilder != null && BGM != null)
+            BGMSilder.value = BGM.volume;
     }
+
     public void ChangeVolume(float value)
     {
-        Percent = Mathf.RoundToInt(value*100);
-        BGM.volume = BGMSilder.value;
-        BGMText.text = Percent + "%";
+        Percent = Mathf.RoundToInt(value * 100);
+        if (BGMSilder != null && BGM != null)
+            BGM.volume = BGMSilder.value;
+        if (BGMText != null)
+            BGMText.text = Percent + "%";
     }
-    private void Update()
+
+    public void PlayerHealthChange(int maxHealth, int currentHealth)
     {
-        if (input.isPause == true && pauseUI.activeSelf == true) 
+        if (playerHealthSilder != null)
         {
-            pauseUI.SetActive(false);
-            input.isPause = false;
+            playerHealthSilder.maxValue = maxHealth;
+            playerHealthSilder.value = currentHealth;
         }
-        else if(input.isPause == true && pauseUI.activeSelf == false)
+    }
+
+    public void EnemyHealthChange(int maxHealth, int currentHealth)
+    {
+        if (enemyHealthSilder != null)
         {
-            pauseUI.SetActive(true);
-            input.isPause = false;
+            enemyHealthSilder.maxValue = maxHealth;
+            enemyHealthSilder.value = currentHealth;
         }
+    }
+
+    // 公开的切换方法，供 InputManger 或其它脚本调用
+    public void OpenPauseUI()
+    {
+        if (pauseUI == null)
+        {
+            Debug.LogWarning("[UIManger] pauseUI 未绑定。");
+            return;
+        }
+        bool newState = !pauseUI.activeSelf;
+        pauseUI.SetActive(newState);
+        Debug.Log("[UIManger] Pause UI toggled -> " + newState);
+    }
+
+    // 静态便捷入口（可直接 UIManger.TogglePause()）
+    public static void TogglePause()
+    {
+        if (Instance == null)
+        {
+            Debug.LogWarning("[UIManger] Instance is null when calling TogglePause()");
+            return;
+        }
+        Instance.OpenPauseUI();
     }
 }

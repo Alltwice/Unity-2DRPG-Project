@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class PlayerDateManger : MonoBehaviour
 {
-    public static PlayerDateManger instance;
+    public static PlayerDateManger instance { get; private set; }
 
     [Header("基础数据")]
     public float moveSpeed;
