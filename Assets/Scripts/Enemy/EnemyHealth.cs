@@ -9,12 +9,10 @@ public class EnemyHealth : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
-        UIManger.Instance.EnemyHealthChange(maxHealth, currentHealth);
     }
     public void ChangeHealth(int changeHealth)
     {
         currentHealth -= changeHealth;
-        UIManger.Instance.EnemyHealthChange(maxHealth, currentHealth);
         if (currentHealth <= 0)
         {
             isDie = true;

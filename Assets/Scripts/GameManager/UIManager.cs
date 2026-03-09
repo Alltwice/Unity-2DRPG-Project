@@ -2,13 +2,10 @@ using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
-/// <summary>
-///  UI 管理器：管理场景中已有的 UI 面板
-/// </summary>
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
-    public BasePanel PausePanel;
+    public BasePanel pausePanel;
     public Stack<BasePanel> panelsStack = new Stack<BasePanel>();
     private void Awake()
     {
@@ -18,11 +15,13 @@ public class UIManager : MonoBehaviour
             return;
         }
         Instance = this;
-        PausePanel.Close();
+        pausePanel.Close();
+        InputManger.PauseEvent += TogglePausePanel;
     }
     public void PushIn(BasePanel newPanel)
     {
-        if(newPanel==null)
+        Debug.Log("入栈了");
+        if (newPanel==null)
         {
             return;
         }
@@ -48,5 +47,10 @@ public class UIManager : MonoBehaviour
             BasePanel nextPanel = panelsStack.Peek();
             nextPanel.Resume();
         }
+    }
+    public void TogglePausePanel()
+    {
+        Debug.Log("被订阅了");
+        PushIn(pausePanel);
     }
 }

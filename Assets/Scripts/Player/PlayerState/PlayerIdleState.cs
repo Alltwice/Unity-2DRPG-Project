@@ -5,7 +5,6 @@ public class PlayerIdleState:PlayerStateMachine
     protected Animator am;
     protected Rigidbody2D rg;
     protected PlayerWarrior playerWarrior;
-    protected InputManger inputActions;
     public PlayerIdleState(PlayerWarrior playerWarrior)
     {
         this.playerWarrior = playerWarrior;
@@ -15,13 +14,13 @@ public class PlayerIdleState:PlayerStateMachine
         Debug.Log("现在是待机");
         am = playerWarrior.am;
         rg = playerWarrior.rg;
-        inputActions = playerWarrior.inputActions;
         rg.linearVelocity = Vector2.zero;
+        InputManger.AttackEvent += HandleAttack;
     }
 
     public override void OnExit()
     {
-
+        InputManger.AttackEvent -= HandleAttack;
     }
 
     public override void OnFixedUpdate()
@@ -31,13 +30,13 @@ public class PlayerIdleState:PlayerStateMachine
 
     public override void OnUpdate()
     {
-        if (inputActions.moveInput!=Vector2.zero)
+        if (rg.linearVelocity!= Vector2.zero)
         {
             playerWarrior.ChangeState(playerWarrior.moveState);
         }
-        if(inputActions.isAttack==true)
-        {
-            playerWarrior.ChangeState(playerWarrior.attackState);
-        }
+    }
+    public void HandleAttack()
+    {
+        playerWarrior.ChangeState(playerWarrior.attackState);
     }
 }

@@ -4,30 +4,31 @@ using UnityEngine;
 /// <summary>
 /// 1. 面板基类：直接挂在 Hierarchy 里的 UI 对象上
 /// </summary>
-public class BasePanel : MonoBehaviour
+public abstract class BasePanel : MonoBehaviour
 {
     public CanvasGroup canvas;
-    private void Awake()
+    protected virtual void Awake()
     {
         canvas = GetComponent<CanvasGroup>();
     }
-    public void Open()
+    public virtual void Open()
     {
         canvas.alpha = 1;
         canvas.interactable = true;
         canvas.blocksRaycasts = true;
     }
-    public void Close()
+    public virtual void Close()
     {
         canvas.alpha = 0;
         canvas.interactable = false;
         canvas.blocksRaycasts = false;
+        Debug.Log("界面关闭了");
     }
-    public void Pause()
+    public virtual void Pause()
     {
         canvas.interactable = false;
     }
-    public void Resume()
+    public virtual void Resume()
     {
         canvas.interactable = true;
     }

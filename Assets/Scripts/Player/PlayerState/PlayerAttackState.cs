@@ -5,7 +5,6 @@ public class PlayerAttackState : PlayerStateMachine
     protected Animator am;
     protected Rigidbody2D rg;
     protected PlayerWarrior playerWarrior;
-    protected InputManger inputActions;
     public PlayerAttackState(PlayerWarrior playerWarrior)
     {
         this.playerWarrior = playerWarrior;
@@ -15,13 +14,12 @@ public class PlayerAttackState : PlayerStateMachine
         Debug.Log("现在是攻击");
         am = playerWarrior.am;
         rg = playerWarrior.rg;
-        inputActions = playerWarrior.inputActions;
         am.SetBool("isAttacking", true);
+        rg.linearVelocity = Vector2.zero;
     }
 
     public override void OnExit()
     {
-        inputActions.isAttack = false;
         am.SetBool("isAttacking", false);
     }
 

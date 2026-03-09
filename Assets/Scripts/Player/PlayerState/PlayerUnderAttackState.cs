@@ -7,7 +7,6 @@ public class PlayerUnderAttackState : PlayerStateMachine
     protected Animator am;
     protected Rigidbody2D rg;
     protected PlayerWarrior playerWarrior;
-    protected InputManger inputActions;
     protected EnemyTorch torch;
     public PlayerUnderAttackState(PlayerWarrior playerWarrior)
     {
@@ -18,7 +17,6 @@ public class PlayerUnderAttackState : PlayerStateMachine
         Debug.Log("现在是受击");
         am = playerWarrior.am;
         rg = playerWarrior.rg;
-        inputActions = playerWarrior.inputActions;
     }
 
     public override void OnExit()
