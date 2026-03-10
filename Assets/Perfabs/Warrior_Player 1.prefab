@@ -44,9 +44,9 @@ GameObject:
   - component: {fileID: 8208138257320696252}
   - component: {fileID: 2042055924551320546}
   - component: {fileID: 8277215665014148372}
-  - component: {fileID: 6391719333517834297}
-  - component: {fileID: 8977139133822802385}
-  - component: {fileID: 8477507694424741032}
+  - component: {fileID: 6199328081623726946}
+  - component: {fileID: 1021946586550845116}
+  - component: {fileID: 1392894618981901669}
   m_Layer: 3
   m_Name: Warrior_Player 1
   m_TagString: Player
@@ -215,23 +215,7 @@ CapsuleCollider2D:
   m_Offset: {x: 0.008880377, y: -0.30342478}
   m_Size: {x: 0.6037307, y: 0.60373104}
   m_Direction: 0
---- !u!114 &6391719333517834297
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7996765548089880938}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: dd71d326ecbd72a4eb65c9c4fbce5550, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
-  currentHealth: 10
-  maxHealth: 10
-  healthText: {fileID: 0}
-  ui: {fileID: 0}
---- !u!114 &8977139133822802385
+--- !u!114 &6199328081623726946
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -246,7 +230,7 @@ MonoBehaviour:
   am: {fileID: 0}
   rg: {fileID: 0}
   inputActions: {fileID: 0}
---- !u!114 &8477507694424741032
+--- !u!114 &1021946586550845116
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -255,10 +239,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 7996765548089880938}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8ee680e7bf432e54d85eec79951644bf, type: 3}
+  m_Script: {fileID: 11500000, guid: dd71d326ecbd72a4eb65c9c4fbce5550, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::InputManager
-  uIManger: {fileID: 0}
-  moveInput: {x: 0, y: 0}
-  isAttack: 0
-  isPause: 0
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerHealth
+  currentHealth: 15
+  maxHealth: 15
+--- !u!114 &1392894618981901669
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7996765548089880938}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: bd7a662c14e2b5340b9d7de172b452a1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::PlayerDateManger
+  moveSpeed: 5
+  damage: 1
+  isbacking: 0
+  attackPoint: {fileID: 1227487817462057399}
+  attackRange: {x: 1, y: 1}
+  attackLayer:
+    serializedVersion: 2
+    m_Bits: 64

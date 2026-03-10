@@ -22,7 +22,6 @@ public abstract class BasePanel : MonoBehaviour
         canvas.alpha = 0;
         canvas.interactable = false;
         canvas.blocksRaycasts = false;
-        Debug.Log("界面关闭了");
     }
     public virtual void Pause()
     {

@@ -30,7 +30,7 @@ public class PlayerIdleState:PlayerStateMachine
 
     public override void OnUpdate()
     {
-        if (rg.linearVelocity!= Vector2.zero)
+        if (InputManger.Instance.moveInput!= Vector2.zero)
         {
             playerWarrior.ChangeState(playerWarrior.moveState);
         }

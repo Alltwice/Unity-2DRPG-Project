@@ -5,12 +5,10 @@ public class PlayerHealth : MonoBehaviour
 {
     public int currentHealth;
     public int maxHealth;
-    //在开始时显示文本内容
-    public void Awake()
-    {
-    }
     public void Start()
     {
+        currentHealth = maxHealth;
+        GameEvent.TriggerPlayerHealthChange(currentHealth, maxHealth);
     }
     //一个改变生命值的方法
     public void changeHealth(int changeamount)
@@ -24,5 +22,6 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+        GameEvent.TriggerPlayerHealthChange(currentHealth, maxHealth);
     }
 }

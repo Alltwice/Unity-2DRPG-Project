@@ -9,6 +9,7 @@ public class EnemyHealth : MonoBehaviour
     private void Start()
     {
         currentHealth = maxHealth;
+        GameEvent.TriggerEnemyHealthChange(currentHealth, maxHealth);
     }
     public void ChangeHealth(int changeHealth)
     {
@@ -21,5 +22,6 @@ public class EnemyHealth : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+        GameEvent.TriggerEnemyHealthChange(currentHealth, maxHealth);
     }
 }

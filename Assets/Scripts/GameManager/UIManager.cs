@@ -16,7 +16,14 @@ public class UIManager : MonoBehaviour
         }
         Instance = this;
         pausePanel.Close();
+    }
+    private void OnEnable()
+    {
         InputManger.PauseEvent += TogglePausePanel;
+    }
+    private void OnDisable()
+    {
+        InputManger.PauseEvent -= TogglePausePanel;
     }
     public void PushIn(BasePanel newPanel)
     {
@@ -50,7 +57,6 @@ public class UIManager : MonoBehaviour
     }
     public void TogglePausePanel()
     {
-        Debug.Log("被订阅了");
         PushIn(pausePanel);
     }
 }
