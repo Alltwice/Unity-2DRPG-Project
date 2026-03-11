@@ -1,16 +1,25 @@
 using UnityEngine;
-
+using UnityEngine.UI;
 public class EnemyHealthUI : MonoBehaviour
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
+    public Slider healthUI;
+    public EnemyHealth enemyHealth;
 
-    // Update is called once per frame
-    void Update()
+    private void Awake()
     {
-        
+        enemyHealth = GetComponentInParent<EnemyHealth>();
+    }
+    private void OnEnable()
+    {
+        enemyHealth.EnemyHealthChange += EnemyHealthChange;
+    }
+    private void OnDisable()
+    {
+        enemyHealth.EnemyHealthChange -= EnemyHealthChange;
+    }
+    public void EnemyHealthChange(int currentHealth,int maxHealth)
+    {
+        healthUI.maxValue = maxHealth;
+        healthUI.value = currentHealth;
     }
 }

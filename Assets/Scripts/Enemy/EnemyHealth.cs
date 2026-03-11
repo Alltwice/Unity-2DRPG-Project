@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
@@ -5,11 +6,12 @@ public class EnemyHealth : MonoBehaviour
     public int currentHealth;
     public int maxHealth;
     public bool isDie = false;
+    public event Action<int, int> EnemyHealthChange;
 
     private void Start()
     {
         currentHealth = maxHealth;
-        GameEvent.TriggerEnemyHealthChange(currentHealth, maxHealth);
+        TriggerEnemyHealthChange(currentHealth, maxHealth);
     }
     public void ChangeHealth(int changeHealth)
     {
@@ -22,6 +24,10 @@ public class EnemyHealth : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-        GameEvent.TriggerEnemyHealthChange(currentHealth, maxHealth);
+        TriggerEnemyHealthChange(currentHealth, maxHealth);
+    }
+    public void TriggerEnemyHealthChange(int current, int max)
+    {
+        EnemyHealthChange?.Invoke(current, max);
     }
 }

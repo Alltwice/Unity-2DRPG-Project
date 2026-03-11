@@ -14,7 +14,7 @@ public class PlayerHud : MonoBehaviour
     }
     public void PlayerHealthChange(int currentHealth,int maxHealth)
     {
-        playerHealth.value = currentHealth;
         playerHealth.maxValue = maxHealth;
+        playerHealth.value = currentHealth;
     }
 }
