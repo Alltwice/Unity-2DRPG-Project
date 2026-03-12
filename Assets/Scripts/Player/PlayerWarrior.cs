@@ -17,8 +17,11 @@ public class PlayerWarrior : MonoBehaviour
     //∑∂Œßø… ”ªØ
     private void OnDrawGizmosSelected()
     {
-        Gizmos.color = Color.red;
-        Gizmos.DrawWireCube(PlayerDateManger.instance.attackPoint.position, PlayerDateManger.instance.attackRange);
+        if(PlayerDateManger.instance.attackPoint!=null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(PlayerDateManger.instance.attackPoint.position, PlayerDateManger.instance.attackRange);
+        }
     }
     private void Awake()
     {

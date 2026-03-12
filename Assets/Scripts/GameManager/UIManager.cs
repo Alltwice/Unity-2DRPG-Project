@@ -6,6 +6,7 @@ public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
     public BasePanel pausePanel;
+    public BasePanel gameOverPanel;
     public Stack<BasePanel> panelsStack = new Stack<BasePanel>();
     private void Awake()
     {
@@ -15,19 +16,24 @@ public class UIManager : MonoBehaviour
             return;
         }
         Instance = this;
+    }
+    private void Start()
+    {
         pausePanel.Close();
+        gameOverPanel.Close();
     }
     private void OnEnable()
     {
         InputManger.PauseEvent += TogglePausePanel;
+        GameEvent.PlayerDeath += ToggleGameOverPanel;
     }
     private void OnDisable()
     {
         InputManger.PauseEvent -= TogglePausePanel;
+        GameEvent.PlayerDeath -= ToggleGameOverPanel;
     }
     public void PushIn(BasePanel newPanel)
     {
-        Debug.Log("入栈了");
         if (newPanel==null)
         {
             return;
@@ -57,6 +63,20 @@ public class UIManager : MonoBehaviour
     }
     public void TogglePausePanel()
     {
-        PushIn(pausePanel);
+        if(pausePanel.canvas.alpha==0)
+        {
+            PushIn(pausePanel);
+        }
+        else
+        {
+            PopOut();   
+        }
+    }
+    public void ToggleGameOverPanel()
+    {
+        if(gameOverPanel.canvas.alpha==0)
+        {
+            PushIn(gameOverPanel);
+        }
     }
 }
