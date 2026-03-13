@@ -7,6 +7,8 @@ public class EnemyIdleState : EnemyStateMachine
     public EnemyIdleState(EnemyTorch torch)
     {
         this.torch = torch;
+        am = torch.am;
+        rg = torch.rg;
     }
 
     protected Animator am;
@@ -14,8 +16,6 @@ public class EnemyIdleState : EnemyStateMachine
 
     public override void OnEnter()
     {
-        am = torch.am;
-        rg = torch.rg;
         rg.linearVelocity = Vector2.zero;
         am.SetBool("isIdle", true);
     }

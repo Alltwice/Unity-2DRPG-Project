@@ -8,12 +8,13 @@ public class PlayerIdleState:PlayerStateMachine
     public PlayerIdleState(PlayerWarrior playerWarrior)
     {
         this.playerWarrior = playerWarrior;
+        am = playerWarrior.am;
+        rg = playerWarrior.rg;
     }
     public override void OnEnter()
     {
-        Debug.Log("现在是待机");
-        am = playerWarrior.am;
-        rg = playerWarrior.rg;
+        am.SetBool("isMoving", false);
+        am.SetBool("isAttacking", false);
         rg.linearVelocity = Vector2.zero;
         InputManger.AttackEvent += HandleAttack;
     }

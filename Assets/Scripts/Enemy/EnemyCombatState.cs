@@ -6,14 +6,14 @@ public class EnemyCombatState : EnemyStateMachine
     public EnemyCombatState(EnemyTorch torch)
     {
         this.torch = torch;
+        am = torch.am;
+        rg = torch.rg;
     }
 
     protected Animator am;
     protected Rigidbody2D rg;
     public override void OnEnter()
     {
-        am = torch.am;
-        rg = torch.rg;
         rg.linearVelocity = Vector2.zero;
         am.SetBool("isAttack", true);
     }

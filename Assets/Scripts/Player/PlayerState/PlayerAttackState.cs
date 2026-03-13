@@ -8,12 +8,11 @@ public class PlayerAttackState : PlayerStateMachine
     public PlayerAttackState(PlayerWarrior playerWarrior)
     {
         this.playerWarrior = playerWarrior;
+        am = playerWarrior.am;
+        rg = playerWarrior.rg;
     }
     public override void OnEnter()
     {
-        Debug.Log("现在是攻击");
-        am = playerWarrior.am;
-        rg = playerWarrior.rg;
         am.SetBool("isAttacking", true);
         rg.linearVelocity = Vector2.zero;
     }

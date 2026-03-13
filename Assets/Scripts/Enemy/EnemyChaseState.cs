@@ -8,6 +8,9 @@ public class EnemyChaseState : EnemyStateMachine
     public EnemyChaseState(EnemyTorch torch)
     {
         this.torch = torch;
+        am = torch.am;
+        rg = torch.rg;
+        player = torch.player;
     }
     protected Animator am;
     protected Rigidbody2D rg;
@@ -16,9 +19,6 @@ public class EnemyChaseState : EnemyStateMachine
     private int faceDirection=1;
     public override void OnEnter()
     {
-        am = torch.am;
-        rg = torch.rg;
-        player = torch.player;
         am.SetBool("isChase", true);
     }
     public override void OnUpdate()

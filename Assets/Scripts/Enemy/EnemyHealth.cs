@@ -7,7 +7,7 @@ public class EnemyHealth : MonoBehaviour
     public int maxHealth;
     public bool isDie = false;
     public event Action<int, int> EnemyHealthChange;
-
+    public event Action EnemyHited;
     private void Start()
     {
         currentHealth = maxHealth;
@@ -24,10 +24,15 @@ public class EnemyHealth : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+        TriggerEnemyHited();
         TriggerEnemyHealthChange(currentHealth, maxHealth);
     }
     public void TriggerEnemyHealthChange(int current, int max)
     {
         EnemyHealthChange?.Invoke(current, max);
+    }
+    public  void TriggerEnemyHited()
+    {
+        EnemyHited?.Invoke();
     }
 }

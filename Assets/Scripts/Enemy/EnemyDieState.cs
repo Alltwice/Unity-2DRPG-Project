@@ -7,6 +7,8 @@ public class EnemyDieState : EnemyStateMachine
     public EnemyDieState(EnemyTorch torch)
     {
         this.torch = torch;
+        am = torch.am;
+        rg = torch.rg;
     }
 
     protected Animator am;
@@ -14,9 +16,6 @@ public class EnemyDieState : EnemyStateMachine
 
     public override void OnEnter()
     {
-        UnityEngine.Debug.Log("真死了");
-        am = torch.am;
-        rg = torch.rg;
         rg.linearVelocity = Vector2.zero;
         am.SetBool("isDie", true);
 

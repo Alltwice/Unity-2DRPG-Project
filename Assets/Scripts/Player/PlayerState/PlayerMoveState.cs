@@ -10,12 +10,11 @@ public class PlayerMoveState:PlayerStateMachine
     public PlayerMoveState(PlayerWarrior playerWarrior)
     {
         this.playerWarrior = playerWarrior;
+        am = playerWarrior.am;
+        rg = playerWarrior.rg;
     }
     public override void OnEnter()
     {
-        Debug.Log("现在是移动");
-        am = playerWarrior.am;
-        rg = playerWarrior.rg;
         am.SetBool("isMoving", true);
         InputManger.AttackEvent += HandleAttack;
     }

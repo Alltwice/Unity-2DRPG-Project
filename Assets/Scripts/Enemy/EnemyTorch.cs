@@ -12,6 +12,7 @@ public class EnemyTorch : MonoBehaviour
     [HideInInspector] public Animator am;
     [HideInInspector] public Rigidbody2D rg;
     [HideInInspector] public GameObject player;
+    [HideInInspector] public SpriteRenderer sr;
     private EnemyHealth enemyHealth;
     //感知/攻击范围
     public Transform detectPoint;
@@ -27,6 +28,7 @@ public class EnemyTorch : MonoBehaviour
     [HideInInspector] public EnemyChaseState chaseState;
     [HideInInspector] public EnemyCombatState combatState;
     [HideInInspector] public EnemyDieState dieState;
+    public EnemyUnderAttack underAttack;
     //感知范围显示
     private void OnDrawGizmosSelected()
     {
@@ -36,6 +38,14 @@ public class EnemyTorch : MonoBehaviour
         Gizmos.DrawWireSphere(transform.position, attackDetectRange);
         Gizmos.color = Color.red;
         Gizmos.DrawWireCube(attackPoint.position,attackRange);
+    }
+    private void OnEnable()
+    {
+        enemyHealth.EnemyHited += ChangeStateUnderAttack;
+    }
+    private void OnDisable()
+    {
+        enemyHealth.EnemyHited -= ChangeStateUnderAttack;
     }
 
     //感知能力
@@ -85,12 +95,14 @@ public class EnemyTorch : MonoBehaviour
     {
         am = GetComponent<Animator>();
         rg = GetComponent<Rigidbody2D>();
+        sr = GetComponent<SpriteRenderer>();
         player = GameObject.Find("Warrior_Player");
         enemyHealth = GetComponent<EnemyHealth>();
         idleState = new EnemyIdleState(this);
         chaseState = new EnemyChaseState(this);
         combatState = new EnemyCombatState(this);
         dieState = new EnemyDieState(this);
+        underAttack = new EnemyUnderAttack(this);
     }
     void Start()
     {
@@ -116,6 +128,12 @@ public class EnemyTorch : MonoBehaviour
     {
         currentState?.OnExit();
         currentState = idleState;
+        currentState?.OnEnter();
+    }
+    public void ChangeStateUnderAttack()
+    {
+        currentState?.OnExit();
+        currentState = underAttack;
         currentState?.OnEnter();
     }
 }

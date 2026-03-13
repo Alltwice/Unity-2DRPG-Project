@@ -27,5 +27,6 @@ public class PlayerHealth : MonoBehaviour
             currentHealth = maxHealth;
         }
         GameEvent.TriggerPlayerHealthChange(currentHealth, maxHealth);
+        GameEvent.TriggerPlayerHited();
     }
 }

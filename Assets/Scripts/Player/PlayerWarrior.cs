@@ -8,6 +8,7 @@ public class PlayerWarrior : MonoBehaviour
     [HideInInspector] public Animator am;
     [HideInInspector] public Rigidbody2D rg;
     [HideInInspector] public InputManger inputActions;
+    [HideInInspector] public SpriteRenderer sr;
     //需求状态
     protected PlayerStateMachine currentState;
     public PlayerIdleState idleState;
@@ -23,11 +24,20 @@ public class PlayerWarrior : MonoBehaviour
             Gizmos.DrawWireCube(PlayerDateManger.instance.attackPoint.position, PlayerDateManger.instance.attackRange);
         }
     }
+    private void OnEnable()
+    {
+        GameEvent.PlayerHited += ChangeStateUnderAttack;
+    }
+    private void OnDisable()
+    {
+        GameEvent.PlayerHited -= ChangeStateUnderAttack;
+    }
     private void Awake()
     {
         am = GetComponent<Animator>();
         rg = GetComponent<Rigidbody2D>();
         inputActions = GetComponent<InputManger>();
+        sr = GetComponent<SpriteRenderer>();
         idleState = new PlayerIdleState(this);
         moveState = new PlayerMoveState(this);
         underAttackState = new PlayerUnderAttackState(this);
@@ -59,13 +69,17 @@ public class PlayerWarrior : MonoBehaviour
         currentState = idleState;
         currentState?.OnEnter();
     }
+    public void ChangeStateUnderAttack()
+    {
+        currentState?.OnExit();
+        currentState = underAttackState;
+        currentState?.OnEnter();
+    }
     public void Attack()
     {
-        Debug.Log("触发攻击了");
         Collider2D[] hits = Physics2D.OverlapBoxAll(PlayerDateManger.instance.attackPoint.position, PlayerDateManger.instance.attackRange, 0f, PlayerDateManger.instance.attackLayer);
         if(hits.Length>0)
         {
-            Debug.Log("攻击到了");
             hits[0].GetComponent<EnemyHealth>().ChangeHealth(PlayerDateManger.instance.damage);
         }
     }
