@@ -5,6 +5,10 @@ public class EnemyUnderAttack : EnemyStateMachine
 {
     protected EnemyTorch torch;
     public float stunTime=0.25f;
+    public float beatBackForce = 10f;
+    public float speedDown = 10f;
+    public Vector2 damageSource;
+    public Vector2 beatBackDirection;
     public EnemyUnderAttack(EnemyTorch torch)
     {
         this.torch = torch;
@@ -16,10 +20,11 @@ public class EnemyUnderAttack : EnemyStateMachine
     protected Rigidbody2D rg;
     public override void OnEnter()
     {
-        torch.sr.DOKill();
-        torch.sr.color = Color.red;
-        torch.sr.DOColor(Color.white, 0.2f).SetEase(Ease.OutQuad);
-        torch.transform.DOShakePosition(0.15f, 0.3f);
+        stunTime = 0.25f;
+        damageSource = torch.enemyHealth.attackObject;
+        beatBackDirection= ((Vector2)torch.transform.position-damageSource).normalized;
+        rg.linearVelocity = Vector2.zero;
+        rg.linearVelocity = beatBackForce * beatBackDirection;
     }
 
     public override void OnExit()
@@ -35,7 +40,8 @@ public class EnemyUnderAttack : EnemyStateMachine
     public override void OnUpdate()
     {
         stunTime -= Time.deltaTime;
-        if(stunTime<=0)
+        rg.linearVelocity = Vector2.Lerp(rg.linearVelocity, Vector2.zero, Time.deltaTime * speedDown);
+        if (stunTime<=0)
         {
             torch.ChangeState(torch.idleState);
         }

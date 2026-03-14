@@ -5,6 +5,7 @@ public class PlayerHealth : MonoBehaviour
 {
     public int currentHealth=8;
     public int maxHealth=8;
+    public Vector2 attackObject;
     public void Awake()
     {
         currentHealth = maxHealth;
@@ -14,8 +15,9 @@ public class PlayerHealth : MonoBehaviour
         GameEvent.TriggerPlayerHealthChange(currentHealth, maxHealth);
     }
     //一个改变生命值的方法
-    public void changeHealth(int changeamount)
+    public void changeHealth(int changeamount,Vector2 attackObject)
     {
+        this.attackObject = attackObject;
         currentHealth -= changeamount;
         if (currentHealth<=0)
         {

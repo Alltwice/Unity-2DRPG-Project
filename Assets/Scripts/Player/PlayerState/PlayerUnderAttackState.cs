@@ -1,5 +1,6 @@
 using DG.Tweening;
 using System.Collections;
+using UnityEditor.Splines;
 using UnityEngine;
 using UnityEngine.UIElements;
 
@@ -10,6 +11,10 @@ public class PlayerUnderAttackState : PlayerStateMachine
     protected PlayerWarrior playerWarrior;
     protected EnemyTorch torch;
     public float stunTime = 0.25f;
+    public float beatBackForce=10f;
+    public float speedDown = 10f;
+    public Vector2 damageSource;
+    public Vector2 beatBackDirection;
     public PlayerUnderAttackState(PlayerWarrior playerWarrior)
     {
         this.playerWarrior = playerWarrior;
@@ -18,11 +23,11 @@ public class PlayerUnderAttackState : PlayerStateMachine
     }
     public override void OnEnter()
     {
-        //该部分使用了DOTween插件实现简单受击动画
-        playerWarrior.sr.DOKill();
-        playerWarrior.sr.color = Color.red;
-        playerWarrior.sr.DOColor(Color.white, 0.2f).SetEase(Ease.OutQuad);
-        playerWarrior.transform.DOShakePosition(0.15f, 0.2f);
+        stunTime = 0.25f;
+        damageSource = playerWarrior.playerHealth.attackObject;
+        beatBackDirection = ((Vector2)playerWarrior.transform.position - damageSource).normalized;
+        playerWarrior.rg.linearVelocity = Vector2.zero;
+        playerWarrior.rg.linearVelocity = beatBackForce * beatBackDirection;
     }
 
     public override void OnExit()
@@ -38,9 +43,11 @@ public class PlayerUnderAttackState : PlayerStateMachine
     public override void OnUpdate()
     {
         stunTime -= Time.deltaTime;
+        playerWarrior.rg.linearVelocity = Vector2.Lerp(playerWarrior.rg.linearVelocity, Vector2.zero, Time.deltaTime * speedDown);
         if(stunTime<=0)
         {
             playerWarrior.ChangeState(playerWarrior.idleState);
         }
     }
+
 }

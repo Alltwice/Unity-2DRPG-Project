@@ -25,11 +25,11 @@ public class InputManger : MonoBehaviour
     }
     public void OnEnable()
     {
-        input.Enable();
+        input?.Enable();
     }
 
     public void OnDisable()
     {
-        input.Disable();
+        input?.Disable();
     }
 }

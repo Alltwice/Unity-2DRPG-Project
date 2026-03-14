@@ -8,13 +8,15 @@ public class EnemyHealth : MonoBehaviour
     public bool isDie = false;
     public event Action<int, int> EnemyHealthChange;
     public event Action EnemyHited;
+    public Vector2 attackObject;
     private void Start()
     {
         currentHealth = maxHealth;
         TriggerEnemyHealthChange(currentHealth, maxHealth);
     }
-    public void ChangeHealth(int changeHealth)
+    public void ChangeHealth(int changeHealth,Vector2 attackObject)
     {
+        this.attackObject = attackObject;
         currentHealth -= changeHealth;
         if (currentHealth <= 0)
         {

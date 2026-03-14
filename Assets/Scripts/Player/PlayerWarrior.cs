@@ -9,6 +9,7 @@ public class PlayerWarrior : MonoBehaviour
     [HideInInspector] public Rigidbody2D rg;
     [HideInInspector] public InputManger inputActions;
     [HideInInspector] public SpriteRenderer sr;
+    [HideInInspector] public PlayerHealth playerHealth;
     //ÐèÇó×´Ì¬
     protected PlayerStateMachine currentState;
     public PlayerIdleState idleState;
@@ -38,6 +39,7 @@ public class PlayerWarrior : MonoBehaviour
         rg = GetComponent<Rigidbody2D>();
         inputActions = GetComponent<InputManger>();
         sr = GetComponent<SpriteRenderer>();
+        playerHealth = GetComponent<PlayerHealth>();
         idleState = new PlayerIdleState(this);
         moveState = new PlayerMoveState(this);
         underAttackState = new PlayerUnderAttackState(this);
@@ -80,7 +82,7 @@ public class PlayerWarrior : MonoBehaviour
         Collider2D[] hits = Physics2D.OverlapBoxAll(PlayerDateManger.instance.attackPoint.position, PlayerDateManger.instance.attackRange, 0f, PlayerDateManger.instance.attackLayer);
         if(hits.Length>0)
         {
-            hits[0].GetComponent<EnemyHealth>().ChangeHealth(PlayerDateManger.instance.damage);
+            hits[0].GetComponent<EnemyHealth>().ChangeHealth(PlayerDateManger.instance.damage,transform.position);
         }
     }
 }

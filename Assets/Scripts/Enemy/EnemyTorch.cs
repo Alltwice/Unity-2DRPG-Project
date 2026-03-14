@@ -13,7 +13,7 @@ public class EnemyTorch : MonoBehaviour
     [HideInInspector] public Rigidbody2D rg;
     [HideInInspector] public GameObject player;
     [HideInInspector] public SpriteRenderer sr;
-    private EnemyHealth enemyHealth;
+    [HideInInspector] public EnemyHealth enemyHealth;
     //¸ĞÖª/¹¥»÷·¶Î§
     public Transform detectPoint;
     public float detectRange;
@@ -83,7 +83,7 @@ public class EnemyTorch : MonoBehaviour
         Collider2D[] hit = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, attackLayer);
         if (hit.Length > 0)
         {
-            player.GetComponent<PlayerHealth>().changeHealth(damage);
+            player.GetComponent<PlayerHealth>().changeHealth(damage,gameObject.transform.position);
         }
     }
     //ËÀÍö
