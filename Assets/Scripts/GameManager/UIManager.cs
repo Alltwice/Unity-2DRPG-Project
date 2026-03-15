@@ -19,6 +19,8 @@ public class UIManager : MonoBehaviour
     }
     private void Start()
     {
+        pausePanel.gameObject.SetActive(true);
+        gameOverPanel.gameObject.SetActive(true);
         pausePanel.Close();
         gameOverPanel.Close();
     }

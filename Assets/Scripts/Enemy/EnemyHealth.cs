@@ -22,6 +22,7 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= changeHealth;
         GameEvent.TriggerCameraShake(cameraShakeForce);
         HitStopManager.Instance.HitStop(hitStopTime);
+        GameEvent.TriggerPlaySFX(GameEvent.SFXType.EnemyHit);
         if (currentHealth <= 0)
         {
             isDie = true;

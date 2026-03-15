@@ -10,6 +10,10 @@ public class PlayerWarrior : MonoBehaviour
     [HideInInspector] public InputManger inputActions;
     [HideInInspector] public SpriteRenderer sr;
     [HideInInspector] public PlayerHealth playerHealth;
+    //攻击相关
+    public Transform attackPoint;
+    public Vector2 attackRange;
+    public LayerMask attackLayer;
     //需求状态
     protected PlayerStateMachine currentState;
     public PlayerIdleState idleState;
@@ -19,10 +23,10 @@ public class PlayerWarrior : MonoBehaviour
     //范围可视化
     private void OnDrawGizmosSelected()
     {
-        if(PlayerDateManger.instance.attackPoint!=null)
+        if(attackPoint!=null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(PlayerDateManger.instance.attackPoint.position, PlayerDateManger.instance.attackRange);
+            Gizmos.DrawWireCube(attackPoint.position, attackRange);
         }
     }
     private void OnEnable()
@@ -79,7 +83,7 @@ public class PlayerWarrior : MonoBehaviour
     }
     public void Attack()
     {
-        Collider2D[] hits = Physics2D.OverlapBoxAll(PlayerDateManger.instance.attackPoint.position, PlayerDateManger.instance.attackRange, 0f, PlayerDateManger.instance.attackLayer);
+        Collider2D[] hits = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, attackLayer);
         if(hits.Length>0)
         {
             hits[0].GetComponent<EnemyHealth>().ChangeHealth(PlayerDateManger.instance.damage,transform.position);
