@@ -6,6 +6,8 @@ public class PlayerHealth : MonoBehaviour
     public int currentHealth=8;
     public int maxHealth=8;
     public Vector2 attackObject;
+    public float stunTime;
+    public float cameraShakeForce;
     public void Awake()
     {
         currentHealth = maxHealth;
@@ -19,6 +21,8 @@ public class PlayerHealth : MonoBehaviour
     {
         this.attackObject = attackObject;
         currentHealth -= changeamount;
+        GameEvent.TriggerCameraShake(cameraShakeForce);
+        HitStopManager.Instance.HitStop(stunTime);
         if (currentHealth<=0)
         {
             gameObject.SetActive(false);

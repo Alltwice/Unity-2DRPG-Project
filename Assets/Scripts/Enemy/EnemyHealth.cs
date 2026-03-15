@@ -9,6 +9,8 @@ public class EnemyHealth : MonoBehaviour
     public event Action<int, int> EnemyHealthChange;
     public event Action EnemyHited;
     public Vector2 attackObject;
+    public float hitStopTime;
+    public float cameraShakeForce=0.2f;
     private void Start()
     {
         currentHealth = maxHealth;
@@ -18,6 +20,8 @@ public class EnemyHealth : MonoBehaviour
     {
         this.attackObject = attackObject;
         currentHealth -= changeHealth;
+        GameEvent.TriggerCameraShake(cameraShakeForce);
+        HitStopManager.Instance.HitStop(hitStopTime);
         if (currentHealth <= 0)
         {
             isDie = true;
