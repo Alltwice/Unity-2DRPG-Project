@@ -11,9 +11,10 @@ public static class GameEvent
     public static event Action<float> CameraShake;
     public enum SFXType
     {
-        PlayerHit,
-        EnemyHit,
-        SwordSwing
+        PlayerBeHit,
+        EnemyBeHit,
+        SwordSwing,
+        PlayerDefenceBeHit
     }
     public static void TriggerPlayerHealthChange(int current,int max)
     {

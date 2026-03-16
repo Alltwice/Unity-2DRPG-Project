@@ -1,5 +1,4 @@
-using System;
-using Unity.AppUI.UI;
+using System;   
 using UnityEngine;
 using static GameEvent;
 using Random = UnityEngine.Random;
@@ -7,7 +6,9 @@ using Random = UnityEngine.Random;
 public class AudioManager : MonoBehaviour
 {
     public AudioSource audioSource;
-    public AudioClip[] EnemyhitSound;
+    public AudioClip[] EnemyBehitSound;
+    public AudioClip[] PlayerDefenceBeHit;
+    public AudioClip[] PlayerBeHit;
     public float pitchMin = 0.5f;
     public float pitchMax = 1.5f;
     private void Awake()
@@ -26,14 +27,17 @@ public class AudioManager : MonoBehaviour
     {
         switch(sFXType)
         {
-            case GameEvent.SFXType.EnemyHit:
-                PlayRandomSound(EnemyhitSound);
+            case GameEvent.SFXType.EnemyBeHit:
+                PlayRandomSound(EnemyBehitSound);
                 break;
-            case GameEvent.SFXType.PlayerHit:
-
+            case GameEvent.SFXType.PlayerBeHit:
+                PlayRandomSound(PlayerBeHit);
                 break;
             case GameEvent.SFXType.SwordSwing:
 
+                break;
+            case GameEvent.SFXType.PlayerDefenceBeHit:
+                PlayRandomSound(PlayerDefenceBeHit);
                 break;
         }
     }

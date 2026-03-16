@@ -22,6 +22,7 @@ public class EnemyTorch : MonoBehaviour
     public Vector2 attackRange;
     public float attackDetectRange;
     public LayerMask attackLayer;
+    Collider2D[] hits = new Collider2D[10];
     //×´Ì¬
     private EnemyStateMachine currentState;
     [HideInInspector] public EnemyIdleState idleState;
@@ -80,10 +81,10 @@ public class EnemyTorch : MonoBehaviour
     //¹¥»÷ÄÜÁ¦
     public void Attack()
     {
-        Collider2D[] hit = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, attackLayer);
-        if (hit.Length > 0)
+        hits = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, attackLayer);
+        if (hits.Length > 0)
         {
-            player.GetComponent<PlayerHealth>().changeHealth(damage,gameObject.transform.position);
+            player.GetComponent<PlayerHealth>().ChangeHealth(damage,transform.position);
         }
     }
     //ËÀÍö

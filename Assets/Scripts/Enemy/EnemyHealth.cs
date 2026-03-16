@@ -20,9 +20,11 @@ public class EnemyHealth : MonoBehaviour
     {
         this.attackObject = attackObject;
         currentHealth -= changeHealth;
+        GameEvent.TriggerPlaySFX(GameEvent.SFXType.EnemyBeHit);
+        //相机晃动
         GameEvent.TriggerCameraShake(cameraShakeForce);
+        //顿帧
         HitStopManager.Instance.HitStop(hitStopTime);
-        GameEvent.TriggerPlaySFX(GameEvent.SFXType.EnemyHit);
         if (currentHealth <= 0)
         {
             isDie = true;
@@ -31,14 +33,16 @@ public class EnemyHealth : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+        //切换受击状态
         TriggerEnemyHited();
+        //给UI传值
         TriggerEnemyHealthChange(currentHealth, maxHealth);
     }
     public void TriggerEnemyHealthChange(int current, int max)
     {
         EnemyHealthChange?.Invoke(current, max);
     }
-    public  void TriggerEnemyHited()
+    public void TriggerEnemyHited()
     {
         EnemyHited?.Invoke();
     }

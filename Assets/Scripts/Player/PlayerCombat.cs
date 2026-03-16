@@ -1,4 +1,4 @@
-using UnityEngine;
+    using UnityEngine;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -72,7 +72,7 @@ public class PlayerCombat : MonoBehaviour
     {
         canInputNextCombo = false;
         comboStep++;
-        if (comboStep > 3)
+        if (comboStep > 4)
         {
             comboStep = 1;
         }

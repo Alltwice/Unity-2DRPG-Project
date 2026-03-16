@@ -15,12 +15,14 @@ public class PlayerWarrior : MonoBehaviour
     public Transform attackPoint;
     public Vector2 attackRange;
     public LayerMask attackLayer;
+    Collider2D[] hits = new Collider2D[10];
     //需求状态
     protected PlayerStateMachine currentState;
     public PlayerIdleState idleState;
     public PlayerMoveState moveState;
     public PlayerUnderAttackState underAttackState;
     public PlayerAttackState attackState;
+    public PlayerDefenceStage defenceStage;
     //范围可视化
     private void OnDrawGizmosSelected()
     {
@@ -50,6 +52,7 @@ public class PlayerWarrior : MonoBehaviour
         moveState = new PlayerMoveState(this);
         underAttackState = new PlayerUnderAttackState(this);
         attackState = new PlayerAttackState(this);
+        defenceStage = new PlayerDefenceStage(this);
     }
     void Start()
     {
@@ -85,10 +88,17 @@ public class PlayerWarrior : MonoBehaviour
     }
     public void Attack()
     {
-        Collider2D[] hits = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, attackLayer);
-        if(hits.Length>0)
+        hits = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, attackLayer);
+        if(hits.Length==0)
         {
-            hits[0].GetComponent<EnemyHealth>().ChangeHealth(PlayerDateManger.instance.damage,transform.position);
+            return;
+        }
+        else if(hits.Length>0)
+        {
+            for(int i=0;i<hits.Length;i++)
+            {
+                hits[i].GetComponent<EnemyHealth>()?.ChangeHealth(PlayerDateManger.instance.damage, transform.position);
+            }
         }
     }
 }

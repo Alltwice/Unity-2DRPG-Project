@@ -8,21 +8,25 @@ public class PlayerHealth : MonoBehaviour
     public Vector2 attackObject;
     public float stunTime;
     public float cameraShakeForce;
+    public PlayerDefence playerDefence;
+    public int finallDamage;
     public void Awake()
     {
         currentHealth = maxHealth;
+        playerDefence = GetComponent<PlayerDefence>();
     }
     public void Start()
     {
         GameEvent.TriggerPlayerHealthChange(currentHealth, maxHealth);
     }
     //一个改变生命值的方法
-    public void changeHealth(int changeamount,Vector2 attackObject)
+    public void ChangeHealth(int changeamount,Vector2 attackObject)
     {
         this.attackObject = attackObject;
-        currentHealth -= changeamount;
+        finallDamage = playerDefence.FinallyDamage(changeamount);
+        currentHealth -= finallDamage;
+        //相机抖动
         GameEvent.TriggerCameraShake(cameraShakeForce);
-        HitStopManager.Instance.HitStop(stunTime);
         if (currentHealth<=0)
         {
             gameObject.SetActive(false);
@@ -32,7 +36,11 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
+        //给UI组件提供数值变化
         GameEvent.TriggerPlayerHealthChange(currentHealth, maxHealth);
+        //调用playerController里的订阅事件，切换到受击状态
         GameEvent.TriggerPlayerHited();
+        //顿帧效果
+        HitStopManager.Instance.HitStop(stunTime);
     }
 }
