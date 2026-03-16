@@ -16,13 +16,11 @@ public class PlayerMoveState:PlayerStateMachine
     public override void OnEnter()
     {
         am.SetBool("isMoving", true);
-        InputManger.AttackEvent += HandleAttack;
     }
 
     public override void OnExit()
     {
         am.SetBool("isMoving", false);
-        InputManger.AttackEvent -= HandleAttack;
     }
 
     public override void OnFixedUpdate()
@@ -41,9 +39,5 @@ public class PlayerMoveState:PlayerStateMachine
         {
             playerWarrior.ChangeState(playerWarrior.idleState);
         }
-    }
-    public void HandleAttack()
-    {
-        playerWarrior.ChangeState(playerWarrior.attackState);
     }
 }

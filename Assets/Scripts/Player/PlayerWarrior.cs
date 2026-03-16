@@ -10,6 +10,7 @@ public class PlayerWarrior : MonoBehaviour
     [HideInInspector] public InputManger inputActions;
     [HideInInspector] public SpriteRenderer sr;
     [HideInInspector] public PlayerHealth playerHealth;
+    [HideInInspector] public PlayerCombat combat;
     //¹¥»÷Ïà¹Ø
     public Transform attackPoint;
     public Vector2 attackRange;
@@ -44,6 +45,7 @@ public class PlayerWarrior : MonoBehaviour
         inputActions = GetComponent<InputManger>();
         sr = GetComponent<SpriteRenderer>();
         playerHealth = GetComponent<PlayerHealth>();
+        combat = GetComponent<PlayerCombat>();
         idleState = new PlayerIdleState(this);
         moveState = new PlayerMoveState(this);
         underAttackState = new PlayerUnderAttackState(this);

@@ -13,15 +13,12 @@ public class PlayerIdleState:PlayerStateMachine
     }
     public override void OnEnter()
     {
-        am.SetBool("isMoving", false);
-        am.SetBool("isAttacking", false);
+        am.Play("Warrior_Idle");
         rg.linearVelocity = Vector2.zero;
-        InputManger.AttackEvent += HandleAttack;
     }
 
     public override void OnExit()
     {
-        InputManger.AttackEvent -= HandleAttack;
     }
 
     public override void OnFixedUpdate()
@@ -35,9 +32,5 @@ public class PlayerIdleState:PlayerStateMachine
         {
             playerWarrior.ChangeState(playerWarrior.moveState);
         }
-    }
-    public void HandleAttack()
-    {
-        playerWarrior.ChangeState(playerWarrior.attackState);
     }
 }

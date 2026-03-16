@@ -23,6 +23,7 @@ public class PlayerUnderAttackState : PlayerStateMachine
     }
     public override void OnEnter()
     {
+        playerWarrior.combat.comboStep = 0;
         stunTime = 0.25f;
         damageSource = playerWarrior.playerHealth.attackObject;
         beatBackDirection = ((Vector2)playerWarrior.transform.position - damageSource).normalized;
