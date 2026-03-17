@@ -4,8 +4,8 @@ public class PlayerIdleState:PlayerStateMachine
 {
     protected Animator am;
     protected Rigidbody2D rg;
-    protected PlayerWarrior playerWarrior;
-    public PlayerIdleState(PlayerWarrior playerWarrior)
+    protected PlayerController playerWarrior;
+    public PlayerIdleState(PlayerController playerWarrior)
     {
         this.playerWarrior = playerWarrior;
         am = playerWarrior.am;

@@ -1,11 +1,11 @@
 using UnityEngine;
 
-public class PlayerDefenceStage:PlayerStateMachine
+public class PlayerDefenceState:PlayerStateMachine
 {
     protected Animator am;
     protected Rigidbody2D rg;
-    protected PlayerWarrior playerWarrior;
-    public PlayerDefenceStage(PlayerWarrior playerWarrior)
+    protected PlayerController playerWarrior;
+    public PlayerDefenceState(PlayerController playerWarrior)
     {
         this.playerWarrior = playerWarrior;
         am = playerWarrior.am;

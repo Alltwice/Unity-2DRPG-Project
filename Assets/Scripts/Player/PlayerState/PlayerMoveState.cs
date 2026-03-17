@@ -5,9 +5,9 @@ public class PlayerMoveState:PlayerStateMachine
 {
     protected Animator am;
     protected Rigidbody2D rg;
-    protected PlayerWarrior playerWarrior;
+    protected PlayerController playerWarrior;
     private int faceDirection=1;
-    public PlayerMoveState(PlayerWarrior playerWarrior)
+    public PlayerMoveState(PlayerController playerWarrior)
     {
         this.playerWarrior = playerWarrior;
         am = playerWarrior.am;

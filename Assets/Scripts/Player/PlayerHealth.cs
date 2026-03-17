@@ -36,7 +36,7 @@ public class PlayerHealth : MonoBehaviour
         {
             currentHealth = maxHealth;
         }
-        //给UI组件提供数值变化
+        //给UI组件提供数值变化，以及会调用一次受击反馈
         GameEvent.TriggerPlayerHealthChange(currentHealth, maxHealth);
         //调用playerController里的订阅事件，切换到受击状态
         GameEvent.TriggerPlayerHited();

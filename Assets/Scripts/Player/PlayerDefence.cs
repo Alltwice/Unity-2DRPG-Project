@@ -4,13 +4,13 @@ using UnityEngine;
 public class PlayerDefence : MonoBehaviour
 {
     public Collider2D shieldCollider;
-    public PlayerWarrior player;
+    public PlayerController player;
     public PlayerHealth playerHealth;
     public float damageReduction = 0.3f;
     public bool isBlocking = false;
     private void Awake()
     {
-        player = GetComponent<PlayerWarrior>();
+        player = GetComponent<PlayerController>();
     }
     private void OnEnable()
     {
@@ -32,7 +32,7 @@ public class PlayerDefence : MonoBehaviour
     {
         shieldCollider.enabled = false;
         isBlocking = false;
-        player.ChangeStateIdle();
+        player.ChangeState(player.idleState);
     }
     public int FinallyDamage(int damage)
     {

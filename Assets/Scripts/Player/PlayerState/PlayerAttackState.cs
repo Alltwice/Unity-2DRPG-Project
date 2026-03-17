@@ -4,9 +4,9 @@ public class PlayerAttackState : PlayerStateMachine
 {
     protected Animator am;
     protected Rigidbody2D rg;
-    protected PlayerWarrior playerWarrior;
+    protected PlayerController playerWarrior;
     protected PlayerCombat combat;
-    public PlayerAttackState(PlayerWarrior playerWarrior)
+    public PlayerAttackState(PlayerController playerWarrior)
     {
         this.playerWarrior = playerWarrior;
         am = playerWarrior.am;

@@ -2,7 +2,7 @@
 
 public class PlayerCombat : MonoBehaviour
 {
-    private PlayerWarrior player;
+    private PlayerController player;
     private Animator anim;
     public int comboStep = 0;
     public float attackBufferTimer = 0f;
@@ -10,7 +10,7 @@ public class PlayerCombat : MonoBehaviour
 
     private void Awake()
     {
-        player = GetComponent<PlayerWarrior>();
+        player = GetComponent<PlayerController>();
         anim = GetComponent<Animator>();
     }
 
@@ -89,7 +89,7 @@ public class PlayerCombat : MonoBehaviour
     {
         comboStep = 0;
         canInputNextCombo = false;
-        player.ChangeStateIdle();
+        player.ChangeState(player.idleState);
     }
 }
 

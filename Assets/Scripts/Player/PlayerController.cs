@@ -1,8 +1,10 @@
 using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem.LowLevel;
-
-public class PlayerWarrior : MonoBehaviour
+/// <summary>
+/// 处理玩家状态以及存放一些玩家功能函数
+/// </summary>
+public class PlayerController : MonoBehaviour
 {
     //需求组件
     [HideInInspector] public Animator am;
@@ -11,6 +13,7 @@ public class PlayerWarrior : MonoBehaviour
     [HideInInspector] public SpriteRenderer sr;
     [HideInInspector] public PlayerHealth playerHealth;
     [HideInInspector] public PlayerCombat combat;
+    [HideInInspector] public PlayerDefence defence;
     //攻击相关
     public Transform attackPoint;
     public Vector2 attackRange;
@@ -20,9 +23,10 @@ public class PlayerWarrior : MonoBehaviour
     protected PlayerStateMachine currentState;
     public PlayerIdleState idleState;
     public PlayerMoveState moveState;
-    public PlayerUnderAttackState underAttackState;
+    public PlayerHurtState hurtState;
     public PlayerAttackState attackState;
-    public PlayerDefenceStage defenceStage;
+    public PlayerDefenceState defenceStage;
+    public PlayerBlockHitState blockHitState;
     //范围可视化
     private void OnDrawGizmosSelected()
     {
@@ -48,11 +52,13 @@ public class PlayerWarrior : MonoBehaviour
         sr = GetComponent<SpriteRenderer>();
         playerHealth = GetComponent<PlayerHealth>();
         combat = GetComponent<PlayerCombat>();
+        defence = GetComponent<PlayerDefence>();
         idleState = new PlayerIdleState(this);
         moveState = new PlayerMoveState(this);
-        underAttackState = new PlayerUnderAttackState(this);
+        hurtState = new PlayerHurtState(this);
         attackState = new PlayerAttackState(this);
-        defenceStage = new PlayerDefenceStage(this);
+        defenceStage = new PlayerDefenceState(this);
+        blockHitState = new PlayerBlockHitState(this);
     }
     void Start()
     {
@@ -67,6 +73,9 @@ public class PlayerWarrior : MonoBehaviour
     {
         currentState?.OnFixedUpdate();
     }
+    /// <summary>
+    /// 传入参数切换玩家状态
+    /// </summary>
     public void ChangeState(PlayerStateMachine newState)
     {
         currentState?.OnExit();
@@ -74,18 +83,27 @@ public class PlayerWarrior : MonoBehaviour
         currentState?.OnEnter();
 
     }
-    public void ChangeStateIdle()
-    {
-        currentState?.OnExit();
-        currentState = idleState;
-        currentState?.OnEnter();
-    }
+    /// <summary>
+    /// 受击时会根据是否持盾触发事件切换到不同的受击状态
+    /// </summary>
     public void ChangeStateUnderAttack()
     {
-        currentState?.OnExit();
-        currentState = underAttackState;
-        currentState?.OnEnter();
+        if(defence.isBlocking==false)
+        {
+            currentState?.OnExit();
+            currentState = hurtState;
+            currentState?.OnEnter();
+        }
+        else
+        {
+            currentState?.OnExit();
+            currentState = blockHitState;
+            currentState?.OnEnter();
+        }
     }
+    /// <summary>
+    /// 在动画事件中调用
+    /// </summary>
     public void Attack()
     {
         hits = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, attackLayer);

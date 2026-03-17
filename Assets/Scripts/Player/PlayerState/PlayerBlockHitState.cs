@@ -3,18 +3,18 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.UIElements;
 
-public class PlayerUnderAttackState : PlayerStateMachine
+public class PlayerBlockHitState : PlayerStateMachine
 {
     protected Animator am;
     protected Rigidbody2D rg;
-    protected PlayerWarrior playerWarrior;
+    protected PlayerController playerWarrior;
     protected EnemyTorch torch;
-    public float stunTime = 0.25f;
-    public float beatBackForce=10f;
+    public float stunTime = 0.15f;
+    public float beatBackForce = 6f;
     public float speedDown = 10f;
     public Vector2 damageSource;
     public Vector2 beatBackDirection;
-    public PlayerUnderAttackState(PlayerWarrior playerWarrior)
+    public PlayerBlockHitState(PlayerController playerWarrior)
     {
         this.playerWarrior = playerWarrior;
         am = playerWarrior.am;
@@ -23,7 +23,7 @@ public class PlayerUnderAttackState : PlayerStateMachine
     public override void OnEnter()
     {
         playerWarrior.combat.comboStep = 0;
-        stunTime = 0.25f;
+        stunTime = 0.15f;
         damageSource = playerWarrior.playerHealth.attackObject;
         beatBackDirection = ((Vector2)playerWarrior.transform.position - damageSource).normalized;
         playerWarrior.rg.linearVelocity = Vector2.zero;
@@ -44,10 +44,11 @@ public class PlayerUnderAttackState : PlayerStateMachine
     {
         stunTime -= Time.deltaTime;
         playerWarrior.rg.linearVelocity = Vector2.Lerp(playerWarrior.rg.linearVelocity, Vector2.zero, Time.deltaTime * speedDown);
-        if(stunTime<=0)
+        if (stunTime <= 0)
         {
-            playerWarrior.ChangeState(playerWarrior.idleState);
+            playerWarrior.ChangeState(playerWarrior.defenceStage);
         }
     }
 
 }
+
