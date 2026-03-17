@@ -27,6 +27,7 @@ public class PlayerController : MonoBehaviour
     public PlayerAttackState attackState;
     public PlayerDefenceState defenceStage;
     public PlayerBlockHitState blockHitState;
+    public PlayerRollState rollState;
     //范围可视化
     private void OnDrawGizmosSelected()
     {
@@ -59,6 +60,7 @@ public class PlayerController : MonoBehaviour
         attackState = new PlayerAttackState(this);
         defenceStage = new PlayerDefenceState(this);
         blockHitState = new PlayerBlockHitState(this);
+        rollState = new PlayerRollState(this);
     }
     void Start()
     {
@@ -111,11 +113,13 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        else if(hits.Length>0)
+        Debug.Log($"[Attack] 扫到了 {hits.Length} 个碰撞体！");
+        if (hits.Length > 0)
         {
             for(int i=0;i<hits.Length;i++)
             {
                 hits[i].GetComponent<EnemyHealth>()?.ChangeHealth(PlayerDateManger.instance.damage, transform.position);
+                Debug.Log($"[Attack] 成功处理完第 {i} 个目标");
             }
         }
     }

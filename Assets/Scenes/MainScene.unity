@@ -761,7 +761,7 @@ Tilemap:
       - {fileID: -1789804077, guid: 702548d34c30cc046b9b4af369354b36, type: 3}
       - {fileID: 810567720, guid: 702548d34c30cc046b9b4af369354b36, type: 3}
       - {fileID: 115242204, guid: 702548d34c30cc046b9b4af369354b36, type: 3}
-      m_AnimationSpeed: 5
+      m_AnimationSpeed: 5.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 6, y: 5, z: 0}
@@ -806,7 +806,7 @@ Tilemap:
       - {fileID: 1600685411, guid: 702548d34c30cc046b9b4af369354b36, type: 3}
       - {fileID: 1819320076, guid: 702548d34c30cc046b9b4af369354b36, type: 3}
       - {fileID: -1128806708, guid: 702548d34c30cc046b9b4af369354b36, type: 3}
-      m_AnimationSpeed: 5.0000005
+      m_AnimationSpeed: 5
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 6, y: 6, z: 0}
@@ -1017,7 +1017,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 549039741945264179, guid: abb1000395bc3ad4bb2b35aba5289339, type: 3}
       propertyPath: hitStopTime
-      value: 0.12
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 549039741945264179, guid: abb1000395bc3ad4bb2b35aba5289339, type: 3}
       propertyPath: currentHealth
@@ -13118,7 +13118,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 549039741945264179, guid: abb1000395bc3ad4bb2b35aba5289339, type: 3}
       propertyPath: hitStopTime
-      value: 0.12
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 549039741945264179, guid: abb1000395bc3ad4bb2b35aba5289339, type: 3}
       propertyPath: currentHealth
@@ -15157,7 +15157,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 1021946586550845116, guid: 7b5415f8952c19f45b72dfea4ef6abd6, type: 3}
       propertyPath: stunTime
-      value: 0.12
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 1021946586550845116, guid: 7b5415f8952c19f45b72dfea4ef6abd6, type: 3}
       propertyPath: maxHealth
@@ -16418,7 +16418,7 @@ Tilemap:
       - {fileID: -8872482218116189624, guid: 23479594835db5544a6ebcec5bfc1d10, type: 3}
       - {fileID: 7924269410711525378, guid: 23479594835db5544a6ebcec5bfc1d10, type: 3}
       - {fileID: 55988822, guid: 23479594835db5544a6ebcec5bfc1d10, type: 3}
-      m_AnimationSpeed: 5
+      m_AnimationSpeed: 5.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -4, y: 11, z: 0}
@@ -16521,7 +16521,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 549039741945264179, guid: abb1000395bc3ad4bb2b35aba5289339, type: 3}
       propertyPath: hitStopTime
-      value: 0.12
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 549039741945264179, guid: abb1000395bc3ad4bb2b35aba5289339, type: 3}
       propertyPath: currentHealth
@@ -16845,6 +16845,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 39fd99baf6a7f3c4da15c7b3f45bda86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::HitStopManager
+  isStop: 0
 --- !u!4 &1887219305
 Transform:
   m_ObjectHideFlags: 0
@@ -17538,7 +17539,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 549039741945264179, guid: abb1000395bc3ad4bb2b35aba5289339, type: 3}
       propertyPath: hitStopTime
-      value: 0.12
+      value: 0.13
       objectReference: {fileID: 0}
     - target: {fileID: 549039741945264179, guid: abb1000395bc3ad4bb2b35aba5289339, type: 3}
       propertyPath: currentHealth
