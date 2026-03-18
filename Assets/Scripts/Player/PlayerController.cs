@@ -14,6 +14,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public PlayerHealth playerHealth;
     [HideInInspector] public PlayerCombat combat;
     [HideInInspector] public PlayerDefence defence;
+    [HideInInspector] public PlayerDoge doge;
     //攻击相关
     public Transform attackPoint;
     public Vector2 attackRange;
@@ -54,6 +55,7 @@ public class PlayerController : MonoBehaviour
         playerHealth = GetComponent<PlayerHealth>();
         combat = GetComponent<PlayerCombat>();
         defence = GetComponent<PlayerDefence>();
+        doge = GetComponent<PlayerDoge>();
         idleState = new PlayerIdleState(this);
         moveState = new PlayerMoveState(this);
         hurtState = new PlayerHurtState(this);
@@ -113,13 +115,11 @@ public class PlayerController : MonoBehaviour
         {
             return;
         }
-        Debug.Log($"[Attack] 扫到了 {hits.Length} 个碰撞体！");
         if (hits.Length > 0)
         {
             for(int i=0;i<hits.Length;i++)
             {
                 hits[i].GetComponent<EnemyHealth>()?.ChangeHealth(PlayerDateManger.instance.damage, transform.position);
-                Debug.Log($"[Attack] 成功处理完第 {i} 个目标");
             }
         }
     }

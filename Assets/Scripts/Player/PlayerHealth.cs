@@ -10,10 +10,12 @@ public class PlayerHealth : MonoBehaviour
     public float cameraShakeForce;
     public PlayerDefence playerDefence;
     public int finallDamage;
+    public PlayerDoge playerDoge;
     public void Awake()
     {
         currentHealth = maxHealth;
         playerDefence = GetComponent<PlayerDefence>();
+        playerDoge = GetComponent<PlayerDoge>();
     }
     public void Start()
     {
@@ -22,6 +24,10 @@ public class PlayerHealth : MonoBehaviour
     //一个改变生命值的方法
     public void ChangeHealth(int changeamount,Vector2 attackObject)
     {
+        if(playerDoge.isRoll==true)
+        {
+            return;
+        }
         this.attackObject = attackObject;
         finallDamage = playerDefence.FinallyDamage(changeamount);
         currentHealth -= finallDamage;

@@ -6,10 +6,16 @@ public class PlayerMoveState:PlayerStateMachine
     protected Animator am;
     protected Rigidbody2D rg;
     protected PlayerController playerWarrior;
+    protected PlayerCombat combat;
+    protected PlayerDefence defence;
+    protected PlayerDoge doge;
     private int faceDirection=1;
     public PlayerMoveState(PlayerController playerWarrior)
     {
         this.playerWarrior = playerWarrior;
+        defence = playerWarrior.defence;
+        combat = playerWarrior.combat;
+        doge = playerWarrior.doge;
         am = playerWarrior.am;
         rg = playerWarrior.rg;
     }
@@ -38,6 +44,20 @@ public class PlayerMoveState:PlayerStateMachine
         if (InputManger.Instance.moveInput==Vector2.zero)
         {
             playerWarrior.ChangeState(playerWarrior.idleState);
+        }
+        else if (combat.HaveAttackBuffer() == true)
+        {
+            combat.attackBufferTimer = 0;
+            combat.StartAttack();
+        }
+        else if (defence.isBlocking == true)
+        {
+            playerWarrior.ChangeState(playerWarrior.defenceStage);
+        }
+        else if(doge.HaveBufferTime()&&doge.coldDown<=0)
+        {
+            doge.inputBufferTime = 0;
+            doge.StartRool();
         }
     }
 }

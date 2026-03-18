@@ -9,6 +9,7 @@ public class InputManger : MonoBehaviour
     public static event Action PauseEvent;
     public static event Action PushDefenceEvent;
     public static event Action CanceldDefenceEvent;
+    public static event Action RollEvent;
     public static InputManger Instance { get; private set; }
 
     private void Awake()
@@ -26,6 +27,7 @@ public class InputManger : MonoBehaviour
         input.Player.Pause.performed += _ => PauseEvent?.Invoke();
         input.Player.Defence.performed += _ => PushDefenceEvent?.Invoke();
         input.Player.Defence.canceled += _ => CanceldDefenceEvent?.Invoke();
+        input.Player.Roll.performed += ctx => RollEvent?.Invoke();
     }
     public void OnEnable()
     {

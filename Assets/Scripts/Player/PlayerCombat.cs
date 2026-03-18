@@ -2,7 +2,7 @@
 
 public class PlayerCombat : MonoBehaviour
 {
-    private PlayerController player;
+    public PlayerController player;
     private Animator anim;
     public int comboStep = 0;
     public float attackBufferTimer = 0f;
@@ -38,23 +38,8 @@ public class PlayerCombat : MonoBehaviour
         if (attackBufferTimer > 0)
         {
             //从存在输入缓冲开始时开始计时
+            //状态切换的逻辑写在状态机内
             attackBufferTimer -= Time.deltaTime;
-            //当处于没有攻击的状态或是可进行连段的状态消耗缓冲
-            if (comboStep == 0 || canInputNextCombo==true)
-            {
-                attackBufferTimer = 0; // 消耗缓冲
-
-                if (comboStep == 0)
-                {
-                    //如果是第一刀直接切换到攻击状态
-                    player.ChangeState(player.attackState);
-                }
-                else
-                {
-                    // 如果是连击直接打下一段
-                    ExecuteCombo();
-                }
-            }
         }
     }
 
@@ -65,10 +50,11 @@ public class PlayerCombat : MonoBehaviour
         anim.Play("Warrior_Attack1");
         //等待动画事件判断是否可以进入下一段攻击
         canInputNextCombo = false;
+        player.ChangeState(player.attackState);
     }
 
     // 执行后续连段
-    private void ExecuteCombo()
+    public void ExecuteCombo()
     {
         canInputNextCombo = false;
         comboStep++;
@@ -90,6 +76,10 @@ public class PlayerCombat : MonoBehaviour
         comboStep = 0;
         canInputNextCombo = false;
         player.ChangeState(player.idleState);
+    }
+    public bool HaveAttackBuffer()
+    {
+        return attackBufferTimer > 0;
     }
 }
 

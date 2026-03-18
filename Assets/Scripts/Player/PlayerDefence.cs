@@ -26,13 +26,11 @@ public class PlayerDefence : MonoBehaviour
     {
         shieldCollider.enabled = true;
         isBlocking = true;
-        player.ChangeState(player.defenceStage);
     }
     public void StopDefence()
     {
         shieldCollider.enabled = false;
         isBlocking = false;
-        player.ChangeState(player.idleState);
     }
     public int FinallyDamage(int damage)
     {

@@ -31,6 +31,11 @@ public class PlayerAttackState : PlayerStateMachine
 
     public override void OnUpdate()
     {
-
+        //当处于没有攻击的状态或是可进行连段的状态消耗缓冲
+        if (combat.HaveAttackBuffer() == true && combat.canInputNextCombo == true)
+        {
+            combat.attackBufferTimer = 0;
+            combat.ExecuteCombo();
+        }
     }
 }

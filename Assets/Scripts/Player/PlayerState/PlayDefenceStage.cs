@@ -5,9 +5,11 @@ public class PlayerDefenceState:PlayerStateMachine
     protected Animator am;
     protected Rigidbody2D rg;
     protected PlayerController playerWarrior;
+    protected PlayerDefence defence;
     public PlayerDefenceState(PlayerController playerWarrior)
     {
         this.playerWarrior = playerWarrior;
+        defence = playerWarrior.defence;
         am = playerWarrior.am;
         rg = playerWarrior.rg;
     }
@@ -30,6 +32,9 @@ public class PlayerDefenceState:PlayerStateMachine
 
     public override void OnUpdate()
     {
-
+        if(defence.isBlocking==false)
+        {
+            playerWarrior.ChangeState(playerWarrior.idleState);
+        }
     }
 }
