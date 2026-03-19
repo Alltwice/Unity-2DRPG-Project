@@ -8,14 +8,14 @@ public class PlayerMoveState:PlayerStateMachine
     protected PlayerController playerWarrior;
     protected PlayerCombat combat;
     protected PlayerDefence defence;
-    protected PlayerDoge doge;
+    protected PlayerDodge doge;
     private int faceDirection=1;
     public PlayerMoveState(PlayerController playerWarrior)
     {
         this.playerWarrior = playerWarrior;
         defence = playerWarrior.defence;
         combat = playerWarrior.combat;
-        doge = playerWarrior.doge;
+        doge = playerWarrior.dodge;
         am = playerWarrior.am;
         rg = playerWarrior.rg;
     }
@@ -31,7 +31,8 @@ public class PlayerMoveState:PlayerStateMachine
 
     public override void OnFixedUpdate()
     {
-        rg.linearVelocity = InputManger.Instance.moveInput * PlayerDateManger.instance.moveSpeed;
+        //这里！！
+        rg.linearVelocity = InputManger.Instance.moveInput * 1;
         if (InputManger.Instance.moveInput.x > 0 && playerWarrior.transform.localScale.x < 0 || InputManger.Instance.moveInput.x < 0 && playerWarrior.transform.localScale.x > 0)
         {
             faceDirection *= -1;
@@ -48,7 +49,7 @@ public class PlayerMoveState:PlayerStateMachine
         else if (combat.HaveAttackBuffer() == true)
         {
             combat.attackBufferTimer = 0;
-            combat.StartAttack();
+            playerWarrior.ChangeState(playerWarrior.attackState);
         }
         else if (defence.isBlocking == true)
         {

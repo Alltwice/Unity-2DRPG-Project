@@ -1,7 +1,7 @@
 using TMPro;
 using UnityEngine;
 
-public class PlayerDoge : MonoBehaviour
+public class PlayerDodge : MonoBehaviour
 {
     public float inputBufferTime;
     public float rollSpeed;

@@ -7,13 +7,13 @@ public class PlayerIdleState:PlayerStateMachine
     protected PlayerController playerWarrior;
     public PlayerCombat combat;
     public PlayerDefence defence;
-    public PlayerDoge doge;
+    public PlayerDodge dodge;
     public PlayerIdleState(PlayerController playerWarrior)
     {
         this.playerWarrior = playerWarrior;
         combat = playerWarrior.combat;
         defence = playerWarrior.defence;
-        doge = playerWarrior.doge;
+        dodge = playerWarrior.dodge;
         am = playerWarrior.am;
         rg = playerWarrior.rg;
     }
@@ -41,16 +41,16 @@ public class PlayerIdleState:PlayerStateMachine
         else if(combat.HaveAttackBuffer()==true)
         {
             combat.attackBufferTimer = 0;
-            combat.StartAttack();
+            playerWarrior.ChangeState(playerWarrior.attackState);
         }
         else if(defence.isBlocking==true)
         {
             playerWarrior.ChangeState(playerWarrior.defenceStage);
         }
-        else if (doge.HaveBufferTime()&&doge.coldDown<=0)
+        else if (dodge.HaveBufferTime()&&dodge.coldDown<=0)
         {
-            doge.inputBufferTime = 0;
-            doge.StartRool();
+            dodge.inputBufferTime = 0;
+            dodge.StartRool();
         }
     }
 }

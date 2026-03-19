@@ -16,7 +16,7 @@ public class PlayerAttackState : PlayerStateMachine
     public override void OnEnter()
     {
         rg.linearVelocity = Vector2.zero;
-        combat.StartAttack();
+        combat.StartAttack();   
     }
 
     public override void OnExit()

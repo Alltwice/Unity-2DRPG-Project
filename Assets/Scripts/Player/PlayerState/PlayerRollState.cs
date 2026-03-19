@@ -5,11 +5,11 @@ public class PlayerRollState : PlayerStateMachine
     protected Animator am;
     protected Rigidbody2D rg;
     protected PlayerController playerWarrior;
-    protected PlayerDoge doge;
+    protected PlayerDodge doge;
     public PlayerRollState(PlayerController playerWarrior)
     {
         this.playerWarrior = playerWarrior;
-        doge = playerWarrior.doge;
+        doge = playerWarrior.dodge;
         am = playerWarrior.am;
         rg = playerWarrior.rg;
     }

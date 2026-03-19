@@ -1,4 +1,5 @@
     using UnityEngine;
+using static Unity.Cinemachine.IInputAxisOwner.AxisDescriptor;
 
 public class PlayerCombat : MonoBehaviour
 {
@@ -7,7 +8,27 @@ public class PlayerCombat : MonoBehaviour
     public int comboStep = 0;
     public float attackBufferTimer = 0f;
     public bool canInputNextCombo = false;
-
+    //攻击相关
+    private int damage;
+    public Transform attackPoint;
+    private Vector2 attackRange;
+    private LayerMask attackLayer;
+    private Collider2D[] hits = new Collider2D[10];
+    //范围可视化
+    private void OnDrawGizmosSelected()
+    {
+        if (attackPoint != null)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawWireCube(attackPoint.position, attackRange);
+        }
+    }
+    public void PlayerCombatInitialize(int damage,Vector2 attackRange,LayerMask attackLayer)
+    {
+        this.damage = damage;
+        this.attackRange = attackRange;
+        this.attackLayer = attackLayer;
+    }
     private void Awake()
     {
         player = GetComponent<PlayerController>();
@@ -50,7 +71,6 @@ public class PlayerCombat : MonoBehaviour
         anim.Play("Warrior_Attack1");
         //等待动画事件判断是否可以进入下一段攻击
         canInputNextCombo = false;
-        player.ChangeState(player.attackState);
     }
 
     // 执行后续连段
@@ -80,6 +100,24 @@ public class PlayerCombat : MonoBehaviour
     public bool HaveAttackBuffer()
     {
         return attackBufferTimer > 0;
+    }
+    /// <summary>
+    /// 在动画事件中调用
+    /// </summary>
+    public void Attack()
+    {
+        hits = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, attackLayer);
+        if (hits.Length == 0)
+        {
+            return;
+        }
+        if (hits.Length > 0)
+        {
+            for (int i = 0; i < hits.Length; i++)
+            {
+                hits[i].GetComponent<EnemyHealth>()?.ChangeHealth(damage, transform.position);
+            }
+        }
     }
 }
 

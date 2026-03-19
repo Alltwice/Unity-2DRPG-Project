@@ -3,19 +3,25 @@ using UnityEngine;
 
 public class PlayerHealth : MonoBehaviour
 {
-    public int currentHealth=8;
-    public int maxHealth=8;
+    private int currentHealth;
+    public int maxHealth;
     public Vector2 attackObject;
-    public float stunTime;
+    public float hitStopStunTime;
     public float cameraShakeForce;
     public PlayerDefence playerDefence;
-    public int finallDamage;
-    public PlayerDoge playerDoge;
+    public int finalDamage;
+    public PlayerDodge playerDodge;
     public void Awake()
     {
-        currentHealth = maxHealth;
         playerDefence = GetComponent<PlayerDefence>();
-        playerDoge = GetComponent<PlayerDoge>();
+        playerDodge = GetComponent<PlayerDodge>();
+    }
+    public void PlayerHealthInitialize(int maxHealth, float hitStopStunTime, float cameraShakeForce)
+    {
+        this.maxHealth = maxHealth;
+        this.hitStopStunTime = hitStopStunTime;
+        this.cameraShakeForce = cameraShakeForce;
+        currentHealth = maxHealth;
     }
     public void Start()
     {
@@ -24,13 +30,13 @@ public class PlayerHealth : MonoBehaviour
     //一个改变生命值的方法
     public void ChangeHealth(int changeamount,Vector2 attackObject)
     {
-        if(playerDoge.isRoll==true)
+        if(playerDodge.isRoll==true)
         {
             return;
         }
         this.attackObject = attackObject;
-        finallDamage = playerDefence.FinallyDamage(changeamount);
-        currentHealth -= finallDamage;
+        finalDamage = playerDefence.FinallyDamage(changeamount);
+        currentHealth -= finalDamage;
         //相机抖动
         GameEvent.TriggerCameraShake(cameraShakeForce);
         if (currentHealth<=0)
@@ -47,6 +53,6 @@ public class PlayerHealth : MonoBehaviour
         //调用playerController里的订阅事件，切换到受击状态
         GameEvent.TriggerPlayerHited();
         //顿帧效果
-        HitStopManager.Instance.HitStop(stunTime);
+        HitStopManager.Instance.HitStop(hitStopStunTime);
     }
 }

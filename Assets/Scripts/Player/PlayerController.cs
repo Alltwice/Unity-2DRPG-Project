@@ -14,12 +14,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public PlayerHealth playerHealth;
     [HideInInspector] public PlayerCombat combat;
     [HideInInspector] public PlayerDefence defence;
-    [HideInInspector] public PlayerDoge doge;
-    //攻击相关
-    public Transform attackPoint;
-    public Vector2 attackRange;
-    public LayerMask attackLayer;
-    Collider2D[] hits = new Collider2D[10];
+    [HideInInspector] public PlayerDodge dodge;
     //需求状态
     protected PlayerStateMachine currentState;
     public PlayerIdleState idleState;
@@ -29,15 +24,6 @@ public class PlayerController : MonoBehaviour
     public PlayerDefenceState defenceStage;
     public PlayerBlockHitState blockHitState;
     public PlayerRollState rollState;
-    //范围可视化
-    private void OnDrawGizmosSelected()
-    {
-        if(attackPoint!=null)
-        {
-            Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(attackPoint.position, attackRange);
-        }
-    }
     private void OnEnable()
     {
         GameEvent.PlayerHited += ChangeStateUnderAttack;
@@ -55,7 +41,7 @@ public class PlayerController : MonoBehaviour
         playerHealth = GetComponent<PlayerHealth>();
         combat = GetComponent<PlayerCombat>();
         defence = GetComponent<PlayerDefence>();
-        doge = GetComponent<PlayerDoge>();
+        dodge = GetComponent<PlayerDodge>();
         idleState = new PlayerIdleState(this);
         moveState = new PlayerMoveState(this);
         hurtState = new PlayerHurtState(this);
@@ -103,24 +89,6 @@ public class PlayerController : MonoBehaviour
             currentState?.OnExit();
             currentState = blockHitState;
             currentState?.OnEnter();
-        }
-    }
-    /// <summary>
-    /// 在动画事件中调用
-    /// </summary>
-    public void Attack()
-    {
-        hits = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, attackLayer);
-        if(hits.Length==0)
-        {
-            return;
-        }
-        if (hits.Length > 0)
-        {
-            for(int i=0;i<hits.Length;i++)
-            {
-                hits[i].GetComponent<EnemyHealth>()?.ChangeHealth(PlayerDateManger.instance.damage, transform.position);
-            }
         }
     }
 }
