@@ -791,7 +791,7 @@ Tilemap:
       - {fileID: -1651876294, guid: 702548d34c30cc046b9b4af369354b36, type: 3}
       - {fileID: -204387785, guid: 702548d34c30cc046b9b4af369354b36, type: 3}
       - {fileID: 1184297017, guid: 702548d34c30cc046b9b4af369354b36, type: 3}
-      m_AnimationSpeed: 5.0000005
+      m_AnimationSpeed: 5
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: 5, y: 6, z: 0}
@@ -1659,6 +1659,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 01bb075b851c89448b9011b695dcf844, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CombatFeedback
+  combatData: {fileID: 11400000, guid: 975d4cb9b2144f147961ee8521e70415, type: 2}
 --- !u!114 &399465312
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1671,6 +1672,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a45ce05e773e634c8504629c7d16d83, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCombat
+  combatData: {fileID: 11400000, guid: 975d4cb9b2144f147961ee8521e70415, type: 2}
   player: {fileID: 0}
   comboStep: 0
   attackBufferTimer: 0
@@ -1688,37 +1690,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a526f43982cb96345a93927721125c1d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDefence
+  combatData: {fileID: 11400000, guid: 975d4cb9b2144f147961ee8521e70415, type: 2}
   shieldCollider: {fileID: 1063654853}
   player: {fileID: 0}
   playerHealth: {fileID: 0}
-  damageReduction: 0.3
   isBlocking: 0
---- !u!114 &399465326
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 399465304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 8dae8352f4e0cb04aae89c64197d2c67, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerDoge
---- !u!114 &399465333
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 399465304}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: bd7a662c14e2b5340b9d7de172b452a1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerDataManger
-  playerBaseDataSO: {fileID: 11400000, guid: 6dd69890d4705d64a9ffd93b274ad3aa, type: 2}
-  playerCombatDataSO: {fileID: 11400000, guid: 975d4cb9b2144f147961ee8521e70415, type: 2}
 --- !u!114 &399465340
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1731,8 +1707,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 228dddbb693fcb446be42692bb7dd5e5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerDodge
+  baseData: {fileID: 11400000, guid: 6dd69890d4705d64a9ffd93b274ad3aa, type: 2}
   inputBufferTime: 0
-  rollSpeed: 7.5
   isRoll: 0
   lastMoveDirection: {x: 1, y: 0}
   rollColdDown: 0
@@ -14515,6 +14491,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1021946586550845116, guid: 7b5415f8952c19f45b72dfea4ef6abd6, type: 3}
+      propertyPath: baseData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6dd69890d4705d64a9ffd93b274ad3aa, type: 2}
+    - target: {fileID: 1021946586550845116, guid: 7b5415f8952c19f45b72dfea4ef6abd6, type: 3}
       propertyPath: stunTime
       value: 0.13
       objectReference: {fileID: 0}
@@ -14522,6 +14502,10 @@ PrefabInstance:
       propertyPath: maxHealth
       value: 80
       objectReference: {fileID: 0}
+    - target: {fileID: 1021946586550845116, guid: 7b5415f8952c19f45b72dfea4ef6abd6, type: 3}
+      propertyPath: combatData
+      value: 
+      objectReference: {fileID: 11400000, guid: 975d4cb9b2144f147961ee8521e70415, type: 2}
     - target: {fileID: 1021946586550845116, guid: 7b5415f8952c19f45b72dfea4ef6abd6, type: 3}
       propertyPath: currentHealth
       value: 80
@@ -14611,6 +14595,10 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 6199328081623726946, guid: 7b5415f8952c19f45b72dfea4ef6abd6, type: 3}
+      propertyPath: BaseData
+      value: 
+      objectReference: {fileID: 11400000, guid: 6dd69890d4705d64a9ffd93b274ad3aa, type: 2}
+    - target: {fileID: 6199328081623726946, guid: 7b5415f8952c19f45b72dfea4ef6abd6, type: 3}
       propertyPath: attackPoint
       value: 
       objectReference: {fileID: 1402956851}
@@ -14666,12 +14654,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 7996765548089880938, guid: 7b5415f8952c19f45b72dfea4ef6abd6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 399465319}
-    - targetCorrespondingSourceObject: {fileID: 7996765548089880938, guid: 7b5415f8952c19f45b72dfea4ef6abd6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 399465326}
-    - targetCorrespondingSourceObject: {fileID: 7996765548089880938, guid: 7b5415f8952c19f45b72dfea4ef6abd6, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 399465333}
     - targetCorrespondingSourceObject: {fileID: 7996765548089880938, guid: 7b5415f8952c19f45b72dfea4ef6abd6, type: 3}
       insertIndex: -1
       addedObject: {fileID: 399465340}

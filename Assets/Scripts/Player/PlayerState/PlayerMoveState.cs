@@ -10,7 +10,6 @@ public class PlayerMoveState:PlayerStateMachine
     protected PlayerDefence defence;
     protected PlayerDodge dodge;
     private int faceDirection=1;
-    private float speed;
     public PlayerMoveState(PlayerController playerWarrior)
     {
         this.playerWarrior = playerWarrior;
@@ -19,7 +18,6 @@ public class PlayerMoveState:PlayerStateMachine
         dodge = playerWarrior.dodge;
         am = playerWarrior.am;
         rg = playerWarrior.rg;
-        speed = playerWarrior.dataManger.MoveSpeed;
     }
 
     public override void OnEnter()
@@ -34,7 +32,7 @@ public class PlayerMoveState:PlayerStateMachine
 
     public override void OnFixedUpdate()
     {
-        rg.linearVelocity = InputManger.Instance.moveInput * speed;
+        rg.linearVelocity = InputManger.Instance.moveInput * playerWarrior.BaseDataSO.MoveSpeed;
         if (InputManger.Instance.moveInput.x > 0 && playerWarrior.transform.localScale.x < 0 || InputManger.Instance.moveInput.x < 0 && playerWarrior.transform.localScale.x > 0)
         {
             faceDirection *= -1;

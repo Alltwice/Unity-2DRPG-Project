@@ -25,7 +25,7 @@ public class PlayerRollState : PlayerStateMachine
 
     public override void OnFixedUpdate()
     {
-        rg.linearVelocity = doge.lastMoveDirection * doge.rollSpeed;
+        rg.linearVelocity = doge.lastMoveDirection * doge.BaseData.RollSpeed;
     }
 
     public override void OnUpdate()

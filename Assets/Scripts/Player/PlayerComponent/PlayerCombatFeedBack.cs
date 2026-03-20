@@ -6,29 +6,12 @@ using System.Collections;
 /// </summary>
 public class PlayerCombatFeedBack : MonoBehaviour
 {
-    private float flashDuration;
-    private float blockFlashDuration;
-    private Color flashColor;
-    private Color blockFlashColor;
-    private float shakeDuration;
-    private float blockShakeDuration;
-    private float shakeStrength;
-    private float blockShakeStrength;
+    [SerializeField] private PlayerCombatDataSO combatData;
+
     private SpriteRenderer sr;
     private int _lastHealth; // 记录上次血量，用于判断是否是“扣血”
     private PlayerDefence playerDefence;
-    public void PlayerCombatFeedBackInitialize(float flashDuration, float shakeDuration, float shakeStrength, Color flashColor,
-                                               float blockFlashDuration,float blockShakeDuration,float blockShakeStrength,Color blockFlashColor)
-    {
-        this.flashDuration = flashDuration;
-        this.shakeDuration = shakeDuration;
-        this.shakeStrength = shakeStrength;
-        this.flashColor = flashColor;
-        this.blockFlashDuration = blockFlashDuration;
-        this.blockFlashColor = blockFlashColor;
-        this.blockShakeDuration = blockShakeDuration;
-        this.blockShakeStrength = blockShakeStrength;
-    }
+
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -56,7 +39,7 @@ public class PlayerCombatFeedBack : MonoBehaviour
         // 如果当前血量比之前少，说明挨打了！触发反馈！
         if (currentHealth < _lastHealth)
         {
-            if(playerDefence.isBlocking==true)
+            if (playerDefence.isBlocking == true)
             {
                 TriggerBlockHitFeedBack();
             }
@@ -73,15 +56,15 @@ public class PlayerCombatFeedBack : MonoBehaviour
     public void TriggerHitFeedBack()
     {
         sr.DOKill();
-        sr.color = flashColor;
-        sr.DOColor(Color.white, flashDuration).SetEase(Ease.OutQuad);
-        transform.DOShakePosition(shakeStrength, shakeDuration);
+        sr.color = combatData.FlashColor;
+        sr.DOColor(Color.white, combatData.FlashDuration).SetEase(Ease.OutQuad);
+        transform.DOShakePosition(combatData.ShakeDuration, combatData.ShakeStrength);
     }
     public void TriggerBlockHitFeedBack()
     {
         sr.DOKill();
-        sr.color = blockFlashColor;
-        sr.DOColor(Color.white, blockFlashDuration).SetEase(Ease.OutQuad);
-        transform.DOShakePosition(blockShakeStrength, blockShakeDuration);
+        sr.color = combatData.BlockFlashColor;
+        sr.DOColor(Color.white, combatData.BlockFlashDuration).SetEase(Ease.OutQuad);
+        transform.DOShakePosition(combatData.BlockShakeDuration, combatData.BlockShakeStrength);
     }
 }

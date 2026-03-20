@@ -4,28 +4,26 @@ using UnityEngine;
 
 public class PlayerDefence : MonoBehaviour
 {
+    [SerializeField] private PlayerCombatDataSO combatData;
+
     public Collider2D shieldCollider;
     public PlayerController player;
     public PlayerHealth playerHealth;
-    public float damageReduction = 0.3f;
     public bool isBlocking = false;
-    public void PlayerDefenceInitialize(float damageReduction)
-    {
-        this.damageReduction = damageReduction;
-    }
+
     private void Awake()
     {
         player = GetComponent<PlayerController>();
     }
     private void OnEnable()
     {
-        InputManger.PushDefenceEvent +=StartDefence;
-        InputManger.CanceldDefenceEvent +=StopDefence;
+        InputManger.PushDefenceEvent += StartDefence;
+        InputManger.CanceldDefenceEvent += StopDefence;
     }
     private void OnDisable()
     {
-        InputManger.PushDefenceEvent -=StartDefence;
-        InputManger.CanceldDefenceEvent -=StopDefence;
+        InputManger.PushDefenceEvent -= StartDefence;
+        InputManger.CanceldDefenceEvent -= StopDefence;
     }
     public void StartDefence()
     {
@@ -39,10 +37,10 @@ public class PlayerDefence : MonoBehaviour
     }
     public int FinallyDamage(int damage)
     {
-        if(isBlocking==true)
+        if (isBlocking == true)
         {
             GameEvent.TriggerPlaySFX(GameEvent.SFXType.PlayerDefenceBeHit);
-            return Mathf.Max(1, Mathf.RoundToInt(damage * damageReduction));
+            return Mathf.Max(1, Mathf.RoundToInt(damage * combatData.DamageReduction));
         }
         else
         {

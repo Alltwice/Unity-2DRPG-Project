@@ -1,18 +1,17 @@
-    using UnityEngine;
+using UnityEngine;
 using static Unity.Cinemachine.IInputAxisOwner.AxisDescriptor;
 
 public class PlayerCombat : MonoBehaviour
 {
+    [SerializeField] private PlayerCombatDataSO combatData;
+
     public PlayerController player;
     private Animator anim;
     public int comboStep = 0;
     public float attackBufferTimer = 0f;
     public bool canInputNextCombo = false;
     //攻击相关
-    private int damage;
     public Transform attackPoint;
-    private Vector2 attackRange;
-    private LayerMask attackLayer;
     private Collider2D[] hits = new Collider2D[10];
     //范围可视化
     private void OnDrawGizmosSelected()
@@ -20,14 +19,8 @@ public class PlayerCombat : MonoBehaviour
         if (attackPoint != null)
         {
             Gizmos.color = Color.red;
-            Gizmos.DrawWireCube(attackPoint.position, attackRange);
+            Gizmos.DrawWireCube(attackPoint.position, combatData.AttackRange);
         }
-    }
-    public void PlayerCombatInitialize(int damage,Vector2 attackRange,LayerMask attackLayer)
-    {
-        this.damage = damage;
-        this.attackRange = attackRange;
-        this.attackLayer = attackLayer;
     }
     private void Awake()
     {
@@ -49,7 +42,7 @@ public class PlayerCombat : MonoBehaviour
     private void OnAttackInput()
     {
         //按下按键时存在0.2秒的缓冲
-        attackBufferTimer = 0.2f; 
+        attackBufferTimer = 0.2f;
     }
 
     private void Update()
@@ -88,7 +81,7 @@ public class PlayerCombat : MonoBehaviour
     // --- 动画事件 ---
     public void OpenComboWindow()
     {
-        canInputNextCombo = true; 
+        canInputNextCombo = true;
     }
 
     public void EndAttack()
@@ -106,7 +99,7 @@ public class PlayerCombat : MonoBehaviour
     /// </summary>
     public void Attack()
     {
-        hits = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, attackLayer);
+        hits = Physics2D.OverlapBoxAll(attackPoint.position, combatData.AttackRange, 0f, combatData.AttackLayer.value);
         if (hits.Length == 0)
         {
             return;
@@ -115,7 +108,7 @@ public class PlayerCombat : MonoBehaviour
         {
             for (int i = 0; i < hits.Length; i++)
             {
-                hits[i].GetComponent<EnemyHealth>()?.ChangeHealth(damage, transform.position);
+                hits[i].GetComponent<EnemyHealth>()?.ChangeHealth(combatData.Damage, transform.position);
             }
         }
     }

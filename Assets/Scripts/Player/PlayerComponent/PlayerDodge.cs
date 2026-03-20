@@ -3,24 +3,20 @@ using UnityEngine;
 
 public class PlayerDodge : MonoBehaviour
 {
+    [SerializeField] private PlayerBaseDataSO baseData;
+
     public float inputBufferTime;
-    public float rollSpeed;
-    public bool isRoll=false;
+    public bool isRoll = false;
     private PlayerController player;
     public Vector2 lastMoveDirection = Vector2.right;
     private Vector2 input;
     public float rollColdDown;
-    private float markColdDown;
-    public void PlayerDodgeInitialize(float rollSpeed,float markColdDown)
-    {
-        this.rollSpeed = rollSpeed;
-        this.markColdDown = markColdDown;
-    }
-    private void OnEnable()
+
+    public void OnEnable()
     {
         InputManger.RollEvent += OnDogeInput;
     }
-    private void OnDisable()
+    public void OnDisable()
     {
         InputManger.RollEvent -= OnDogeInput;
     }
@@ -38,7 +34,7 @@ public class PlayerDodge : MonoBehaviour
         {
             inputBufferTime -= Time.deltaTime;
         }
-        if(rollColdDown>0)
+        if (rollColdDown > 0)
         {
             rollColdDown -= Time.deltaTime;
         }
@@ -59,9 +55,12 @@ public class PlayerDodge : MonoBehaviour
     }
     public void EndRoll()
     {
-        rollColdDown = markColdDown;
+        rollColdDown = baseData.RollColdDown;
         isRoll = false;
         player.rg.linearVelocity = Vector2.zero;
         player.ChangeState(player.idleState);
     }
+
+    // Expose SO for other scripts that previously referenced configuration fields
+    public PlayerBaseDataSO BaseData => baseData;
 }
