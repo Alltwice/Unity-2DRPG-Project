@@ -15,6 +15,7 @@ public class PlayerController : MonoBehaviour
     [HideInInspector] public PlayerCombat combat;
     [HideInInspector] public PlayerDefence defence;
     [HideInInspector] public PlayerDodge dodge;
+    [HideInInspector] public PlayerDataManger dataManger;
     //ÐèÇó×´Ì¬
     protected PlayerStateMachine currentState;
     public PlayerIdleState idleState;
@@ -42,6 +43,7 @@ public class PlayerController : MonoBehaviour
         combat = GetComponent<PlayerCombat>();
         defence = GetComponent<PlayerDefence>();
         dodge = GetComponent<PlayerDodge>();
+        dataManger = GetComponent<PlayerDataManger>();
         idleState = new PlayerIdleState(this);
         moveState = new PlayerMoveState(this);
         hurtState = new PlayerHurtState(this);

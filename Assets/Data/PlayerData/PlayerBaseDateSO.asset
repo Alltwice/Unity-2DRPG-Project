@@ -14,3 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::PlayerBaseDataSO
   moveSpeed: 5
   maxHealth: 30
+  rollSpeed: 7.5
+  rollColdDown: 0.5

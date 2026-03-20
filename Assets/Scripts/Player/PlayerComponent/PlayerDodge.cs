@@ -6,10 +6,16 @@ public class PlayerDodge : MonoBehaviour
     public float inputBufferTime;
     public float rollSpeed;
     public bool isRoll=false;
-    public PlayerController player;
+    private PlayerController player;
     public Vector2 lastMoveDirection = Vector2.right;
-    public Vector2 input;
-    public float coldDown;
+    private Vector2 input;
+    public float rollColdDown;
+    private float markColdDown;
+    public void PlayerDodgeInitialize(float rollSpeed,float markColdDown)
+    {
+        this.rollSpeed = rollSpeed;
+        this.markColdDown = markColdDown;
+    }
     private void OnEnable()
     {
         InputManger.RollEvent += OnDogeInput;
@@ -32,9 +38,9 @@ public class PlayerDodge : MonoBehaviour
         {
             inputBufferTime -= Time.deltaTime;
         }
-        if(coldDown>0)
+        if(rollColdDown>0)
         {
-            coldDown -= Time.deltaTime;
+            rollColdDown -= Time.deltaTime;
         }
     }
     public bool HaveBufferTime()
@@ -53,7 +59,7 @@ public class PlayerDodge : MonoBehaviour
     }
     public void EndRoll()
     {
-        coldDown = 0.5f;
+        rollColdDown = markColdDown;
         isRoll = false;
         player.rg.linearVelocity = Vector2.zero;
         player.ChangeState(player.idleState);

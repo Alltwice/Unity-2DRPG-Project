@@ -4,16 +4,31 @@ using System.Collections;
 /// <summary>
 /// 当被击中后闪烁和晃动
 /// </summary>
-public class PlayerCombatFeedback : MonoBehaviour
+public class PlayerCombatFeedBack : MonoBehaviour
 {
-    public float flashDuration = 0.2f;
-    public Color flashColor = Color.red; 
-    public float shakeDuration = 0.2f;
-    public float shakeStrength = 0.15f;
+    private float flashDuration;
+    private float blockFlashDuration;
+    private Color flashColor;
+    private Color blockFlashColor;
+    private float shakeDuration;
+    private float blockShakeDuration;
+    private float shakeStrength;
+    private float blockShakeStrength;
     private SpriteRenderer sr;
     private int _lastHealth; // 记录上次血量，用于判断是否是“扣血”
-    public PlayerDefence playerDefence;
-
+    private PlayerDefence playerDefence;
+    public void PlayerCombatFeedBackInitialize(float flashDuration, float shakeDuration, float shakeStrength, Color flashColor,
+                                               float blockFlashDuration,float blockShakeDuration,float blockShakeStrength,Color blockFlashColor)
+    {
+        this.flashDuration = flashDuration;
+        this.shakeDuration = shakeDuration;
+        this.shakeStrength = shakeStrength;
+        this.flashColor = flashColor;
+        this.blockFlashDuration = blockFlashDuration;
+        this.blockFlashColor = blockFlashColor;
+        this.blockShakeDuration = blockShakeDuration;
+        this.blockShakeStrength = blockShakeStrength;
+    }
     private void Awake()
     {
         sr = GetComponent<SpriteRenderer>();
@@ -58,15 +73,15 @@ public class PlayerCombatFeedback : MonoBehaviour
     public void TriggerHitFeedBack()
     {
         sr.DOKill();
-        sr.color = Color.red;
+        sr.color = flashColor;
         sr.DOColor(Color.white, flashDuration).SetEase(Ease.OutQuad);
         transform.DOShakePosition(shakeStrength, shakeDuration);
     }
     public void TriggerBlockHitFeedBack()
     {
         sr.DOKill();
-        sr.color = Color.orange;
-        sr.DOColor(Color.white, 0.15f).SetEase(Ease.OutQuad);
-        transform.DOShakePosition(0.10f, 0.15f);
+        sr.color = blockFlashColor;
+        sr.DOColor(Color.white, blockFlashDuration).SetEase(Ease.OutQuad);
+        transform.DOShakePosition(blockShakeStrength, blockShakeDuration);
     }
 }

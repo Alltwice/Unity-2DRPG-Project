@@ -17,5 +17,14 @@ MonoBehaviour:
   attackLayer:
     serializedVersion: 2
     m_Bits: 64
+  damageReduction: 0.3
   hitStopStunTime: 0.13
   cameraShakeForce: 0.2
+  flashDuration: 0.2
+  blockFlashDuration: 0.15
+  shakeDuration: 0.2
+  blockShakeDuration: 0.15
+  shakeStrength: 0.2
+  blockShakeStrength: 0.1
+  flashColor: {r: 1, g: 0, b: 0, a: 1}
+  blockflashColor: {r: 1, g: 0.7091383, b: 0, a: 1}

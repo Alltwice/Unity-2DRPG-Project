@@ -8,17 +8,20 @@ public class PlayerMoveState:PlayerStateMachine
     protected PlayerController playerWarrior;
     protected PlayerCombat combat;
     protected PlayerDefence defence;
-    protected PlayerDodge doge;
+    protected PlayerDodge dodge;
     private int faceDirection=1;
+    private float speed;
     public PlayerMoveState(PlayerController playerWarrior)
     {
         this.playerWarrior = playerWarrior;
         defence = playerWarrior.defence;
         combat = playerWarrior.combat;
-        doge = playerWarrior.dodge;
+        dodge = playerWarrior.dodge;
         am = playerWarrior.am;
         rg = playerWarrior.rg;
+        speed = playerWarrior.dataManger.MoveSpeed;
     }
+
     public override void OnEnter()
     {
         am.SetBool("isMoving", true);
@@ -31,8 +34,7 @@ public class PlayerMoveState:PlayerStateMachine
 
     public override void OnFixedUpdate()
     {
-        //这里！！
-        rg.linearVelocity = InputManger.Instance.moveInput * 1;
+        rg.linearVelocity = InputManger.Instance.moveInput * speed;
         if (InputManger.Instance.moveInput.x > 0 && playerWarrior.transform.localScale.x < 0 || InputManger.Instance.moveInput.x < 0 && playerWarrior.transform.localScale.x > 0)
         {
             faceDirection *= -1;
@@ -55,10 +57,10 @@ public class PlayerMoveState:PlayerStateMachine
         {
             playerWarrior.ChangeState(playerWarrior.defenceStage);
         }
-        else if(doge.HaveBufferTime()&&doge.coldDown<=0)
+        else if(dodge.HaveBufferTime()&&dodge.rollColdDown<=0)
         {
-            doge.inputBufferTime = 0;
-            doge.StartRool();
+            dodge.inputBufferTime = 0;
+            dodge.StartRool();
         }
     }
 }

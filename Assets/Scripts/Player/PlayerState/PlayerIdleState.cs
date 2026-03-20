@@ -47,7 +47,7 @@ public class PlayerIdleState:PlayerStateMachine
         {
             playerWarrior.ChangeState(playerWarrior.defenceStage);
         }
-        else if (dodge.HaveBufferTime()&&dodge.coldDown<=0)
+        else if (dodge.HaveBufferTime()&&dodge.rollColdDown<=0)
         {
             dodge.inputBufferTime = 0;
             dodge.StartRool();

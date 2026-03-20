@@ -1,4 +1,5 @@
 using DG.Tweening.Core.Easing;
+using System.Security.Cryptography;
 using UnityEngine;
 
 public class PlayerDefence : MonoBehaviour
@@ -8,6 +9,10 @@ public class PlayerDefence : MonoBehaviour
     public PlayerHealth playerHealth;
     public float damageReduction = 0.3f;
     public bool isBlocking = false;
+    public void PlayerDefenceInitialize(float damageReduction)
+    {
+        this.damageReduction = damageReduction;
+    }
     private void Awake()
     {
         player = GetComponent<PlayerController>();
