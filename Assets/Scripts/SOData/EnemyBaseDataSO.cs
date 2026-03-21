@@ -1,16 +1,12 @@
 using UnityEngine;
-
-public class EnemyBaseDataSO : MonoBehaviour
+[CreateAssetMenu(fileName = "NewEnemyBaseData", menuName = "数据/敌人数据/基础数据", order = 0)]
+public class EnemyBaseDataSO : ScriptableObject
 {
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
-    }
+    [Header("基础数据")]
+    [SerializeField] private float moveSpeed;
+    [SerializeField] private int damage;
+    [SerializeField] private int maxHealth;
+    public float MoveSpeed => moveSpeed;
+    public int Damage => damage;
+    public int MaxHealth => maxHealth;
 }

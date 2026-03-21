@@ -4,10 +4,7 @@ using System.Collections;
 
 public class EnemyCombatFeedback : MonoBehaviour
 {
-    public float flashDuration = 0.15f;
-    public Color flashColor = Color.red;
-    public float shakeDuration = 0.2f;
-    public float shakeStrength = 0.15f;
+    [SerializeField] private EnemyCombatDataSO CombatData;
     private SpriteRenderer sr;
     private int _lastHealth; // 记录上次血量，用于判断是否是“扣血”
     private EnemyHealth enemyHealth;
@@ -44,8 +41,8 @@ public class EnemyCombatFeedback : MonoBehaviour
     public void TriggerHitFeedback()
     {
         sr.DOKill();
-        sr.color = Color.red;
-        sr.DOColor(Color.white, 0.2f).SetEase(Ease.OutQuad);
-        transform.DOShakePosition(0.15f, 0.2f);
+        sr.color = CombatData.FlashColor;
+        sr.DOColor(Color.white, CombatData.FlashDuration).SetEase(Ease.OutQuad);
+        transform.DOShakePosition(CombatData.ShakeStrength, CombatData.ShakeDuration);
     }
 }

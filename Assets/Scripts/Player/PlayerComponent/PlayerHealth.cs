@@ -9,12 +9,14 @@ public class PlayerHealth : MonoBehaviour
     public int currentHealth = 8;
     public Vector2 attackObject;
     public PlayerDefence playerDefence;
+    public PlayerDodge playerDodge;
     public int finallDamage;
 
     public void Awake()
     {
         currentHealth = baseData.MaxHealth;
         playerDefence = GetComponent<PlayerDefence>();
+        playerDodge = GetComponent<PlayerDodge>();
     }
     public void Start()
     {
@@ -23,6 +25,10 @@ public class PlayerHealth : MonoBehaviour
     //一个改变生命值的方法
     public void ChangeHealth(int changeamount, Vector2 attackObject)
     {
+        if(playerDodge.isRoll==true)
+        {
+            return;
+        }
         this.attackObject = attackObject;
         finallDamage = playerDefence.FinallyDamage(changeamount);
         currentHealth -= finallDamage;

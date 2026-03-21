@@ -3,18 +3,17 @@ using UnityEngine;
 
 public class EnemyHealth : MonoBehaviour
 {
+    [SerializeField] private EnemyBaseDataSO BaseData;
+    [SerializeField] private EnemyCombatDataSO CombatData;
     public int currentHealth;
-    public int maxHealth;
     public bool isDie = false;
     public event Action<int, int> EnemyHealthChange;
     public event Action EnemyHited;
     public Vector2 attackObject;
-    public float hitStopTime;
-    public float cameraShakeForce=0.2f;
     private void Start()
     {
-        currentHealth = maxHealth;
-        TriggerEnemyHealthChange(currentHealth, maxHealth);
+        currentHealth = BaseData.MaxHealth;
+        TriggerEnemyHealthChange(currentHealth, BaseData.MaxHealth);
     }
     public void ChangeHealth(int changeHealth,Vector2 attackObject)
     {
@@ -22,21 +21,21 @@ public class EnemyHealth : MonoBehaviour
         currentHealth -= changeHealth;
         GameEvent.TriggerPlaySFX(GameEvent.SFXType.EnemyBeHit);
         //相机晃动
-        GameEvent.TriggerCameraShake(cameraShakeForce);
+        GameEvent.TriggerCameraShake(CombatData.CameraShakeForce);
         //顿帧
-        HitStopManager.Instance.HitStop(hitStopTime);
+        HitStopManager.Instance.HitStop(CombatData.HitStopTime);
         if (currentHealth <= 0)
         {
             isDie = true;
         }
-        else if(currentHealth>maxHealth)
+        else if(currentHealth>BaseData.MaxHealth)
         {
-            currentHealth = maxHealth;
+            currentHealth = BaseData.MaxHealth;
         }
         //切换受击状态
         TriggerEnemyHited();
         //给UI传值
-        TriggerEnemyHealthChange(currentHealth, maxHealth);
+        TriggerEnemyHealthChange(currentHealth, BaseData.MaxHealth);
     }
     public void TriggerEnemyHealthChange(int current, int max)
     {

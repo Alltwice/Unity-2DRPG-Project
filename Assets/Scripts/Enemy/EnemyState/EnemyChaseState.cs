@@ -34,7 +34,7 @@ public class EnemyChaseState : EnemyStateMachine
             torch.transform.localScale = new Vector3(faceDirection, torch.transform.localScale.y, torch.transform.localScale.z);
         }
         direction = (player.transform.position - torch.transform.position).normalized;
-        rg.linearVelocity = direction * torch.moveSpeed;
+        rg.linearVelocity = direction * torch.BaseDataSO.MoveSpeed;
     }
 
     public override void OnExit()

@@ -30,6 +30,11 @@ public class PlayerDodge : MonoBehaviour
     }
     private void Update()
     {
+        input = InputManger.Instance.moveInput;
+        if (input.sqrMagnitude > 0.01f)
+        {
+            lastMoveDirection = input.normalized;
+        }
         if (inputBufferTime > 0)
         {
             inputBufferTime -= Time.deltaTime;
@@ -46,11 +51,7 @@ public class PlayerDodge : MonoBehaviour
     public void StartRool()
     {
         isRoll = true;
-        input = InputManger.Instance.moveInput;
-        if (input.sqrMagnitude > 0.01f)
-        {
-            lastMoveDirection = input.normalized;
-        }
+
         player.ChangeState(player.rollState);
     }
     public void EndRoll()

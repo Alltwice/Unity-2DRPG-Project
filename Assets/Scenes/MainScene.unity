@@ -11944,7 +11944,7 @@ Tilemap:
       - {fileID: -2083524934, guid: 23479594835db5544a6ebcec5bfc1d10, type: 3}
       - {fileID: 1493766499, guid: 23479594835db5544a6ebcec5bfc1d10, type: 3}
       - {fileID: -1271099298, guid: 23479594835db5544a6ebcec5bfc1d10, type: 3}
-      m_AnimationSpeed: 5
+      m_AnimationSpeed: 5.0000005
       m_AnimationTimeOffset: 0
       m_Flags: 0
   - first: {x: -9, y: 10, z: 0}
@@ -14940,10 +14940,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e27f81f74a44cd5428790045ae14e6ad, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombatFeedback
-  flashDuration: 0.15
-  flashColor: {r: 1, g: 0, b: 0, a: 1}
-  shakeDuration: 0.2
-  shakeStrength: 0.2
+  CombatData: {fileID: 11400000, guid: a51e54bcfb6cdac4abb610cccee7fbbc, type: 2}
 --- !u!4 &1402956851 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1227487817462057399, guid: 7b5415f8952c19f45b72dfea4ef6abd6, type: 3}
@@ -16546,9 +16543,17 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 549039741945264179, guid: abb1000395bc3ad4bb2b35aba5289339, type: 3}
+      propertyPath: BaseData
+      value: 
+      objectReference: {fileID: 11400000, guid: 5e7aa54f63e05994fbc460276c810fdc, type: 2}
+    - target: {fileID: 549039741945264179, guid: abb1000395bc3ad4bb2b35aba5289339, type: 3}
       propertyPath: maxHealth
       value: 30
       objectReference: {fileID: 0}
+    - target: {fileID: 549039741945264179, guid: abb1000395bc3ad4bb2b35aba5289339, type: 3}
+      propertyPath: CombatData
+      value: 
+      objectReference: {fileID: 11400000, guid: a51e54bcfb6cdac4abb610cccee7fbbc, type: 2}
     - target: {fileID: 549039741945264179, guid: abb1000395bc3ad4bb2b35aba5289339, type: 3}
       propertyPath: HitStopTime
       value: 0.15
@@ -16633,6 +16638,10 @@ PrefabInstance:
       propertyPath: damage
       value: 10
       objectReference: {fileID: 0}
+    - target: {fileID: 3595553597270941387, guid: abb1000395bc3ad4bb2b35aba5289339, type: 3}
+      propertyPath: BaseData
+      value: 
+      objectReference: {fileID: 11400000, guid: 5e7aa54f63e05994fbc460276c810fdc, type: 2}
     - target: {fileID: 3910703370756708751, guid: abb1000395bc3ad4bb2b35aba5289339, type: 3}
       propertyPath: m_AnchorMax.x
       value: 0.5

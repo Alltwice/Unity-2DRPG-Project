@@ -3,11 +3,8 @@ using UnityEngine.InputSystem.EnhancedTouch;
 
 public class EnemyTorch : MonoBehaviour
 {
-    //基础属性
-    public float moveSpeed;
-    public int damage;
-    public float attackFroce;
-    public float stunTime;
+    [SerializeField] private EnemyBaseDataSO BaseData;
+    public EnemyBaseDataSO BaseDataSO => BaseData;
     //需求组件
     [HideInInspector] public Animator am;
     [HideInInspector] public Rigidbody2D rg;
@@ -84,7 +81,7 @@ public class EnemyTorch : MonoBehaviour
         hits = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, attackLayer);
         if (hits.Length > 0)
         {
-            player.GetComponent<PlayerHealth>().ChangeHealth(damage,transform.position);
+            player.GetComponent<PlayerHealth>().ChangeHealth(BaseData.Damage,transform.position);
         }
     }
     //死亡
