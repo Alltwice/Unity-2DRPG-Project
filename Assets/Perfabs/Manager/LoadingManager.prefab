@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1156810060693356997
+--- !u!1 &2874220507106183518
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,40 +8,42 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 8925037945954178673}
-  - component: {fileID: 7605635466828801588}
+  - component: {fileID: 9155753807007442823}
+  - component: {fileID: 4037370130856681241}
   m_Layer: 0
-  m_Name: GameManger
+  m_Name: LoadingManager
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &8925037945954178673
+--- !u!4 &9155753807007442823
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1156810060693356997}
+  m_GameObject: {fileID: 2874220507106183518}
   serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 190.08028, y: 402.14236, z: 0}
+  m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
+  m_LocalPosition: {x: 970.8857, y: 594.54706, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &7605635466828801588
+--- !u!114 &4037370130856681241
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1156810060693356997}
+  m_GameObject: {fileID: 2874220507106183518}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 522adcd9304391a47ab0316060e63e59, type: 3}
+  m_Script: {fileID: 11500000, guid: 6cf24f6d10a14354a9c75a5af01397d4, type: 3}
   m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::GameManger
-  PauseUI: {fileID: 0}
+  m_EditorClassIdentifier: Assembly-CSharp::LoadManager
+  loadText: {fileID: 0}
+  loadPanel: {fileID: 0}
+  loadSlider: {fileID: 0}

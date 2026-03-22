@@ -7,9 +7,11 @@ using UnityEngine;
 public abstract class BasePanel : MonoBehaviour
 {
     public CanvasGroup canvas;
+    public PanelType panelType;
     protected virtual void Awake()
     {
         canvas = GetComponent<CanvasGroup>();
+        Close();
     }
     public virtual void Open()
     {

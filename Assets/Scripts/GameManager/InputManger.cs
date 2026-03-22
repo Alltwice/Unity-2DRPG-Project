@@ -6,7 +6,7 @@ public class InputManger : MonoBehaviour
     public PlayerAction input;
     public Vector2 moveInput;
     public static event Action AttackEvent;
-    public static event Action PauseEvent;
+    public static event Action<PanelType> PauseEvent;
     public static event Action PushDefenceEvent;
     public static event Action CanceldDefenceEvent;
     public static event Action RollEvent;
@@ -24,7 +24,7 @@ public class InputManger : MonoBehaviour
         input.Player.Move.performed += ctx => moveInput = ctx.ReadValue<Vector2>();
         input.Player.Move.canceled += ctx => moveInput = Vector2.zero;
         input.Player.Attack.performed += _ =>AttackEvent?.Invoke();
-        input.Player.Pause.performed += _ => PauseEvent?.Invoke();
+        input.Player.Pause.performed += _ => PauseEvent?.Invoke(PanelType.pausePanel);
         input.Player.Defence.performed += _ => PushDefenceEvent?.Invoke();
         input.Player.Defence.canceled += _ => CanceldDefenceEvent?.Invoke();
         input.Player.Roll.performed += ctx => RollEvent?.Invoke();

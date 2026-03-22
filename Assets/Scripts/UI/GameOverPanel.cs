@@ -3,25 +3,18 @@ using UnityEngine.SceneManagement;
 
 public class GameOverPanel : BasePanel
 {
+
+    private void Start()
+    {
+        UIManager.Instance.RegisterPanel(PanelType.gameOverPanel, this);
+    }
+    private void OnDisable()
+    {
+        UIManager.Instance.UnregisterPanel(PanelType.gameOverPanel);
+    }
     protected override void Awake()
     {
         base.Awake();
-    }
-    public override void Open()
-    {
-        base.Open();
-    }
-    public override void Close()
-    {
-        base.Close();
-    }
-    public override void Resume()
-    {
-        base.Resume();
-    }
-    public override void Pause()
-    {
-        base.Pause();
     }
     public void OnClickRestart()
     {

@@ -16,6 +16,14 @@ public class PauseUI : BasePanel
         volumeSlider.value = bgm.volume;
         bgmPercent.text = Mathf.RoundToInt(volumeSlider.value * 100) + "%";
     }
+    private void Start()
+    {
+        UIManager.Instance.RegisterPanel(PanelType.pausePanel, this);
+    }
+    private void OnDisable()
+    {
+        UIManager.Instance.UnregisterPanel(PanelType.pausePanel);
+    }
     public override void Open()
     {
         base.Open();
@@ -27,14 +35,6 @@ public class PauseUI : BasePanel
     {
         Time.timeScale = 1;
         base.Close();
-    }
-    public override void Pause()
-    {
-        base.Pause();
-    }
-    public override void Resume()
-    {
-        base.Resume();
     }
     public void ChangeBgmVolum(float value)
     {
@@ -64,5 +64,14 @@ public class PauseUI : BasePanel
             // 如果是打包出来的程序，则正常关闭
             Application.Quit();
 #endif
+    }
+    public void OnClickToMenu()
+    {
+        if (UIManager.Instance != null)
+        {
+            UIManager.Instance.panelsStack.Clear();
+        }
+        Time.timeScale = 1;
+        LoadManager.Instance.StartLoading("Menu", true);
     }
 }

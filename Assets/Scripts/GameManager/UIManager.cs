@@ -1,12 +1,18 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
+using TMPro;
+using Unity.AppUI.UI;
 using UnityEngine;
-
+public enum PanelType
+{
+    pausePanel,
+    gameOverPanel,
+    settingPanel
+}
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
-    public BasePanel pausePanel;
-    public BasePanel gameOverPanel;
+    private Dictionary<PanelType, BasePanel> panelDict = new Dictionary<PanelType, BasePanel>();
     public Stack<BasePanel> panelsStack = new Stack<BasePanel>();
     private void Awake()
     {
@@ -17,22 +23,31 @@ public class UIManager : MonoBehaviour
         }
         Instance = this;
     }
-    private void Start()
+    //使用字典注册减少对其他组件的依赖
+    public void RegisterPanel(PanelType type, BasePanel panel)
     {
-        pausePanel.gameObject.SetActive(true);
-        gameOverPanel.gameObject.SetActive(true);
-        pausePanel.Close();
-        gameOverPanel.Close();
+        if (!panelDict.ContainsKey(type))
+        {
+            panelDict.Add(type, panel);
+        }
+    }
+
+    public void UnregisterPanel(PanelType type)
+    {
+        if (panelDict.ContainsKey(type))
+        {
+            panelDict.Remove(type);
+        }
     }
     private void OnEnable()
     {
         InputManger.PauseEvent += TogglePausePanel;
-        GameEvent.PlayerDeath += ToggleGameOverPanel;
+        GameEvent.PlayerDeath += PlayerDeath;
     }
     private void OnDisable()
     {
         InputManger.PauseEvent -= TogglePausePanel;
-        GameEvent.PlayerDeath -= ToggleGameOverPanel;
+        GameEvent.PlayerDeath -= PlayerDeath;
     }
     public void PushIn(BasePanel newPanel)
     {
@@ -63,22 +78,31 @@ public class UIManager : MonoBehaviour
             nextPanel.Resume();
         }
     }
-    public void TogglePausePanel()
+    public void TogglePausePanel(PanelType pausePanel)
     {
-        if(pausePanel.canvas.alpha==0)
+        if (panelDict.TryGetValue(pausePanel,out BasePanel targetPanel)==false)
         {
-            PushIn(pausePanel);
+            return;
+        }
+        if(panelsStack.Count>0&&panelsStack.Peek()==targetPanel)
+        {
+            PopOut();
         }
         else
         {
-            PopOut();   
+            PushIn(targetPanel);
         }
     }
-    public void ToggleGameOverPanel()
+    public void PlayerDeath()
     {
-        if(gameOverPanel.canvas.alpha==0)
+        ToggleGameOverPanel(PanelType.gameOverPanel);
+    }
+    public void ToggleGameOverPanel(PanelType gameOverPanel)
+    {
+        if (panelDict.TryGetValue(gameOverPanel, out BasePanel targetPanel) == false)
         {
-            PushIn(gameOverPanel);
+            return;
         }
+        PushIn(targetPanel);
     }
 }
