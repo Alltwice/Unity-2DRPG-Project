@@ -22,8 +22,7 @@ public class GameOverPanel : BasePanel
         {
             UIManager.Instance.panelsStack.Clear();
         }
-        string currentScene = SceneManager.GetActiveScene().name;
-        SceneManager.LoadScene(currentScene);
+        LoadManager.Instance.StartLoading("MainScene", true);
     }
     public void OnClickExit()
     {

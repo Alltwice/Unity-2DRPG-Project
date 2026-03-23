@@ -86,7 +86,7 @@ public class UIManager : MonoBehaviour
         }
         if(panelsStack.Count>0&&panelsStack.Peek()==targetPanel)
         {
-            PopOut();
+            PopOut();       
         }
         else
         {
