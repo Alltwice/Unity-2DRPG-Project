@@ -10,6 +10,8 @@ public class PlayerMoveState:PlayerStateMachine
     protected PlayerDefence defence;
     protected PlayerDodge dodge;
     private int faceDirection=1;
+    public Vector2 lastMoveDirection = Vector2.right;
+    private Vector2 input;
     public PlayerMoveState(PlayerController playerWarrior)
     {
         this.playerWarrior = playerWarrior;
@@ -42,6 +44,11 @@ public class PlayerMoveState:PlayerStateMachine
 
     public override void OnUpdate()
     {
+        input = InputManger.Instance.moveInput;
+        if (input.sqrMagnitude > 0.01f)
+        {
+            lastMoveDirection = input.normalized;
+        }
         if (InputManger.Instance.moveInput==Vector2.zero)
         {
             playerWarrior.ChangeState(playerWarrior.idleState);

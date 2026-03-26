@@ -8,8 +8,6 @@ public class PlayerDodge : MonoBehaviour
     public float inputBufferTime;
     public bool isRoll = false;
     private PlayerController player;
-    public Vector2 lastMoveDirection = Vector2.right;
-    private Vector2 input;
     public float rollColdDown;
 
     public void OnEnable()
@@ -30,11 +28,6 @@ public class PlayerDodge : MonoBehaviour
     }
     private void Update()
     {
-        input = InputManger.Instance.moveInput;
-        if (input.sqrMagnitude > 0.01f)
-        {
-            lastMoveDirection = input.normalized;
-        }
         if (inputBufferTime > 0)
         {
             inputBufferTime -= Time.deltaTime;
