@@ -3,20 +3,43 @@ using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
 {
-    //设置为单例方便全局获取
-    public static InventoryManager Instance { get; private set; }
+    //设置为单例方便全局获取（懒加载，避免场景中忘记挂载导致为空）
+    private static InventoryManager _instance;
+    public static InventoryManager Instance
+    {
+        get
+        {
+            if (_instance == null)
+            {
+                // 尝试在场景中查找已有实例
+                _instance = FindObjectOfType<InventoryManager>();
+                if (_instance == null)
+                {
+                    // 场景中没有，则自动创建一个常驻对象
+                    GameObject go = new GameObject("InventoryManager");
+                    _instance = go.AddComponent<InventoryManager>();
+                    DontDestroyOnLoad(go);
+                }
+            }
+            return _instance;
+        }
+        private set
+        {
+            _instance = value;
+        }
+    }
     //在这设置格子数量
     public int amountInventory = 50;
     //利用List存储虽然不如字典效率高，但是有天然的下标和格子匹配属性，且有一定排序逻辑
     public List<InventorySlot> slots = new List<InventorySlot>();
     private void Awake()
     {
-        if(Instance!=null&&Instance!=this)
+        if (_instance != null && _instance != this)
         {
             Destroy(gameObject);
             return;
         }
-        Instance = this;
+        _instance = this;
         //初始化的同时设置格子
         for(int i=0;i<amountInventory;i++)
         {

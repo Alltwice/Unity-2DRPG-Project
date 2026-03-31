@@ -1,0 +1,13 @@
+{
+  "omnisharp.useModernNet": false,
+  "dotnet.server.useOmniSharp": true,
+  "editor.suggestOnTriggerCharacters": true,
+  "editor.quickSuggestions": {
+    "other": "on",
+    "comments": "off",
+    "strings": "off"
+  },
+  "editor.acceptSuggestionOnEnter": "on",
+  "editor.tabCompletion": "on",
+  "editor.snippetSuggestions": "top"
+}

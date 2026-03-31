@@ -1,5 +1,5 @@
 using UnityEngine;
-[CreateAssetMenu(fileName = "NewBagData", menuName = "数据/物品数据/", order = 2)]
+[CreateAssetMenu(fileName = "NewBagData", menuName = "数据/物品数据", order = 2)]
 public class ItemDataSO : ScriptableObject
 {
     [Header("基础信息")]
