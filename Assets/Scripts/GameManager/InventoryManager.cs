@@ -1,6 +1,4 @@
-using NUnit.Framework;
 using System.Collections.Generic;
-using System.Runtime.InteropServices.WindowsRuntime;
 using UnityEngine;
 
 public class InventoryManager : MonoBehaviour
@@ -8,7 +6,7 @@ public class InventoryManager : MonoBehaviour
     //设置为单例方便全局获取
     public static InventoryManager Instance { get; private set; }
     //在这设置格子数量
-    public int amountInventory = 20;
+    public int amountInventory = 50;
     //利用List存储虽然不如字典效率高，但是有天然的下标和格子匹配属性，且有一定排序逻辑
     public List<InventorySlot> slots = new List<InventorySlot>();
     private void Awake()
@@ -44,6 +42,7 @@ public class InventoryManager : MonoBehaviour
                     {
                         //如果一个格子够就直接填
                         slot.amount += addamount;
+                        GameEvent.TriggerInventoryChanged();
                         return true;
                     }
                     else
@@ -64,7 +63,7 @@ public class InventoryManager : MonoBehaviour
                 //依旧简单小计算
                 if (item.IsStackable == true && addamount > item.MaxStack)
                 {
-                    empty.SetItem(addamount, item);
+                    empty.SetItem(item.MaxStack, item);
                     addamount -= item.MaxStack;
                 }
                 else
@@ -79,6 +78,7 @@ public class InventoryManager : MonoBehaviour
                 return false;
             }
         }
+        GameEvent.TriggerInventoryChanged();
         return true;
     }
     //一个辅助的寻找空格子的方法

@@ -1,5 +1,4 @@
 using System;
-using Unity.Multiplayer.PlayMode;
 using UnityEngine;
 
 public static class GameEvent
@@ -7,6 +6,7 @@ public static class GameEvent
     public static event Action<int, int> PlayerHealthChange;
     public static event Action PlayerDeath;
     public static event Action PlayerHited;
+    public static event Action InventoryChanged;
     public static event Action<SFXType> PlaySFX;
     public static event Action<float> CameraShake;
     public enum SFXType
@@ -27,6 +27,10 @@ public static class GameEvent
     public static void TriggerPlayerHited()
     {
         PlayerHited?.Invoke();
+    }
+    public static void TriggerInventoryChanged()
+    {
+        InventoryChanged?.Invoke();
     }
     public static void TriggerCameraShake(float force)
     {
