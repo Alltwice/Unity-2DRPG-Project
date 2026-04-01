@@ -4,25 +4,30 @@ using UnityEngine;
 public class InventoryManager : MonoBehaviour
 {
     //设置为单例方便全局获取（懒加载，避免场景中忘记挂载导致为空）
+    //私有静态实例，用于存储单例实例
     private static InventoryManager _instance;
+    //公共静态属性，用于获取单例实例
     public static InventoryManager Instance
     {
         get
         {
+            //如果实例为空，则尝试在场景中查找已有实例
             if (_instance == null)
             {
                 // 尝试在场景中查找已有实例
-                _instance = FindObjectOfType<InventoryManager>();
+                _instance = FindAnyObjectByType<InventoryManager>();
                 if (_instance == null)
                 {
                     // 场景中没有，则自动创建一个常驻对象
                     GameObject go = new GameObject("InventoryManager");
+                    //自动挂载管理器脚本
                     _instance = go.AddComponent<InventoryManager>();
                     DontDestroyOnLoad(go);
                 }
             }
             return _instance;
         }
+        //私有设置方法，用于设置单例实例
         private set
         {
             _instance = value;
@@ -34,6 +39,7 @@ public class InventoryManager : MonoBehaviour
     public List<InventorySlot> slots = new List<InventorySlot>();
     private void Awake()
     {
+        //手动方法依然可用
         if (_instance != null && _instance != this)
         {
             Destroy(gameObject);

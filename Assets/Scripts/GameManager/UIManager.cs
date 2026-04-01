@@ -7,13 +7,16 @@ public enum PanelType
 {
     pausePanel,
     gameOverPanel,
-    settingPanel
+    settingPanel,
+    bagPanel
 }
 public class UIManager : MonoBehaviour
 {
     public static UIManager Instance { get; private set; }
     private Dictionary<PanelType, BasePanel> panelDict = new Dictionary<PanelType, BasePanel>();
     public Stack<BasePanel> panelsStack = new Stack<BasePanel>();
+    public bool isPause;
+    private bool isDeath;
     private void Awake()
     {
         if(Instance!=null&&Instance!=this)
@@ -22,6 +25,8 @@ public class UIManager : MonoBehaviour
             return;
         }
         Instance = this;
+        isPause = false;
+        isDeath = false;
     }
     //使用字典注册减少对其他组件的依赖
     public void RegisterPanel(PanelType type, BasePanel panel)
@@ -43,11 +48,13 @@ public class UIManager : MonoBehaviour
     {
         InputManger.PauseEvent += TogglePausePanel;
         GameEvent.PlayerDeath += PlayerDeath;
+        InputManger.OpenBagEvent += ToggleBagPanel;
     }
     private void OnDisable()
     {
         InputManger.PauseEvent -= TogglePausePanel;
         GameEvent.PlayerDeath -= PlayerDeath;
+        InputManger.OpenBagEvent -= ToggleBagPanel;
     }
     public void PushIn(BasePanel newPanel)
     {
@@ -84,12 +91,21 @@ public class UIManager : MonoBehaviour
         {
             return;
         }
-        if(panelsStack.Count>0&&panelsStack.Peek()==targetPanel)
+        if(panelsStack.Count>0)
         {
-            PopOut();       
+            if(isDeath==true)
+            {
+                return;
+            }
+            if (panelsStack.Peek() == targetPanel)
+            {
+                isPause = false;
+            }
+            PopOut();
         }
         else
         {
+            isPause = true;
             PushIn(targetPanel);
         }
     }
@@ -103,6 +119,26 @@ public class UIManager : MonoBehaviour
         {
             return;
         }
+        isDeath = true;
         PushIn(targetPanel);
+    }
+    public void ToggleBagPanel(PanelType bagPanel)
+    {
+        if(isPause==true||isDeath==true)
+        {
+            return;
+        }
+        if(panelDict.TryGetValue(bagPanel,out BasePanel targetPanel)==false)
+        {
+            return;
+        }
+        if(panelsStack.Count>0&&panelsStack.Peek()==targetPanel)
+        {
+            PopOut();
+        }
+        else
+        {
+            PushIn(targetPanel);
+        }
     }
 }

@@ -2,7 +2,7 @@ using UnityEngine;
 /// <summary>
 /// 管理背包整体面板UI
 /// </summary>
-public class InventoryPanelUI : MonoBehaviour
+public class InventoryPanelUI : BasePanel
 {
     [SerializeField] private InventorySlotUI[] slotUIs;
 
@@ -11,10 +11,14 @@ public class InventoryPanelUI : MonoBehaviour
         GameEvent.InventoryChanged += RefreshAllSlots;
         RefreshAllSlots();
     }
-
+    private void Start()
+    {
+        UIManager.Instance.RegisterPanel(PanelType.bagPanel, this);
+    }
     private void OnDisable()
     {
         GameEvent.InventoryChanged -= RefreshAllSlots;
+        UIManager.Instance.UnregisterPanel(PanelType.bagPanel);
     }
     /// <summary>
     /// 刷新所有背包格子UI
