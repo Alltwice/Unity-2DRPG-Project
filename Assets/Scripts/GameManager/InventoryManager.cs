@@ -25,6 +25,7 @@ public class InventoryManager : MonoBehaviour
                     DontDestroyOnLoad(go);
                 }
             }
+            _instance.EnsureSlotCapacity();
             return _instance;
         }
         //私有设置方法，用于设置单例实例
@@ -37,6 +38,14 @@ public class InventoryManager : MonoBehaviour
     public int amountInventory = 50;
     //利用List存储虽然不如字典效率高，但是有天然的下标和格子匹配属性，且有一定排序逻辑
     public List<InventorySlot> slots = new List<InventorySlot>();
+
+    /// <summary>保证格子列表长度；避免 UI 在 Awake 顺序下早于本脚本初始化时 slots 仍为空。</summary>
+    public void EnsureSlotCapacity()
+    {
+        while (slots.Count < amountInventory)
+            slots.Add(new InventorySlot());
+    }
+
     private void Awake()
     {
         //手动方法依然可用
@@ -46,11 +55,7 @@ public class InventoryManager : MonoBehaviour
             return;
         }
         _instance = this;
-        //初始化的同时设置格子
-        for(int i=0;i<amountInventory;i++)
-        {
-            slots.Add(new InventorySlot());
-        }
+        EnsureSlotCapacity();
     }
     /// <summary>
     /// 一个增加物品的方法

@@ -30,7 +30,7 @@ public class InventoryPanelUI : BasePanel
         {
             return;
         }
-        //遍历所有背包格子UI
+        //遍历所有背包格子UI（用格子在父节点下的 sibling 下标对应背包数据下标，避免 Inspector 数组顺序与网格子物体顺序不一致）
         for (int i = 0; i < slotUIs.Length; i++)
         {
             //如果背包格子UI为空，则不刷新
@@ -38,11 +38,10 @@ public class InventoryPanelUI : BasePanel
             {
                 continue;
             }
-            //如果背包格子UI索引小于背包管理器物品数量，则获取背包管理器物品，否则获取空物品
-            InventorySlot slotData = i < InventoryManager.Instance.slots.Count
-                ? InventoryManager.Instance.slots[i]
+            int dataIndex = slotUIs[i].transform.GetSiblingIndex();
+            InventorySlot slotData = dataIndex >= 0 && dataIndex < InventoryManager.Instance.slots.Count
+                ? InventoryManager.Instance.slots[dataIndex]
                 : null;
-            //遍历并更新背包格子UI
             slotUIs[i].UpdateSlot(slotData);
         }
     }
