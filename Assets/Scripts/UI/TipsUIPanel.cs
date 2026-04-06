@@ -6,7 +6,6 @@ public class TipsUIPanel : MonoBehaviour
     public static TipsUIPanel Instance { get; private set; }
     private CanvasGroup canvasGroup;
     [Header("基础信息")]
-    [SerializeField] private string itemID;
     [SerializeField] private string itemName;
     [TextArea(3, 5)]
     [SerializeField] private string description;
@@ -19,6 +18,7 @@ public class TipsUIPanel : MonoBehaviour
     public TextMeshProUGUI pricesText;
     public TextMeshProUGUI tpyeText;
     public TextMeshProUGUI RarityText;
+    public TextMeshProUGUI amountText;
 
     private void Awake()
     {
@@ -38,11 +38,10 @@ public class TipsUIPanel : MonoBehaviour
         canvasGroup.alpha = 0;
     }
 
-    public void ShowUIInfo(ItemDataSO itemData)
+    public void ShowUIInfo(ItemDataSO itemData, int amount)
     {
         transform.SetAsLastSibling();
         canvasGroup.alpha = 1;
-        itemID = itemData.ItemID;
         itemName = itemData.ItemName;
         description = itemData.Description;
         itemType = itemData.ItemType;
@@ -50,9 +49,18 @@ public class TipsUIPanel : MonoBehaviour
         prices = itemData.Prices;
         itemNameText.text = itemName;
         descriptionText.text = description;
-        tpyeText.text = itemType.ToString();
-        pricesText.text = prices.ToString();
-        RarityText.text = itemRarity.ToString();
+        tpyeText.text = "种类:" + itemType.ToString();
+        pricesText.text = "价格:" + prices.ToString();
+        RarityText.text = "品质:" + itemRarity.ToString();
+        if (amount > 1)
+        {
+            amountText.text = "x" + amount.ToString();
+
+        }
+        else
+        {
+            amountText.text = "";
+        }
     }
 
     public void Hide()

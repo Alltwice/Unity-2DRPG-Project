@@ -1,3 +1,5 @@
+using System.Collections;
+using System.Collections.Generic;
 using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
@@ -10,18 +12,25 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public Image icon;
     public TextMeshProUGUI amount;
     private ItemDataSO slotData;
+    private int amountInt;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if (slotData != null)
-        {
-            TipsUIPanel.Instance.ShowUIInfo(slotData);
-        }
+        StartCoroutine(ShowInfo(0.5f));
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         TipsUIPanel.Instance.Hide();
+        StopCoroutine(ShowInfo(0.5f));
+    }
+    IEnumerator ShowInfo(float watiTime)
+    {
+        yield return new WaitForSeconds(watiTime);
+        if (slotData != null)
+        {
+            TipsUIPanel.Instance.ShowUIInfo(slotData,amountInt);
+        }
     }
 
     /// <summary>
@@ -29,6 +38,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     /// </summary>
     public void UpdateSlot(InventorySlot slotData)
     {
+        amountInt=slotData.amount;
         if (slotData == null)
         {
             this.slotData = null;
