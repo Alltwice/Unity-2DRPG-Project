@@ -29,10 +29,12 @@ public class PlayerController : MonoBehaviour
     private void OnEnable()
     {
         GameEvent.PlayerHited += ChangeStateUnderAttack;
+        GameEvent.ItemUsed += OnItemUse;
     }
     private void OnDisable()
     {
         GameEvent.PlayerHited -= ChangeStateUnderAttack;
+        GameEvent.ItemUsed -= OnItemUse;
     }
     private void Awake()
     {
@@ -92,5 +94,9 @@ public class PlayerController : MonoBehaviour
             currentState = blockHitState;
             currentState?.OnEnter();
         }
+    }
+    public void OnItemUse(ItemDataSO currentUse)
+    {
+        currentUse.UseMethod(this.gameObject);
     }
 }

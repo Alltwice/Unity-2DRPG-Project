@@ -81,7 +81,7 @@ public class EnemyTorch : MonoBehaviour
         hits = Physics2D.OverlapBoxAll(attackPoint.position, attackRange, 0f, attackLayer);
         if (hits.Length > 0)
         {
-            player.GetComponent<PlayerHealth>().ChangeHealth(BaseData.Damage,transform.position);
+            player.GetComponent<PlayerHealth>().ReduceHealth(BaseData.Damage,transform.position);
         }
     }
     //ËÀÍö

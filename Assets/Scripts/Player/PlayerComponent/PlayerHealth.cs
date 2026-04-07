@@ -11,7 +11,6 @@ public class PlayerHealth : MonoBehaviour
     public PlayerDefence playerDefence;
     public PlayerDodge playerDodge;
     public int finallDamage;
-
     public void Awake()
     {
         currentHealth = baseData.MaxHealth;
@@ -23,7 +22,7 @@ public class PlayerHealth : MonoBehaviour
         GameEvent.TriggerPlayerHealthChange(currentHealth, baseData.MaxHealth);
     }
     //һ���ı�����ֵ�ķ���
-    public void ChangeHealth(int changeamount, Vector2 attackObject)
+    public void ReduceHealth(int changeamount, Vector2 attackObject)
     {
         if(playerDodge.isRoll==true)
         {
@@ -49,5 +48,14 @@ public class PlayerHealth : MonoBehaviour
         GameEvent.TriggerPlayerHealthChange(currentHealth, baseData.MaxHealth);
         //�����л���ø÷����л����ܻ�״̬
         GameEvent.TriggerPlayerHited();
+    }
+    public void HealHealth(int changeamount)
+    {
+        currentHealth += changeamount;
+        if (currentHealth > baseData.MaxHealth) 
+        {
+            currentHealth = baseData.MaxHealth;
+        }
+        GameEvent.TriggerPlayerHealthChange(currentHealth, baseData.MaxHealth);
     }
 }

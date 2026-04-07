@@ -9,15 +9,16 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 695dab6013e77944baad746f57dcffdd, type: 3}
-  m_Name: "\u852C\u83DC"
-  m_EditorClassIdentifier: Assembly-CSharp::ItemDataSO
+  m_Script: {fileID: 11500000, guid: b18eb1be99818e64faaf60c838899992, type: 3}
+  m_Name: TEST
+  m_EditorClassIdentifier: Assembly-CSharp::ConsumableItemSO
   itemID: 01
-  itemName: "\u852C\u83DC"
-  description: "\u5E38\u89C1\u4E0D\u8FC7\u7684\u852C\u83DC"
+  itemName: "\u6D4B\u8BD5"
+  description: "\u8FD9\u662F\u6D4B\u8BD5\u7269\u54C1\u5E94\u8BE5\u80FD\u56DE\u590D10\u70B9\u8840"
   icon: {fileID: -3164809056393425246, guid: e3e754fe49ce6eb4c93f8fdc1055b072, type: 3}
   itemType: 3
-  itemRarity: 1
+  itemRarity: 0
   prices: 11
   isStackable: 1
-  maxStack: 2
+  maxStack: 3
+  healAmount: 10
