@@ -7,22 +7,23 @@ using UnityEngine.UI;
 /// <summary>
 /// 背包格子
 /// </summary>
-public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IPointerClickHandler
 {
     public Image icon;
     public TextMeshProUGUI amount;
     private ItemDataSO slotData;
     private int amountInt;
+    private Coroutine delayShow;
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        StartCoroutine(ShowInfo(0.5f));
+        delayShow=StartCoroutine(ShowInfo(0.5f));
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
         TipsUIPanel.Instance.Hide();
-        StopCoroutine(ShowInfo(0.5f));
+        StopCoroutine(delayShow);
     }
     IEnumerator ShowInfo(float watiTime)
     {
@@ -73,6 +74,15 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
             icon.enabled = false;
             amount.text = "";
             amount.enabled = false;
+        }
+    }
+
+    public void OnPointerClick(PointerEventData eventData)
+    {
+        //事件驱动，点击后不为空，且为左键点击就触发点击事件
+        if(slotData!=null&& eventData.button == PointerEventData.InputButton.Left)
+        {
+            GameEvent.TriggerInventoryClicked(slotData, transform.position);
         }
     }
 }

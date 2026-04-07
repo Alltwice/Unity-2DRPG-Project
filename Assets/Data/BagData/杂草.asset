@@ -16,7 +16,7 @@ MonoBehaviour:
   itemName: "\u6742\u8349"
   description: "\u5982\u4F60\u6240\u89C1\uFF0C\u6742\u8349"
   icon: {fileID: -3356593810811537127, guid: 2ce6e146f7c27cf4d8b8278c0cfc28c5, type: 3}
-  itemType: 4
+  itemType: 1
   itemRarity: 0
   prices: 2
   isStackable: 1
