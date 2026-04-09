@@ -19,6 +19,7 @@ public class ItemActionUI : MonoBehaviour
     public CanvasGroup canvas;
     private ItemDataSO item;
     public Vector3 movePosition;
+    public int index;
     private void Awake()
     {
         canvas = GetComponent<CanvasGroup>();
@@ -33,14 +34,18 @@ public class ItemActionUI : MonoBehaviour
     private void OnEnable()
     {
         GameEvent.InventoryClicked += ShowPanel;
+        GameEvent.BagClose += Close;
     }
     private void OnDisable()
     {
         GameEvent.InventoryClicked -= ShowPanel;
+        GameEvent.BagClose -= Close;
+
     }
     //传入物品数据和位置，显示面板
-    private void ShowPanel(ItemDataSO itemData,Vector3 position)
+    private void ShowPanel(ItemDataSO itemData,Vector3 position,int index)
     {
+        this.index = index;
         item = itemData;
         canvas.alpha = 1;
         canvas.interactable = true;
@@ -58,7 +63,7 @@ public class ItemActionUI : MonoBehaviour
         switch (actionType)
         {
             case ActionType.Use:
-                GameEvent.TriggerItemUsed(item);
+                GameEvent.TriggerItemUsed(item, index);
                 break;
             case ActionType.Equip:
                 GameEvent.TriggerItemEquipped(item);
@@ -67,10 +72,14 @@ public class ItemActionUI : MonoBehaviour
                 GameEvent.TriggerItemDropped(item);
                 break;
             case ActionType.Close:
-                canvas.alpha = 0;
-                canvas.interactable = false;
-                canvas.blocksRaycasts = false;
+                Close();
                 break;
         }
+    }
+    public void Close()
+    {
+        canvas.alpha = 0;
+        canvas.interactable = false;
+        canvas.blocksRaycasts = false;
     }
 }

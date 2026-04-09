@@ -127,4 +127,20 @@ public class InventoryManager : MonoBehaviour
         }
         return null;
     }
+    public void RemoveItem(int itemIndex,int amount)
+    {
+        InventorySlot slot = slots[itemIndex];
+        if(slot != null)
+        {
+            if(slot.amount>amount)
+            {
+                slot.amount -= amount;
+            }
+            else
+            {
+                slot.ClearItem();
+            }
+        }
+        GameEvent.TriggerInventoryChanged();
+    }
 }

@@ -38,5 +38,5 @@ public class ItemDataSO : ScriptableObject
     public ItemType ItemType => itemType;
     public ItemRarity ItemRarity => itemRarity;
     public int Prices => prices;
-    public virtual void UseMethod(GameObject targer) { }
+    public virtual void UseMethod(GameObject targer, int index) { }
 }

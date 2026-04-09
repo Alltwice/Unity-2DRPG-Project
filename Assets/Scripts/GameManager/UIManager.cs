@@ -17,6 +17,7 @@ public class UIManager : MonoBehaviour
     public Stack<BasePanel> panelsStack = new Stack<BasePanel>();
     public bool isPause;
     private bool isDeath;
+    private bool bagOpen;
     private void Awake()
     {
         if(Instance!=null&&Instance!=this)
@@ -77,6 +78,11 @@ public class UIManager : MonoBehaviour
             return;
         }
         BasePanel topPanel = panelsStack.Peek();
+        if (topPanel.panelType == PanelType.pausePanel)
+        {
+            // 关键修复：不论是按 Esc 还是点暂停面板按钮，弹出暂停面板后都必须复位 isPause
+            isPause = false;
+        }
         topPanel.Close();
         panelsStack.Pop();
         if(panelsStack.Count>0)
@@ -135,6 +141,7 @@ public class UIManager : MonoBehaviour
         if(panelsStack.Count>0&&panelsStack.Peek()==targetPanel)
         {
             PopOut();
+            GameEvent.TriggerBagClose();
         }
         else
         {

@@ -4,9 +4,10 @@ public class ConsumableItemSO : ItemDataSO
 {
     [Header("消耗品属性")]
     [SerializeField] private int healAmount=10;
-    public override void UseMethod(GameObject targer)
+    public override void UseMethod(GameObject targer,int index)
     {
         PlayerHealth playerHealth=targer.GetComponent<PlayerHealth>();
         playerHealth.HealHealth(healAmount);
+        InventoryManager.Instance.RemoveItem(index,1);
     }
 }

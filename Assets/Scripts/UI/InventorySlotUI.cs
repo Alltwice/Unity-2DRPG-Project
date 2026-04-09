@@ -82,7 +82,8 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         //事件驱动，点击后不为空，且为左键点击就触发点击事件
         if(slotData!=null&& eventData.button == PointerEventData.InputButton.Left)
         {
-            GameEvent.TriggerInventoryClicked(slotData, transform.position);
+            int index=transform.GetSiblingIndex();
+            GameEvent.TriggerInventoryClicked(slotData, transform.position,index);
         }
     }
 }

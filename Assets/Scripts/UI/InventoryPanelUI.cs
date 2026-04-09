@@ -11,14 +11,14 @@ public class InventoryPanelUI : BasePanel
         GameEvent.InventoryChanged += RefreshAllSlots;
         RefreshAllSlots();
     }
-    private void Start()
-    {
-        UIManager.Instance.RegisterPanel(PanelType.bagPanel, this);
-    }
     private void OnDisable()
     {
         GameEvent.InventoryChanged -= RefreshAllSlots;
         UIManager.Instance.UnregisterPanel(PanelType.bagPanel);
+    }
+    private void Start()
+    {
+        UIManager.Instance.RegisterPanel(PanelType.bagPanel, this);
     }
     /// <summary>
     /// 刷新所有背包格子UI
