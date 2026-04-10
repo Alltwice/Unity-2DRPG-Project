@@ -64,12 +64,15 @@ public class ItemActionUI : MonoBehaviour
         {
             case ActionType.Use:
                 GameEvent.TriggerItemUsed(item, index);
+                Close();
                 break;
             case ActionType.Equip:
                 GameEvent.TriggerItemEquipped(item);
+                Close();
                 break;
             case ActionType.Drop:
                 GameEvent.TriggerItemDropped(item);
+                Close();
                 break;
             case ActionType.Close:
                 Close();

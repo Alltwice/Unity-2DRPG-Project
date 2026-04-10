@@ -143,4 +143,54 @@ public class InventoryManager : MonoBehaviour
         }
         GameEvent.TriggerInventoryChanged();
     }
+    //拖拽交换逻辑
+    public void SwapItems(int from, int to)
+    {
+        //记录一下拖拽前的格子和拖拽后的格子
+        InventorySlot slotFrom=slots[from];
+        InventorySlot slotTo=slots[to];
+        if (slotFrom == null || slotFrom.item == null || slotFrom.amount <= 0)
+        {
+            return;
+        }
+        if (from==to)
+        {
+            return;
+        }
+        //如果说格子都不为空且物品相同且可堆叠就直接叠加数量
+        if (slotFrom!=null&&slotTo!=null)
+        {
+            if(slotFrom.item==slotTo.item&&slotFrom.item.IsStackable==true)
+            {
+                //这里计算剩下格子的数量
+                int leftSpace=slotTo.item.MaxStack-slotTo.amount;
+                //如果剩下格子有剩余
+                if(leftSpace>0)
+                {
+                    //通过取剩下格子或者物品多少处理不同的情况
+                    int amountToMove=Mathf.Min(slotFrom.amount,leftSpace);
+                    slotTo.amount+=amountToMove;
+                    slotFrom.amount-=amountToMove;
+                    if(slotFrom.amount<=0)
+                    {
+                        slotFrom.ClearItem();
+                    }
+                }
+                GameEvent.TriggerInventoryChanged();
+                return;
+            }
+        }
+        //如果在合法范围内
+        if(from>=0&&from<slots.Count&&to>=0&&to<slots.Count)
+        {
+            //记录当前格子的物品和数量，换就完了
+            ItemDataSO tempItem=slotFrom.item;
+            int tempAmount=slotFrom.amount;
+            slotFrom.item=slotTo.item;
+            slotFrom.amount=slotTo.amount;
+            slotTo.item=tempItem;
+            slotTo.amount=tempAmount;
+        }
+        GameEvent.TriggerInventoryChanged();
+    }
 }
