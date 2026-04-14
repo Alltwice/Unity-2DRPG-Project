@@ -8,7 +8,7 @@ public class MainMenuUI : MonoBehaviour
         {
             UIManager.Instance.panelsStack.Clear();
         }
-        Time.timeScale = 1;
+            Time.timeScale = 1;
         LoadManager.Instance.StartLoading("MainScene", true);
     }
     public void OnClickExit()
