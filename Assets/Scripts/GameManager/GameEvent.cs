@@ -4,6 +4,13 @@ using UnityEngine.UIElements;
 
 public static class GameEvent
 {
+    public enum SFXType
+    {
+        PlayerBeHit,
+        EnemyBeHit,
+        SwordSwing,
+        PlayerDefenceBeHit
+    }
     public static event Action<int, int> PlayerHealthChange;
     public static event Action PlayerDeath;
     public static event Action PlayerHited;
@@ -15,13 +22,6 @@ public static class GameEvent
     public static event Action<ItemDataSO> ItemEquipped;
     public static event Action<ItemDataSO> ItemDropped;
     public static event Action BagClose;
-    public enum SFXType
-    {
-        PlayerBeHit,
-        EnemyBeHit,
-        SwordSwing,
-        PlayerDefenceBeHit
-    }
     public static void TriggerPlayerHealthChange(int current,int max)=>PlayerHealthChange?.Invoke(current,max);
     public static void TriggerPlayerDeath()=>PlayerDeath?.Invoke();
     public static void TriggerPlayerHited()=>PlayerHited?.Invoke();

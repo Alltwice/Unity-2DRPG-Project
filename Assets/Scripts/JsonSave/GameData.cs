@@ -12,7 +12,7 @@ public class GameData
 }
 [Serializable]
 ///<summary>
-///背包数据传输对象
+///背包数据传输对象 
 ///</summary>
 public class InventoryDto
 {

@@ -59,5 +59,40 @@ public static class InventoryConnectJson
             GameEvent.TriggerInventoryChanged();
             return;
         }
+        var saved = data.inventory.slotId;
+        int savedCount = saved.Count;
+        int targetSlots = Mathf.Max(savedCount, inv.amountInventory);
+        inv.amountInventory = targetSlots;
+        inv.EnsureSlotCapacity();
+
+        for (int i = 0; i < inv.slots.Count; i++)
+        {
+            InventorySlot slot = inv.slots[i];
+            if (slot == null)
+                continue;
+
+            if (i < savedCount)
+            {
+                InventorySlotDto dto = saved[i];
+                if (dto == null || string.IsNullOrEmpty(dto.id) || dto.amount <= 0)
+                {
+                    slot.ClearItem();
+                    continue;
+                }
+                if (catalog.TryGet(dto.id, out ItemDataSO itemSo))
+                    slot.SetItem(dto.amount, itemSo);
+                else
+                {
+                    Debug.LogWarning($"InventorySnapshotUtility: 未知 ItemID \"{dto.id}\"，已清空该槽位。");
+                    slot.ClearItem();
+                }
+            }
+            else
+            {
+                slot.ClearItem();
+            }
+        }
+
+        GameEvent.TriggerInventoryChanged();
     }
 }
