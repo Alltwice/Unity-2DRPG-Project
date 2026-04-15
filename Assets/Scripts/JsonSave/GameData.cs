@@ -8,7 +8,9 @@ using System.Collections.Generic;
 ///</summary>
 public class GameData
 {
+    public string sceneName;
     public InventoryDto inventory=new InventoryDto();
+    public PlayerSnapshotDto player = new PlayerSnapshotDto();
 }
 [Serializable]
 ///<summary>
@@ -27,5 +29,14 @@ public class InventorySlotDto
 {
     public string id = "";
     public int amount;
+}
+
+[Serializable]
+public class PlayerSnapshotDto
+{
+    public int currentHealth;
+    public float posX;
+    public float posY;
+    public float facingX = 1f;
 }
 

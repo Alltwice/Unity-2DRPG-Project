@@ -22,4 +22,14 @@ public class MainMenuUI : MonoBehaviour
             Application.Quit();
 #endif
     }
+
+    public void OnClickSavePanel()
+    {
+        if (UIManager.Instance == null)
+        {
+            return;
+        }
+
+        UIManager.Instance.ToggleSavePanel(PanelType.savePanel);
+    }
 }

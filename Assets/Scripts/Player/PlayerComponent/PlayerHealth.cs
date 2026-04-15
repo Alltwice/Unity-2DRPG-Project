@@ -58,4 +58,13 @@ public class PlayerHealth : MonoBehaviour
         }
         GameEvent.TriggerPlayerHealthChange(currentHealth, baseData.MaxHealth);
     }
+
+    /// <summary>
+    /// 外部（例如读档）直接同步血量，只更新数值和UI，不触发受击链路。
+    /// </summary>
+    public void SyncHealthOnly(int targetHealth)
+    {
+        currentHealth = Mathf.Clamp(targetHealth, 0, baseData.MaxHealth);
+        GameEvent.TriggerPlayerHealthSyncOnly(currentHealth, baseData.MaxHealth);
+    }
 }

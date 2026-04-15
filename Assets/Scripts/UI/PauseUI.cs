@@ -8,13 +8,9 @@ public class PauseUI : BasePanel
 {
     public Button backGame;
     public TextMeshProUGUI bgmPercent;
-    public Slider volumeSlider;
-    public AudioSource bgm;
     protected override void Awake()
     {
         base.Awake();
-        volumeSlider.value = bgm.volume;
-        bgmPercent.text = Mathf.RoundToInt(volumeSlider.value * 100) + "%";
     }
     private void Start()
     {
@@ -35,11 +31,6 @@ public class PauseUI : BasePanel
     {
         Time.timeScale = 1;
         base.Close();
-    }
-    public void ChangeBgmVolum(float value)
-    {
-        bgm.volume = volumeSlider.value;
-        bgmPercent.text = Mathf.RoundToInt(volumeSlider.value * 100) + "%";
     }
     public void ClickClose()
     {
@@ -72,5 +63,15 @@ public class PauseUI : BasePanel
         }
         Time.timeScale = 1;
         LoadManager.Instance.StartLoading("Menu", true);
+    }
+
+    public void OnClickSavePanel()
+    {
+        if (UIManager.Instance == null)
+        {
+            return;
+        }
+
+        UIManager.Instance.ToggleSavePanel(PanelType.savePanel);
     }
 }

@@ -7,10 +7,12 @@ public class PlayerHud : MonoBehaviour
     private void OnEnable()
     {
         GameEvent.PlayerHealthChange += PlayerHealthChange;
+        GameEvent.PlayerHealthSyncOnly += PlayerHealthChange;
     }
     private void OnDisable()
     {
         GameEvent.PlayerHealthChange -= PlayerHealthChange;
+        GameEvent.PlayerHealthSyncOnly -= PlayerHealthChange;
     }
     public void PlayerHealthChange(int currentHealth,int maxHealth)
     {

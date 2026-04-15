@@ -8,7 +8,8 @@ public enum PanelType
     pausePanel,
     gameOverPanel,
     settingPanel,
-    bagPanel
+    bagPanel,
+    savePanel
 }
 public class UIManager : MonoBehaviour
 {
@@ -142,6 +143,28 @@ public class UIManager : MonoBehaviour
         {
             PopOut();
             GameEvent.TriggerBagClose();
+        }
+        else
+        {
+            PushIn(targetPanel);
+        }
+    }
+
+    public void ToggleSavePanel(PanelType savePanel)
+    {
+        if (isDeath == true)
+        {
+            return;
+        }
+
+        if (panelDict.TryGetValue(savePanel, out BasePanel targetPanel) == false)
+        {
+            return;
+        }
+
+        if (panelsStack.Count > 0 && panelsStack.Peek() == targetPanel)
+        {
+            PopOut();
         }
         else
         {

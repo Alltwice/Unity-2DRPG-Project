@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 /// <summary>
 /// 这个脚本最大的作用就是连接连接器和Json保存工具，而自己提供一个可让外部调用的保存方法和接受全局数据
@@ -24,6 +25,7 @@ public class GameDataSaveLoad : MonoBehaviour
     [Tooltip("槽位文件名前缀。")]
     private string slotFilePrefix = JsonProcess.DefaultSlotFilePrefix;
 
+    //检查是否存在之前存下的下标，如果有就加载
     private void Start()
     {
         if (_pendingLoadSlotIndex > 0)
@@ -35,14 +37,33 @@ public class GameDataSaveLoad : MonoBehaviour
     }
     /// <summary>
     /// 这个方法是调用所有连接器的数据主要作用是将游戏数据转化为Json可存储的数据，有多少模块需要保存就在这加多少
+    /// 并且提供将数据转换为GameData方法即可
     /// </summary>
     /// <returns></returns>
     public static GameData CaptureGlobalState()
     {
-        return InventoryConnectJson.BuildFromInventory(InventoryManager.Instance);
+        GameData data = InventoryConnectJson.BuildFromInventory(InventoryManager.Instance);
+        if (data != null)
+        {
+            data.sceneName = SceneManager.GetActiveScene().name;
+
+            GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+            if (playerObj != null)
+            {
+                PlayerSnapshotDto playerSnapshot = PlayerConnectJson.BuildFromPlayer(playerObj);
+                if (playerSnapshot != null)
+                    data.player = playerSnapshot;
+            }
+            else
+            {
+                Debug.LogWarning("GameDataSaveLoad: 未找到 Tag=Player 的对象，本次不写入玩家血量与位置。");
+            }
+        }
+        return data;
     }
     /// <summary>
-    /// 这里也是一个中间过程，主要作用是将Json数据转化为游戏数据并应用到游戏中，模块越多这里就越长
+    /// 这里也是一个中间过程，主要作用是将Json数据转化为游戏数据并应用到游戏中
+    /// 提供将存档数据赋值或转化给游戏对象的方法
     /// </summary>
     /// <param name="data"></param>
     /// <param name="catalog"></param>
@@ -60,6 +81,21 @@ public class GameDataSaveLoad : MonoBehaviour
         }
 
         InventoryConnectJson.ApplyToInventory(data, InventoryManager.Instance, catalog);
+
+        if (data.player == null)
+        {
+            Debug.LogWarning("GameDataSaveLoad: 存档中没有玩家状态字段（可能是旧存档），跳过玩家还原。");
+            return;
+        }
+
+        GameObject playerObj = GameObject.FindGameObjectWithTag("Player");
+        if (playerObj == null)
+        {
+            Debug.LogWarning("GameDataSaveLoad: 未找到 Tag=Player 的对象，跳过玩家血量与位置还原。");
+            return;
+        }
+
+        PlayerConnectJson.ApplyToPlayer(data, playerObj);
     }
     /// <summary>
     /// 将数据传入json保存工具
@@ -87,29 +123,48 @@ public class GameDataSaveLoad : MonoBehaviour
         ApplyGlobalState(data, catalog);
         return true;
     }
-
+    /// <summary>
+    /// 通过传入下标自动拼接成不同的新存档
+    /// </summary>
+    /// <param name="slotIndex"></param>
+    /// <returns></returns>
     public string GetSlotRelativePath(int slotIndex)
     {
         return JsonProcess.BuildSlotRelativePath(slotIndex, slotDirectory, slotFilePrefix);
     }
-
+    /// <summary>
+    /// 提供一个查找存档是否存在的方法
+    /// </summary>
+    /// <param name="slotIndex"></param>
+    /// <returns></returns>
     public bool HasSlot(int slotIndex)
     {
         return JsonProcess.SlotExists(slotIndex, slotDirectory, slotFilePrefix);
     }
-
+    /// <summary>
+    /// 获取时间戳和存档标号的方法
+    /// </summary>
+    /// <returns></returns>
     public List<JsonProcess.SaveSlotMeta> GetSlotsMeta()
     {
         return JsonProcess.ListSlots(slotDirectory, slotFilePrefix);
     }
-
+    /// <summary>
+    /// 提供下标尝试存档
+    /// </summary>
+    /// <param name="slotIndex"></param>
     public void SaveSlot(int slotIndex)
     {
         string relativePath = GetSlotRelativePath(slotIndex);
         SaveGlobalGameData(relativePath);
         Debug.Log($"GameDataSaveLoad: 槽位 {slotIndex} 已保存 -> {JsonProcess.ResolvePath(relativePath)}");
     }
-
+    /// <summary>
+    /// 提供下标尝试读档
+    /// </summary>
+    /// <param name="slotIndex"></param>
+    /// <param name="loaded"></param>
+    /// <returns></returns>
     public bool TryLoadSlot(int slotIndex, out GameData loaded)
     {
         loaded = null;
@@ -130,6 +185,24 @@ public class GameDataSaveLoad : MonoBehaviour
         return true;
     }
 
+    public bool TryReadSlotRawData(int slotIndex, out GameData loaded)
+    {
+        loaded = null;
+        string relativePath = GetSlotRelativePath(slotIndex);
+        if (!JsonProcess.TryLoadFromFile<GameData>(relativePath, out GameData data) || data == null)
+        {
+            Debug.LogWarning($"GameDataSaveLoad: 槽位 {slotIndex} 不存在或解析失败 -> {JsonProcess.ResolvePath(relativePath)}");
+            return false;
+        }
+
+        loaded = data;
+        return true;
+    }
+    /// <summary>
+    /// 传入下标删除存档
+    /// </summary>
+    /// <param name="slotIndex"></param>
+    /// <returns></returns>
     public bool DeleteSlot(int slotIndex)
     {
         bool deleted = JsonProcess.DeleteSlotFile(slotIndex, slotDirectory, slotFilePrefix);
@@ -145,14 +218,18 @@ public class GameDataSaveLoad : MonoBehaviour
     {
         _pendingLoadSlotIndex = slotIndex;
     }
-    //理论上上面两个方法已经可以用了，但是下面又包裹了一遍并提供了一些防御性编程处理，最终调用这两个方法 
+    /// <summary>
+    /// 提供存档测试方法
+    /// </summary>
     [ContextMenu("保存全局存档 (GameData)")]
     public void SaveGame()
     {
         SaveGlobalGameData(relativeSavePath);
         Debug.Log($"全局存档已写入: {JsonProcess.ResolvePath(relativeSavePath)}");
     }
-
+    /// <summary>
+    /// 提供读档测试方法
+    /// </summary>
     [ContextMenu("读取全局存档 (GameData)")]
     public void LoadGame()
     {
