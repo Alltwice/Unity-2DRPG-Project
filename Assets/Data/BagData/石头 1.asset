@@ -10,15 +10,15 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b18eb1be99818e64faaf60c838899992, type: 3}
-  m_Name: TEST 1
+  m_Name: "\u77F3\u5934 1"
   m_EditorClassIdentifier: Assembly-CSharp::ConsumableItemSO
   itemID: 02
-  itemName: "\u6D4B\u8BD51"
-  description: "\u8FD9\u662F\u53E6\u4E00\u4E2A\u6D4B\u8BD5\u7269\u54C1\uFF0C\u65E0\u6240\u8C13"
+  itemName: "\u77F3\u5934"
+  description: "\u6750\u6599\u7269\u54C1"
   icon: {fileID: 141893073332109768, guid: 09186c4f331b5504ebab304125cf7727, type: 3}
   itemType: 4
   itemRarity: 1
-  prices: 111
+  prices: 150
   isStackable: 1
   maxStack: 3
   healAmount: 0

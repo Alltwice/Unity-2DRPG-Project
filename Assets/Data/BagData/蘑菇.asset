@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b18eb1be99818e64faaf60c838899992, type: 3}
+  m_Name: "\u8611\u83C7"
+  m_EditorClassIdentifier: Assembly-CSharp::ConsumableItemSO
+  itemID: 01
+  itemName: "\u8611\u83C7"
+  description: "\u4F7F\u7528\u540E\u56DE\u590D10\u70B9\u8840"
+  icon: {fileID: -3164809056393425246, guid: e3e754fe49ce6eb4c93f8fdc1055b072, type: 3}
+  itemType: 3
+  itemRarity: 0
+  prices: 5
+  isStackable: 1
+  maxStack: 3
+  rarityWeights:
+  - rarity: 0
+    weight: 70
+  - rarity: 1
+    weight: 29
+  - rarity: 2
+    weight: 1
+  healAmount: 10

@@ -5,23 +5,43 @@ using UnityEngine;
 public class InventorySlot
 {
     public int amount;
-    public ItemDataSO item;
+    public ItemInstance instance;
     //初始化构造
     public InventorySlot()
     {
         amount = 0;
-        item = null;
+        instance = null;
     }
-    //放入槽位
-    public void SetItem(int amount,ItemDataSO item)
+
+    /// <summary>
+    /// 放入槽位（直接传入实例）。
+    /// </summary>
+    public void SetInstance(int amount, ItemInstance instance)
     {
         this.amount = amount;
-        this.item = item;
+        this.instance = instance;
     }
+
+    /// <summary>
+    /// 放入槽位（传入定义并让模板随机品质；主要用于迁移期）。
+    /// </summary>
+    public void SetInstance(int amount, ItemDataSO definition)
+    {
+        if (definition == null)
+        {
+            this.amount = 0;
+            this.instance = null;
+            return;
+        }
+
+        this.amount = amount;
+        this.instance = new ItemInstance(definition, definition.RollRarity());
+    }
+
     //清空槽位
     public void ClearItem()
     {
         amount = 0;
-        item = null;
+        instance = null;
     }
 }

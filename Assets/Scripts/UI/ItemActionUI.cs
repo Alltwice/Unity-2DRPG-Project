@@ -17,7 +17,7 @@ public class ItemActionUI : MonoBehaviour
     public Button equipButton;
     public Button dropButton;
     public CanvasGroup canvas;
-    private ItemDataSO item;
+    private ItemInstance item;
     public Vector3 movePosition;
     public int index;
     private void Awake()
@@ -43,7 +43,7 @@ public class ItemActionUI : MonoBehaviour
 
     }
     //传入物品数据和位置，显示面板
-    private void ShowPanel(ItemDataSO itemData,Vector3 position,int index)
+    private void ShowPanel(ItemInstance itemData,Vector3 position,int index)
     {
         this.index = index;
         item = itemData;
@@ -52,8 +52,8 @@ public class ItemActionUI : MonoBehaviour
         canvas.blocksRaycasts = true;
         panelTransform.position = position + movePosition;
         //通过类型判断显示按钮
-        useButton.gameObject.SetActive(itemData.ItemType == ItemType.消耗品);
-        equipButton.gameObject.SetActive(itemData.ItemType == ItemType.武器 || itemData.ItemType == ItemType.装备);
+        useButton.gameObject.SetActive(itemData != null && itemData.ItemType == ItemType.消耗品);
+        equipButton.gameObject.SetActive(itemData != null && (itemData.ItemType == ItemType.武器 || itemData.ItemType == ItemType.装备));
         dropButton.gameObject.SetActive(true); // 默认所有物品可丢弃，特殊任务物品除外
     }
     private void RequestAction(ActionType actionType)

@@ -18,10 +18,11 @@ public static class InventoryConnectJson
         {
             var slotDto = new InventorySlotDto();
             //如果这个格子不为空
-            if (slot.item != null&&slot!=null&&slot.amount>0)
+            if (slot != null && slot.instance != null && slot.amount > 0)
             {
                 //存入数据
-                slotDto.id = slot.item.ItemID;
+                slotDto.id = slot.instance.definition.ItemID;
+                slotDto.rarity = (int)slot.instance.rarity;
                 slotDto.amount = slot.amount;
             }
             else
@@ -29,6 +30,7 @@ public static class InventoryConnectJson
                 //否则滞空
                 slotDto.id = "";
                 slotDto.amount = 0;
+                slotDto.rarity = 0;
             }
             save.slotId.Add(slotDto);
         }
@@ -80,7 +82,10 @@ public static class InventoryConnectJson
                     continue;
                 }
                 if (catalog.TryGet(dto.id, out ItemDataSO itemSo))
-                    slot.SetItem(dto.amount, itemSo);
+                {
+                    var instance = new ItemInstance(itemSo, (ItemRarity)dto.rarity);
+                    slot.SetInstance(dto.amount, instance);
+                }
                 else
                 {
                     Debug.LogWarning($"InventorySnapshotUtility: 未知 ItemID \"{dto.id}\"，已清空该槽位。");

@@ -38,15 +38,18 @@ public class TipsUIPanel : MonoBehaviour
         canvasGroup.alpha = 0;
     }
 
-    public void ShowUIInfo(ItemDataSO itemData, int amount)
+    public void ShowUIInfo(ItemInstance itemInstance, int amount)
     {
         transform.SetAsLastSibling();
         canvasGroup.alpha = 1;
-        itemName = itemData.ItemName;
-        description = itemData.Description;
-        itemType = itemData.ItemType;
-        itemRarity = itemData.ItemRarity;
-        prices = itemData.Prices;
+        if (itemInstance == null || itemInstance.definition == null)
+            return;
+
+        itemName = itemInstance.ItemName;
+        description = itemInstance.definition.Description;
+        itemType = itemInstance.ItemType;
+        itemRarity = itemInstance.rarity;
+        prices = itemInstance.Prices;
         itemNameText.text = itemName;
         descriptionText.text = description;
         tpyeText.text = "种类:" + itemType.ToString();

@@ -12,7 +12,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
 {
     public Image icon;
     public TextMeshProUGUI amount;
-    private ItemDataSO slotData;
+    private ItemInstance slotData;
     private int amountInt;
     private Coroutine delayShow;
     private CanvasGroup iconCanvas;
@@ -73,10 +73,10 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
             amount.enabled = false;
             return;
         }
-        this.slotData = slotData.item;
-        if (slotData.item != null && slotData.amount > 0)
+        this.slotData = slotData.instance;
+        if (slotData.instance != null && slotData.amount > 0)
         {
-            icon.sprite = slotData.item.Icon;
+            icon.sprite = slotData.instance.Icon;
             icon.enabled = true;
             //如果物品数量大于1，则显示物品数量
             if (slotData.amount > 1)
@@ -196,7 +196,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (fromIndex >= 0 && fromIndex < InventoryManager.Instance.slots.Count)
         {
             InventorySlot fromDataSlot = InventoryManager.Instance.slots[fromIndex];
-            fromDataEmpty = fromDataSlot == null || fromDataSlot.item == null || fromDataSlot.amount <= 0;
+            fromDataEmpty = fromDataSlot == null || fromDataSlot.instance == null || fromDataSlot.amount <= 0;
         }
         // 如果拖拽源有效、不是自己，且源槽位确实有数据才允许交换
         if (fromSlotUI != null && fromSlotUI != this && !fromDataEmpty)

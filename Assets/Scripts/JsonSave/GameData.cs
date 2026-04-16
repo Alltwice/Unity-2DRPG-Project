@@ -29,6 +29,7 @@ public class InventorySlotDto
 {
     public string id = "";
     public int amount;
+    public int rarity;
 }
 
 [Serializable]

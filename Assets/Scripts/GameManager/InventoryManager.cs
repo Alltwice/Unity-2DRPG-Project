@@ -62,57 +62,49 @@ public class InventoryManager : MonoBehaviour
     /// </summary>
     public bool AddItem(int addamount,ItemDataSO item)
     {
-        //通过是否可堆叠判断
-        if(item.IsStackable)
+        if (item == null || addamount <= 0)
+            return false;
+
+        // 按“每个数量单位独立随机”生成实例品质（rarity）。
+        for (int i = 0; i < addamount; i++)
         {
-            //如果可堆叠优先寻找相同种类匹配
-            foreach(InventorySlot slot in slots)
+            ItemRarity rolledRarity = item.RollRarity();
+
+            bool addedToExistingStack = false;
+
+            // 若可堆叠：优先寻找“同定义 + 同品质”的未满槽位
+            if (item.IsStackable)
             {
-                if(slot.item==item&&slot.amount<item.MaxStack)
+                for (int s = 0; s < slots.Count; s++)
                 {
-                    //数量要单独拉出来计算
-                    int spaceLeft = item.MaxStack - slot.amount; 
-                    if(addamount<=spaceLeft)
+                    InventorySlot slot = slots[s];
+                    if (slot == null || slot.instance == null)
+                        continue;
+
+                    if (slot.instance.definition == item &&
+                        slot.instance.rarity == rolledRarity &&
+                        slot.amount < item.MaxStack)
                     {
-                        //如果一个格子够就直接填
-                        slot.amount += addamount;
-                        GameEvent.TriggerInventoryChanged();
-                        return true;
-                    }
-                    else
-                    {
-                        //填不满就直接设满并计算数量
-                        slot.amount = item.MaxStack;
-                        addamount -= spaceLeft;
+                        slot.amount += 1;
+                        addedToExistingStack = true;
+                        break;
                     }
                 }
             }
-        }
-        //然后没填满就一直去寻找下一个格子
-        while (addamount > 0)
-        {
-            InventorySlot empty = FindEmpty();
-            if (empty != null)
+
+            // 否则放入下一个空槽位（每单位独占一个 instance；若同定义+同品质可堆叠，则上面已被收纳）
+            if (!addedToExistingStack)
             {
-                //依旧简单小计算
-                if (item.IsStackable == true && addamount > item.MaxStack)
-                {
-                    empty.SetItem(item.MaxStack, item);
-                    addamount -= item.MaxStack;
-                }
-                else
-                {
-                    empty.SetItem(addamount, item);
-                    addamount = 0;
-                }
+                InventorySlot empty = FindEmpty();
+                if (empty == null)
+                    return false;
+
+                empty.SetInstance(1, new ItemInstance(item, rolledRarity));
             }
-            //如果没有空格子了就填入失败
-            else
-            {
-                return false;
-            }
+
+            GameEvent.TriggerInventoryChanged();
         }
-        GameEvent.TriggerInventoryChanged();
+
         return true;
     }
     //一个辅助的寻找空格子的方法
@@ -120,7 +112,10 @@ public class InventoryManager : MonoBehaviour
     {
         foreach(InventorySlot slot in slots)
         {
-            if(slot.item==null&&slot.amount==0)
+            if(slot == null)
+                continue;
+
+            if(slot.instance==null&&slot.amount==0)
             {
                 return slot;
             }
@@ -149,7 +144,7 @@ public class InventoryManager : MonoBehaviour
         //记录一下拖拽前的格子和拖拽后的格子
         InventorySlot slotFrom=slots[from];
         InventorySlot slotTo=slots[to];
-        if (slotFrom == null || slotFrom.item == null || slotFrom.amount <= 0)
+        if (slotFrom == null || slotFrom.instance == null || slotFrom.amount <= 0)
         {
             return;
         }
@@ -160,10 +155,13 @@ public class InventoryManager : MonoBehaviour
         //如果说格子都不为空且物品相同且可堆叠就直接叠加数量
         if (slotFrom!=null&&slotTo!=null)
         {
-            if(slotFrom.item==slotTo.item&&slotFrom.item.IsStackable==true)
+            if(slotTo.instance != null &&
+               slotFrom.instance.definition==slotTo.instance.definition &&
+               slotFrom.instance.rarity==slotTo.instance.rarity &&
+               slotFrom.instance.definition.IsStackable==true)
             {
                 //这里计算剩下格子的数量
-                int leftSpace=slotTo.item.MaxStack-slotTo.amount;
+                int leftSpace=slotTo.instance.definition.MaxStack-slotTo.amount;
                 //如果剩下格子有剩余
                 if(leftSpace>0)
                 {
@@ -184,11 +182,11 @@ public class InventoryManager : MonoBehaviour
         if(from>=0&&from<slots.Count&&to>=0&&to<slots.Count)
         {
             //记录当前格子的物品和数量，换就完了
-            ItemDataSO tempItem=slotFrom.item;
+            ItemInstance tempInstance=slotFrom.instance;
             int tempAmount=slotFrom.amount;
-            slotFrom.item=slotTo.item;
+            slotFrom.instance=slotTo.instance;
             slotFrom.amount=slotTo.amount;
-            slotTo.item=tempItem;
+            slotTo.instance=tempInstance;
             slotTo.amount=tempAmount;
         }
         GameEvent.TriggerInventoryChanged();

@@ -95,8 +95,11 @@ public class PlayerController : MonoBehaviour
             currentState?.OnEnter();
         }
     }
-    public void OnItemUse(ItemDataSO currentUse, int index)
+    public void OnItemUse(ItemInstance currentUse, int index)
     {
-        currentUse.UseMethod(this.gameObject,index);
+        if (currentUse == null || currentUse.definition == null)
+            return;
+
+        currentUse.definition.UseMethod(this.gameObject, index);
     }
 }   
