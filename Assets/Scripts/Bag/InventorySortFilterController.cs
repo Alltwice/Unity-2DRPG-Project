@@ -12,7 +12,7 @@ public static class InventorySortFilterController
 
     public static void Apply(
         ItemType? boostedType,
-        InventorySortField sortField,
+        InventorySortMode sortMode,
         InventorySortDirection sortDirection)
     {
         InventoryManager inv = InventoryManager.Instance;
@@ -31,7 +31,7 @@ public static class InventorySortFilterController
         List<InventorySlot> newOrder = InventoryQueryServiceTagBoost.SortAndBoost(
             inv.slots,
             boostedType,
-            sortField,
+            sortMode,
             sortDirection);
 
         // 保持 slots 列表对象引用，尽量减少潜在依赖问题。

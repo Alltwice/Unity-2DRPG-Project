@@ -5,11 +5,16 @@ using UnityEngine;
 public class InventoryPanelUI : BasePanel
 {
     [SerializeField] private InventorySlotUI[] slotUIs;
+    [SerializeField] private InventorySortPanelUI sortPanelUI;
 
     private void OnEnable()
     {
         GameEvent.InventoryChanged += RefreshAllSlots;
         RefreshAllSlots();
+        if (sortPanelUI != null)
+        {
+            sortPanelUI.ApplyCurrentSort();
+        }
     }
     private void OnDisable()
     {

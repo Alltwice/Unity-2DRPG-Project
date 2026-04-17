@@ -53,13 +53,14 @@ public class ItemDataSO : ScriptableObject
     [SerializeField] private List<RarityWeight> rarityWeights = new List<RarityWeight>();
 
     /// <summary>
-    /// 为一次“实例生成”随机出品质。
+    /// 玩大转盘
     /// </summary>
     public ItemRarity RollRarity()
     {
         if (rarityWeights == null || rarityWeights.Count == 0)
             return itemRarity;
 
+        //计算出总权重
         int totalWeight = 0;
         for (int i = 0; i < rarityWeights.Count; i++)
         {
@@ -71,7 +72,7 @@ public class ItemDataSO : ScriptableObject
         // 兜底：权重配置无效时，沿用旧字段。
         if (totalWeight <= 0)
             return itemRarity;
-
+        //在总权重区域随机选取一点
         int roll = UnityEngine.Random.Range(0, totalWeight);
         int cursor = 0;
         for (int i = 0; i < rarityWeights.Count; i++)

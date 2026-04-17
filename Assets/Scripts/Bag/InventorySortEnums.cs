@@ -1,5 +1,15 @@
 /// <summary>
-/// 背包排序字段
+/// 背包排序模式（互斥）
+/// </summary>
+public enum InventorySortMode
+{
+    ByTag,
+    ByPrice,
+    ByRarity
+}
+
+/// <summary>
+/// 背包排序字段（兼容保留）
 /// </summary>
 public enum InventorySortField
 {
