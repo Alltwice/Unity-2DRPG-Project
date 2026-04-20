@@ -47,9 +47,7 @@ public static class PlayerConnectJson
         tf.localScale = localScale;
 
         PlayerHealth health = playerObj.GetComponent<PlayerHealth>();
-        if (health == null)
-            return;
-
-        health.SyncHealthOnly(snapshot.currentHealth);
+        if (health != null)
+            health.SyncHealthOnly(snapshot.currentHealth);
     }
 }

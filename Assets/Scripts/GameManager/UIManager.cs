@@ -1,7 +1,6 @@
 using System.Collections.Generic;
 using System.Runtime.InteropServices.WindowsRuntime;
 using TMPro;
-using Unity.AppUI.UI;
 using UnityEngine;
 public enum PanelType
 {

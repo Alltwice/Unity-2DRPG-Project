@@ -145,6 +145,24 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpawnEnemy"",
+                    ""type"": ""Button"",
+                    ""id"": ""fb767a12-58b7-4d2b-bd1c-937e87a33316"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""SpawnItem"",
+                    ""type"": ""Button"",
+                    ""id"": ""f9b18e6c-e1a1-4729-9da9-d41069027537"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -257,6 +275,28 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
                     ""action"": ""Bag"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6cf9739f-13ca-4a9b-9ca9-d615434d923a"",
+                    ""path"": ""<Keyboard>/1"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpawnEnemy"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""2a9328a1-a8fa-4350-a902-5ab0818c1940"",
+                    ""path"": ""<Keyboard>/2"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""SpawnItem"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -271,6 +311,8 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         m_Player_Defence = m_Player.FindAction("Defence", throwIfNotFound: true);
         m_Player_Roll = m_Player.FindAction("Roll", throwIfNotFound: true);
         m_Player_Bag = m_Player.FindAction("Bag", throwIfNotFound: true);
+        m_Player_SpawnEnemy = m_Player.FindAction("SpawnEnemy", throwIfNotFound: true);
+        m_Player_SpawnItem = m_Player.FindAction("SpawnItem", throwIfNotFound: true);
     }
 
     ~@PlayerAction()
@@ -357,6 +399,8 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
     private readonly InputAction m_Player_Defence;
     private readonly InputAction m_Player_Roll;
     private readonly InputAction m_Player_Bag;
+    private readonly InputAction m_Player_SpawnEnemy;
+    private readonly InputAction m_Player_SpawnItem;
     /// <summary>
     /// Provides access to input actions defined in input action map "Player".
     /// </summary>
@@ -392,6 +436,14 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "Player/Bag".
         /// </summary>
         public InputAction @Bag => m_Wrapper.m_Player_Bag;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SpawnEnemy".
+        /// </summary>
+        public InputAction @SpawnEnemy => m_Wrapper.m_Player_SpawnEnemy;
+        /// <summary>
+        /// Provides access to the underlying input action "Player/SpawnItem".
+        /// </summary>
+        public InputAction @SpawnItem => m_Wrapper.m_Player_SpawnItem;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -436,6 +488,12 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Bag.started += instance.OnBag;
             @Bag.performed += instance.OnBag;
             @Bag.canceled += instance.OnBag;
+            @SpawnEnemy.started += instance.OnSpawnEnemy;
+            @SpawnEnemy.performed += instance.OnSpawnEnemy;
+            @SpawnEnemy.canceled += instance.OnSpawnEnemy;
+            @SpawnItem.started += instance.OnSpawnItem;
+            @SpawnItem.performed += instance.OnSpawnItem;
+            @SpawnItem.canceled += instance.OnSpawnItem;
         }
 
         /// <summary>
@@ -465,6 +523,12 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
             @Bag.started -= instance.OnBag;
             @Bag.performed -= instance.OnBag;
             @Bag.canceled -= instance.OnBag;
+            @SpawnEnemy.started -= instance.OnSpawnEnemy;
+            @SpawnEnemy.performed -= instance.OnSpawnEnemy;
+            @SpawnEnemy.canceled -= instance.OnSpawnEnemy;
+            @SpawnItem.started -= instance.OnSpawnItem;
+            @SpawnItem.performed -= instance.OnSpawnItem;
+            @SpawnItem.canceled -= instance.OnSpawnItem;
         }
 
         /// <summary>
@@ -547,5 +611,19 @@ public partial class @PlayerAction: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnBag(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SpawnEnemy" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSpawnEnemy(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "SpawnItem" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnSpawnItem(InputAction.CallbackContext context);
     }
 }

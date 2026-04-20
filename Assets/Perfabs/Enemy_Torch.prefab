@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: 3595553597270941387}
   - component: {fileID: 549039741945264179}
   - component: {fileID: 5855380359179465742}
+  - component: {fileID: 7457613888398025491}
   m_Layer: 6
   m_Name: Enemy_Torch
   m_TagString: Untagged
@@ -245,6 +246,19 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::EnemyCombatFeedback
   CombatData: {fileID: 11400000, guid: a51e54bcfb6cdac4abb610cccee7fbbc, type: 2}
+--- !u!114 &7457613888398025491
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1134680713258246626}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 1e873c00f683d6149ac47cabae00ef9b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemySaveIdentity
+  enemyId: b5108a037707434c849d5264d5b615fe
 --- !u!1 &1188333916676677373
 GameObject:
   m_ObjectHideFlags: 0
@@ -437,6 +451,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::EnemyHealthUI
   healthUI: {fileID: 8686422875136698316}
   enemyHealth: {fileID: 0}
+  headOffset: {x: 0, y: 0.2, z: 0}
 --- !u!1 &2018847309293336483
 GameObject:
   m_ObjectHideFlags: 0
@@ -620,7 +635,7 @@ MonoBehaviour:
     m_PressedTrigger: Pressed
     m_SelectedTrigger: Selected
     m_DisabledTrigger: Disabled
-  m_Interactable: 1
+  m_Interactable: 0
   m_TargetGraphic: {fileID: 0}
   m_FillRect: {fileID: 4218505353850400443}
   m_HandleRect: {fileID: 0}

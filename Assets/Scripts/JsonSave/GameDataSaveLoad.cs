@@ -58,6 +58,8 @@ public class GameDataSaveLoad : MonoBehaviour
             {
                 Debug.LogWarning("GameDataSaveLoad: 未找到 Tag=Player 的对象，本次不写入玩家血量与位置。");
             }
+
+            data.enemies = EnemyConnectJson.BuildFromEnemies();
         }
         return data;
     }
@@ -92,10 +94,13 @@ public class GameDataSaveLoad : MonoBehaviour
         if (playerObj == null)
         {
             Debug.LogWarning("GameDataSaveLoad: 未找到 Tag=Player 的对象，跳过玩家血量与位置还原。");
-            return;
+        }
+        else
+        {
+            PlayerConnectJson.ApplyToPlayer(data, playerObj);
         }
 
-        PlayerConnectJson.ApplyToPlayer(data, playerObj);
+        EnemyConnectJson.ApplyToEnemies(data);
     }
     /// <summary>
     /// 将数据传入json保存工具

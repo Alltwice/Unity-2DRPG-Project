@@ -1,6 +1,7 @@
 using System;
 using UnityEngine;
 
+[RequireComponent(typeof(EnemySaveIdentity))]
 public class EnemyHealth : MonoBehaviour
 {
     [SerializeField] private EnemyBaseDataSO BaseData;
@@ -44,5 +45,19 @@ public class EnemyHealth : MonoBehaviour
     public void TriggerEnemyHited()
     {
         EnemyHited?.Invoke();
+    }
+
+    public void SyncHealthOnly(int targetHealth)
+    {
+        int maxHealth = BaseData != null ? BaseData.MaxHealth : targetHealth;
+        currentHealth = Mathf.Clamp(targetHealth, 0, maxHealth);
+        isDie = currentHealth <= 0;
+        TriggerEnemyHealthChange(currentHealth, maxHealth);
+    }
+
+    public void ApplySnapshot(int targetHealth, bool deadState)
+    {
+        SyncHealthOnly(targetHealth);
+        isDie = deadState || currentHealth <= 0;
     }
 }

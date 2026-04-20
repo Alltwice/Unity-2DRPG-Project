@@ -17,8 +17,17 @@ MonoBehaviour:
   description: "\u7B80\u5355\u7684\u5F13"
   icon: {fileID: -4349393927651703796, guid: 51e3ffb8eb7f27448b9e8d5bb55eb6e9, type: 3}
   itemType: 1
-  itemRarity: 2
+  itemRarity: 0
   prices: 300
-  isStackable: 1
+  isStackable: 0
   maxStack: 3
+  rarityWeights:
+  - rarity: 0
+    weight: 60
+  - rarity: 1
+    weight: 30
+  - rarity: 2
+    weight: 9
+  - rarity: 3
+    weight: 1
   healAmount: 0

@@ -11,6 +11,7 @@ public class GameData
     public string sceneName;
     public InventoryDto inventory=new InventoryDto();
     public PlayerSnapshotDto player = new PlayerSnapshotDto();
+    public List<EnemySnapshotDto> enemies = new List<EnemySnapshotDto>();
 }
 [Serializable]
 ///<summary>
@@ -39,5 +40,16 @@ public class PlayerSnapshotDto
     public float posX;
     public float posY;
     public float facingX = 1f;
+}
+
+[Serializable]
+public class EnemySnapshotDto
+{
+    public string enemyId = "";
+    public int currentHealth;
+    public float posX;
+    public float posY;
+    public bool isActive;
+    public bool isDead;
 }
 

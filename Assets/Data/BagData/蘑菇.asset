@@ -18,14 +18,16 @@ MonoBehaviour:
   icon: {fileID: -3164809056393425246, guid: e3e754fe49ce6eb4c93f8fdc1055b072, type: 3}
   itemType: 3
   itemRarity: 0
-  prices: 5
+  prices: 10
   isStackable: 1
   maxStack: 3
   rarityWeights:
   - rarity: 0
-    weight: 70
+    weight: 60
   - rarity: 1
-    weight: 29
+    weight: 30
   - rarity: 2
+    weight: 9
+  - rarity: 3
     weight: 1
   healAmount: 10
