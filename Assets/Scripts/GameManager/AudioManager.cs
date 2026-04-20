@@ -5,7 +5,10 @@ using Random = UnityEngine.Random;
 
 public class AudioManager : MonoBehaviour
 {
+    [Tooltip("用于 PlayOneShot 等音效（原 audioSource）")]
     public AudioSource audioSource;
+    [Tooltip("背景音乐，可选；可在 Inspector 指定 Loop 与 Clip")]
+    public AudioSource bgmSource;
     public AudioClip[] EnemyBehitSound;
     public AudioClip[] PlayerDefenceBeHit;
     public AudioClip[] PlayerBeHit;
@@ -14,7 +17,33 @@ public class AudioManager : MonoBehaviour
     public float pitchMax = 1.5f;
     private void Awake()
     {
-        audioSource = GetComponent<AudioSource>();
+        if (audioSource == null)
+            audioSource = GetComponent<AudioSource>();
+
+        float bgm = PlayerPrefs.GetFloat(SettingsPrefs.BgmVolume, 1f);
+        float sfx = PlayerPrefs.GetFloat(SettingsPrefs.SfxVolume, 1f);
+        SetBgmVolume(bgm);
+        SetSfxVolume(sfx);
+    }
+
+    private void Start()
+    {
+        if (bgmSource != null && bgmSource.clip != null && !bgmSource.isPlaying)
+            bgmSource.Play();
+    }
+
+    public void SetBgmVolume(float linear01)
+    {
+        linear01 = Mathf.Clamp01(linear01);
+        if (bgmSource != null)
+            bgmSource.volume = linear01;
+    }
+
+    public void SetSfxVolume(float linear01)
+    {
+        linear01 = Mathf.Clamp01(linear01);
+        if (audioSource != null)
+            audioSource.volume = linear01;
     }
     private void OnEnable()
     {

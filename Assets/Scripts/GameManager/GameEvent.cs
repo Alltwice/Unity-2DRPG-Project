@@ -31,6 +31,7 @@ public static class GameEvent
     public static void TriggerInventoryChanged()=>InventoryChanged?.Invoke();
     public static void TriggerCameraShake(float force)=>CameraShake?.Invoke(force);
     public static void TriggerPlaySFX(SFXType sFX)=>PlaySFX?.Invoke(sFX);
+    public static void TriggerClickUISfx() => TriggerPlaySFX(SFXType.ClickUI);
     public static void TriggerInventoryClicked(ItemInstance item,Vector3 transform,int Index)=>InventoryClicked?.Invoke(item,transform,Index);
     public static void TriggerItemUsed(ItemInstance item,int index) => ItemUsed?.Invoke(item,index);
     public static void TriggerItemEquipped(ItemInstance item) => ItemEquipped?.Invoke(item);

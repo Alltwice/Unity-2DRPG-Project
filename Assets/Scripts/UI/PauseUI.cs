@@ -34,10 +34,12 @@ public class PauseUI : BasePanel
     }
     public void ClickClose()
     {
+        GameEvent.TriggerClickUISfx();
         UIManager.Instance.PopOut();
     }
     public void OnClickRestart()
     {
+        GameEvent.TriggerClickUISfx();
         if (UIManager.Instance != null)
         {
             UIManager.Instance.panelsStack.Clear();
@@ -46,6 +48,7 @@ public class PauseUI : BasePanel
     }
     public void OnClickExit()
     {
+        GameEvent.TriggerClickUISfx();
         // 预编译指令：根据环境执行不同的退出方式
 #if UNITY_EDITOR
         // 如果是在编辑器里运行，则停止播放模式
@@ -57,6 +60,7 @@ public class PauseUI : BasePanel
     }
     public void OnClickToMenu()
     {
+        GameEvent.TriggerClickUISfx();
         if (UIManager.Instance != null)
         {
             UIManager.Instance.panelsStack.Clear();
@@ -67,11 +71,23 @@ public class PauseUI : BasePanel
 
     public void OnClickSavePanel()
     {
+        GameEvent.TriggerClickUISfx();
         if (UIManager.Instance == null)
         {
             return;
         }
 
         UIManager.Instance.ToggleSavePanel(PanelType.savePanel);
+    }
+
+    public void OnClickOpenSettings()
+    {
+        GameEvent.TriggerClickUISfx();
+        if (UIManager.Instance == null)
+        {
+            return;
+        }
+
+        UIManager.Instance.ToggleSettingPanel(PanelType.settingPanel);
     }
 }

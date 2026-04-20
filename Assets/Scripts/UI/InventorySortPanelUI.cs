@@ -58,6 +58,7 @@ public class InventorySortPanelUI : MonoBehaviour
 
     public void OnPriceButtonClicked()
     {
+        GameEvent.TriggerClickUISfx();
         if (currentMode == InventorySortMode.ByPrice)
             priceDirection = ToggleDirection(priceDirection);
 
@@ -67,6 +68,7 @@ public class InventorySortPanelUI : MonoBehaviour
 
     public void OnRarityButtonClicked()
     {
+        GameEvent.TriggerClickUISfx();
         if (currentMode == InventorySortMode.ByRarity)
             rarityDirection = ToggleDirection(rarityDirection);
 
@@ -76,6 +78,7 @@ public class InventorySortPanelUI : MonoBehaviour
 
     public void ToggleTagPanel()
     {
+        GameEvent.TriggerClickUISfx();
         if (tagSubPanel == null)
             return;
 
@@ -84,6 +87,7 @@ public class InventorySortPanelUI : MonoBehaviour
     //设置标签并传入具体标签，由子面板调用
     public void SetTagAndApply(ItemType? tagType)
     {
+        GameEvent.TriggerClickUISfx();
         selectedTag = tagType;
         currentMode = InventorySortMode.ByTag;
         ApplyCurrentSort();

@@ -50,6 +50,7 @@ public class SavePanelUI : BasePanel
     /// <param name="slotIndex">存档下标</param>
     public void OnClickSaveSlot(int slotIndex)
     {
+        GameEvent.TriggerClickUISfx();
         if (!ValidateSlotIndex(slotIndex))
             return;
 
@@ -69,6 +70,7 @@ public class SavePanelUI : BasePanel
     /// <param name="slotIndex"></param>
     public void OnClickLoadSlot(int slotIndex)
     {
+        GameEvent.TriggerClickUISfx();
         if (!ValidateSlotIndex(slotIndex))
             return;
 
@@ -113,6 +115,7 @@ public class SavePanelUI : BasePanel
     /// <param name="slotIndex"></param>
     public void OnClickDeleteSlot(int slotIndex)
     {
+        GameEvent.TriggerClickUISfx();
         if (!ValidateSlotIndex(slotIndex))
             return;
 
@@ -131,6 +134,7 @@ public class SavePanelUI : BasePanel
     /// </summary>
     public void OnClickClose()
     {
+        GameEvent.TriggerClickUISfx();
         if (UIManager.Instance == null)
             return;
 

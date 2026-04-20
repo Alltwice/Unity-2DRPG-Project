@@ -58,6 +58,7 @@ public class ItemActionUI : MonoBehaviour
     }
     private void RequestAction(ActionType actionType)
     {
+        GameEvent.TriggerClickUISfx();
         if (item == null) return;
 
         switch (actionType)

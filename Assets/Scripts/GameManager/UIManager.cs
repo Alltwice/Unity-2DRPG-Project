@@ -29,6 +29,7 @@ public class UIManager : MonoBehaviour
         Instance = this;
         isPause = false;
         isDeath = false;
+        SettingsPanelUI.ApplyStoredVideoMode();
     }
     //使用字典注册减少对其他组件的依赖
     public void RegisterPanel(PanelType type, BasePanel panel)
@@ -158,6 +159,28 @@ public class UIManager : MonoBehaviour
         }
 
         if (panelDict.TryGetValue(savePanel, out BasePanel targetPanel) == false)
+        {
+            return;
+        }
+
+        if (panelsStack.Count > 0 && panelsStack.Peek() == targetPanel)
+        {
+            PopOut();
+        }
+        else
+        {
+            PushIn(targetPanel);
+        }
+    }
+
+    public void ToggleSettingPanel(PanelType settingPanelType)
+    {
+        if (isDeath == true)
+        {
+            return;
+        }
+
+        if (panelDict.TryGetValue(settingPanelType, out BasePanel targetPanel) == false)
         {
             return;
         }
