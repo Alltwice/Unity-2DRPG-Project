@@ -9,7 +9,8 @@ public static class GameEvent
         PlayerBeHit,
         EnemyBeHit,
         SwordSwing,
-        PlayerDefenceBeHit
+        PlayerDefenceBeHit,
+        ClickUI
     }
     public static event Action<int, int> PlayerHealthChange;
     public static event Action<int, int> PlayerHealthSyncOnly;

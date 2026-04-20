@@ -24,6 +24,14 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private Transform dragRoot;
     private bool isDragging;
 
+    /// <summary>与 <see cref="InventoryManager.slots"/> 对齐的逻辑下标；虚拟滚动下不等于 Transform 兄弟顺序。</summary>
+    public int BoundDataIndex { get; private set; }
+
+    public void SetBoundDataIndex(int index)
+    {
+        BoundDataIndex = index;
+    }
+
     private void Awake()
     {
         iconCanvas = icon != null ? icon.GetComponent<CanvasGroup>() : null;
@@ -47,7 +55,8 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnPointerExit(PointerEventData eventData)
     {
         TipsUIPanel.Instance.Hide();
-        StopCoroutine(delayShow);
+        if (delayShow != null)
+            StopCoroutine(delayShow);
     }
     IEnumerator ShowInfo(float watiTime)
     {
@@ -63,41 +72,64 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     /// </summary>
     public void UpdateSlot(InventorySlot slotData)
     {
-        amountInt=slotData.amount;
         if (slotData == null)
         {
             this.slotData = null;
-            icon.sprite = null;
-            icon.enabled = false;
-            amount.text = "";
-            amount.enabled = false;
-            return;
-        }
-        this.slotData = slotData.instance;
-        if (slotData.instance != null && slotData.amount > 0)
-        {
-            icon.sprite = slotData.instance.Icon;
-            icon.enabled = true;
-            //如果物品数量大于1，则显示物品数量
-            if (slotData.amount > 1)
+            amountInt = 0;
+            if (icon != null)
             {
-                amount.text = slotData.amount.ToString();
-                amount.enabled = true;
+                icon.sprite = null;
+                icon.enabled = false;
             }
-            //如果物品数量为1，则不显示物品数量
-            else
+
+            if (amount != null)
             {
                 amount.text = "";
                 amount.enabled = false;
+            }
+
+            return;
+        }
+
+        amountInt = slotData.amount;
+        this.slotData = slotData.instance;
+        if (slotData.instance != null && slotData.amount > 0)
+        {
+            if (icon != null)
+            {
+                icon.sprite = slotData.instance.Icon;
+                icon.enabled = true;
+            }
+
+            //如果物品数量大于1，则显示物品数量
+            if (amount != null)
+            {
+                if (slotData.amount > 1)
+                {
+                    amount.text = slotData.amount.ToString();
+                    amount.enabled = true;
+                }
+                else
+                {
+                    amount.text = "";
+                    amount.enabled = false;
+                }
             }
         }
         //如果物品为空，则清空背包格子UI
         else
         {
-            icon.sprite = null;
-            icon.enabled = false;
-            amount.text = "";
-            amount.enabled = false;
+            if (icon != null)
+            {
+                icon.sprite = null;
+                icon.enabled = false;
+            }
+
+            if (amount != null)
+            {
+                amount.text = "";
+                amount.enabled = false;
+            }
         }
     }
 
@@ -106,8 +138,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         //事件驱动，点击后不为空，且为左键点击就触发点击事件
         if(slotData!=null&& eventData.button == PointerEventData.InputButton.Left)
         {
-            int index=transform.GetSiblingIndex();
-            GameEvent.TriggerInventoryClicked(slotData, transform.position,index);
+            GameEvent.TriggerInventoryClicked(slotData, transform.position, BoundDataIndex);
         }
     }
 
@@ -190,8 +221,8 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     public void OnDrop(PointerEventData eventData)
     {
         InventorySlotUI fromSlotUI = eventData.pointerDrag != null ? eventData.pointerDrag.GetComponent<InventorySlotUI>() : null;
-        int fromIndex = fromSlotUI != null ? fromSlotUI.transform.GetSiblingIndex() : -1;
-        int toIndex = transform.GetSiblingIndex();
+        int fromIndex = fromSlotUI != null ? fromSlotUI.BoundDataIndex : -1;
+        int toIndex = BoundDataIndex;
         bool fromDataEmpty = true;
         if (fromIndex >= 0 && fromIndex < InventoryManager.Instance.slots.Count)
         {

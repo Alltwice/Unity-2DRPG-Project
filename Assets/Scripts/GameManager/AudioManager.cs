@@ -9,6 +9,7 @@ public class AudioManager : MonoBehaviour
     public AudioClip[] EnemyBehitSound;
     public AudioClip[] PlayerDefenceBeHit;
     public AudioClip[] PlayerBeHit;
+    public AudioClip[] clickUI;
     public float pitchMin = 0.5f;
     public float pitchMax = 1.5f;
     private void Awake()
@@ -38,6 +39,9 @@ public class AudioManager : MonoBehaviour
                 break;
             case GameEvent.SFXType.PlayerDefenceBeHit:
                 PlayRandomSound(PlayerDefenceBeHit);
+                break;
+            case GameEvent.SFXType.ClickUI:
+                PlayRandomSound(clickUI);
                 break;
         }
     }
