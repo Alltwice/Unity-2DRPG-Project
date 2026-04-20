@@ -22,7 +22,7 @@ public static class GameEvent
     public static event Action<ItemInstance,Vector3,int> InventoryClicked;
     public static event Action<ItemInstance,int> ItemUsed;
     public static event Action<ItemInstance> ItemEquipped;
-    public static event Action<ItemInstance> ItemDropped;
+    public static event Action<ItemInstance, int> ItemDropped;
     public static event Action BagClose;
     public static void TriggerPlayerHealthChange(int current,int max)=>PlayerHealthChange?.Invoke(current,max);
     public static void TriggerPlayerHealthSyncOnly(int current, int max) => PlayerHealthSyncOnly?.Invoke(current, max);
@@ -35,6 +35,6 @@ public static class GameEvent
     public static void TriggerInventoryClicked(ItemInstance item,Vector3 transform,int Index)=>InventoryClicked?.Invoke(item,transform,Index);
     public static void TriggerItemUsed(ItemInstance item,int index) => ItemUsed?.Invoke(item,index);
     public static void TriggerItemEquipped(ItemInstance item) => ItemEquipped?.Invoke(item);
-    public static void TriggerItemDropped(ItemInstance item) => ItemDropped?.Invoke(item);
+    public static void TriggerItemDropped(ItemInstance item, int index) => ItemDropped?.Invoke(item, index);
     public static void TriggerBagClose() => BagClose?.Invoke();
 }

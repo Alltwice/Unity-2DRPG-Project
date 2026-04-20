@@ -10,6 +10,24 @@ using UnityEngine.UI;
 /// </summary>
 public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler,IPointerClickHandler,IBeginDragHandler,IEndDragHandler,IDragHandler,IDropHandler
 {
+    [System.Serializable]
+    private struct RarityColorEntry
+    {
+        public ItemRarity rarity;
+        public Color color;
+    }
+
+    [Header("稀有度底图")]
+    [SerializeField] private Image rarityBackground;
+    [SerializeField] private Color emptySlotColor = Color.clear;
+    [SerializeField] private List<RarityColorEntry> rarityColors = new List<RarityColorEntry>
+    {
+        new RarityColorEntry { rarity = ItemRarity.普通, color = new Color(0.70f, 0.70f, 0.70f, 0.30f) },
+        new RarityColorEntry { rarity = ItemRarity.稀有, color = new Color(0.30f, 0.56f, 1.00f, 0.35f) },
+        new RarityColorEntry { rarity = ItemRarity.史诗, color = new Color(0.73f, 0.33f, 1.00f, 0.35f) },
+        new RarityColorEntry { rarity = ItemRarity.传奇, color = new Color(1.00f, 0.62f, 0.20f, 0.40f) },
+    };
+
     public Image icon;
     public TextMeshProUGUI amount;
     private ItemInstance slotData;
@@ -23,6 +41,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
     private Vector2 amountDragOffset;
     private Transform dragRoot;
     private bool isDragging;
+    private readonly Dictionary<ItemRarity, Color> rarityColorMap = new Dictionary<ItemRarity, Color>();
 
     /// <summary>与 <see cref="InventoryManager.slots"/> 对齐的逻辑下标；虚拟滚动下不等于 Transform 兄弟顺序。</summary>
     public int BoundDataIndex { get; private set; }
@@ -34,6 +53,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
 
     private void Awake()
     {
+        CacheRarityColorMap();
         iconCanvas = icon != null ? icon.GetComponent<CanvasGroup>() : null;
         if (iconCanvas == null && icon != null)
         {
@@ -44,6 +64,12 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         if (amount != null)
         {
             amount.raycastTarget = false;
+        }
+        if (rarityBackground != null)
+        {
+            rarityBackground.raycastTarget = false;
+            rarityBackground.color = emptySlotColor;
+            rarityBackground.enabled = false;
         }
     }
 
@@ -76,6 +102,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         {
             this.slotData = null;
             amountInt = 0;
+            UpdateRarityBackground(null);
             if (icon != null)
             {
                 icon.sprite = null;
@@ -95,6 +122,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         this.slotData = slotData.instance;
         if (slotData.instance != null && slotData.amount > 0)
         {
+            UpdateRarityBackground(slotData.instance);
             if (icon != null)
             {
                 icon.sprite = slotData.instance.Icon;
@@ -119,6 +147,7 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
         //如果物品为空，则清空背包格子UI
         else
         {
+            UpdateRarityBackground(null);
             if (icon != null)
             {
                 icon.sprite = null;
@@ -235,5 +264,35 @@ public class InventorySlotUI : MonoBehaviour, IPointerEnterHandler, IPointerExit
             // 获取拖拽源的下标，和我自己的下标
             InventoryManager.Instance.SwapItems(fromIndex, toIndex);
         }
+    }
+
+    private void CacheRarityColorMap()
+    {
+        rarityColorMap.Clear();
+        for (int i = 0; i < rarityColors.Count; i++)
+        {
+            rarityColorMap[rarityColors[i].rarity] = rarityColors[i].color;
+        }
+    }
+
+    private void UpdateRarityBackground(ItemInstance itemInstance)
+    {
+        if (rarityBackground == null)
+            return;
+
+        if (itemInstance == null)
+        {
+            rarityBackground.color = emptySlotColor;
+            rarityBackground.enabled = false;
+            return;
+        }
+
+        if (!rarityColorMap.TryGetValue(itemInstance.rarity, out Color rarityColor))
+        {
+            rarityColor = Color.white;
+        }
+
+        rarityBackground.color = rarityColor;
+        rarityBackground.enabled = true;
     }
 }

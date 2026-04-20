@@ -47,6 +47,7 @@ public class SettingsPanelUI : BasePanel
         if (sfxSlider != null) sfxSlider.onValueChanged.AddListener(OnSfxSliderChanged);
         if (fullscreenToggle != null) fullscreenToggle.onValueChanged.AddListener(OnFullscreenToggled);
         if (resolutionDropdown != null) resolutionDropdown.onValueChanged.AddListener(OnResolutionDropdownChanged);
+        ApplyStoredVideoMode();
     }
     private void Start()
     {
@@ -64,22 +65,25 @@ public class SettingsPanelUI : BasePanel
 
     private void RefreshAllControlsFromState()
     {
-        // 直接读取并赋值
-        // 注意：这里的直接赋值会触发一次下方的 OnValueChanged 事件
-        //打开面板还会保存一次
-
-        if (bgmSlider != null) bgmSlider.value = PlayerPrefs.GetFloat("BgmVolumePrefs", 1f);
-        if (sfxSlider != null) sfxSlider.value = PlayerPrefs.GetFloat("SfxVolumePrefs", 1f);
+        if (bgmSlider != null) bgmSlider.value = PlayerPrefs.GetFloat("BgmVolumePrefs");
+        if (sfxSlider != null) sfxSlider.value = PlayerPrefs.GetFloat("SfxVolumePrefs");
 
         if (fullscreenToggle != null)
         {
-            fullscreenToggle.isOn = Screen.fullScreenMode != FullScreenMode.Windowed;
+            // 优先从硬盘读，如果硬盘没有（新玩家），再去问屏幕当前是不是全屏
+            bool isFull = PlayerPrefs.GetInt("FullscreenPrefs", Screen.fullScreenMode != FullScreenMode.Windowed ? 1 : 0) == 1;
+            fullscreenToggle.isOn = isFull;
         }
 
         if (resolutionDropdown != null && _uniqueResolutions.Count > 0)
         {
-            int idx = FindResolutionIndex(Screen.width, Screen.height);
-            resolutionDropdown.value = Mathf.Max(0, idx); // 找不到就默认显示第一个
+            // 优先从硬盘读之前存的宽和高，如果硬盘没有，才去读当前屏幕大小
+            int w = PlayerPrefs.GetInt("ResWidthPrefs", Screen.width);
+            int h = PlayerPrefs.GetInt("ResHeightPrefs", Screen.height);
+
+            // 拿硬盘里存的数字去匹配下拉菜单的标号
+            int idx = FindResolutionIndex(w, h);
+            resolutionDropdown.value = Mathf.Max(0, idx); // 赋值给 UI
         }
 
         UpdatePercentLabels();

@@ -30,11 +30,13 @@ public class PlayerController : MonoBehaviour
     {
         GameEvent.PlayerHited += ChangeStateUnderAttack;
         GameEvent.ItemUsed += OnItemUse;
+        GameEvent.ItemDropped += OnItemDrop;
     }
     private void OnDisable()
     {
         GameEvent.PlayerHited -= ChangeStateUnderAttack;
         GameEvent.ItemUsed -= OnItemUse;
+        GameEvent.ItemDropped -= OnItemDrop;
     }
     private void Awake()
     {
@@ -101,5 +103,15 @@ public class PlayerController : MonoBehaviour
             return;
 
         currentUse.definition.UseMethod(this.gameObject, index);
+    }
+
+    public void OnItemDrop(ItemInstance currentDrop, int index)
+    {
+        if (currentDrop == null || currentDrop.definition == null)
+            return;
+        if (index < 0 || index >= InventoryManager.Instance.slots.Count)
+            return;
+
+        InventoryManager.Instance.RemoveItem(index, 1);
     }
 }   

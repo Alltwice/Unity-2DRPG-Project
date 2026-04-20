@@ -22,7 +22,8 @@ public class ItemInstance
     public string ItemName => definition != null ? definition.ItemName : string.Empty;
     public Sprite Icon => definition != null ? definition.Icon : null;
     public ItemType ItemType => definition != null ? definition.ItemType : ItemType.未知;
-    public int Prices => definition != null ? definition.Prices : 0;
+    public int BasePrice => definition != null ? definition.Prices : 0;
+    public int Prices => RarityPriceCalculator.ToFinalPrice(BasePrice, rarity);
     public int MaxStack => definition != null ? definition.MaxStack : 0;
     public bool IsStackable => definition != null && definition.IsStackable;
 

@@ -9,5 +9,5 @@ public class ConsumableItemSO : ItemDataSO
         PlayerHealth playerHealth=targer.GetComponent<PlayerHealth>();
         playerHealth.HealHealth(healAmount);
         InventoryManager.Instance.RemoveItem(index,1);
-    }
+    }   
 }

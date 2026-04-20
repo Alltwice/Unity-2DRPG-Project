@@ -72,7 +72,7 @@ public class ItemActionUI : MonoBehaviour
                 Close();
                 break;
             case ActionType.Drop:
-                GameEvent.TriggerItemDropped(item);
+                GameEvent.TriggerItemDropped(item, index);
                 Close();
                 break;
             case ActionType.Close:

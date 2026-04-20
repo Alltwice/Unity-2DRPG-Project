@@ -20,8 +20,8 @@ public class AudioManager : MonoBehaviour
         if (audioSource == null)
             audioSource = GetComponent<AudioSource>();
 
-        float bgm = PlayerPrefs.GetFloat(SettingsPrefs.BgmVolume, 1f);
-        float sfx = PlayerPrefs.GetFloat(SettingsPrefs.SfxVolume, 1f);
+        float bgm = PlayerPrefs.GetFloat(SettingsPrefs.BgmVolume);
+        float sfx = PlayerPrefs.GetFloat(SettingsPrefs.SfxVolume);
         SetBgmVolume(bgm);
         SetSfxVolume(sfx);
     }
