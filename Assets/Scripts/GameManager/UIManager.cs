@@ -142,7 +142,6 @@ public class UIManager : MonoBehaviour
         if(panelsStack.Count>0&&panelsStack.Peek()==targetPanel)
         {
             PopOut();
-            GameEvent.TriggerBagClose();
         }
         else
         {

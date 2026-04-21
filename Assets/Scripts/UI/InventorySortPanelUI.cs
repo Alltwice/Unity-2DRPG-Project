@@ -46,6 +46,22 @@ public class InventorySortPanelUI : MonoBehaviour
         }
     }
 
+    private void OnEnable()
+    {
+        GameEvent.BagClose += OnBagClosed;
+    }
+
+    private void OnDisable()
+    {
+        GameEvent.BagClose -= OnBagClosed;
+    }
+
+    private void OnBagClosed()
+    {
+        if (tagSubPanel != null)
+            tagSubPanel.HideImmediate();
+    }
+
     private void OnDestroy()
     {
         if (priceSortButton != null)

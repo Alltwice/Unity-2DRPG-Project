@@ -33,6 +33,21 @@ public class TipsUIPanel : MonoBehaviour
         canvasGroup = GetComponent<CanvasGroup>();
     }
 
+    private void OnEnable()
+    {
+        GameEvent.BagClose += OnBagClosed;
+    }
+
+    private void OnDisable()
+    {
+        GameEvent.BagClose -= OnBagClosed;
+    }
+
+    private void OnBagClosed()
+    {
+        Hide();
+    }
+
     private void Start()
     {
         canvasGroup.alpha = 0;

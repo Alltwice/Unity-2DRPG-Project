@@ -10,6 +10,7 @@ public class PauseUI : BasePanel
     public TextMeshProUGUI bgmPercent;
     protected override void Awake()
     {
+        panelType = PanelType.pausePanel;
         base.Awake();
     }
     private void Start()

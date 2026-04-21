@@ -76,6 +76,8 @@ public class EnemyHealthUI : MonoBehaviour
         if (parentCanvas == null || parentCanvas.renderMode == RenderMode.WorldSpace)
         {
             transform.position = targetWorld;
+            // 血条挂在敌人子层级下时会继承倒地旋转，仅跟随位置时保持世界空间直立
+            transform.rotation = Quaternion.identity;
             return;
         }
 
@@ -96,5 +98,8 @@ public class EnemyHealthUI : MonoBehaviour
         {
             rectTransform.anchoredPosition = localPoint;
         }
+
+        // 血条挂在敌人子层级时仍会继承父级世界旋转，用世界空间直立覆盖（localRotation 无法抵消父级旋转）
+        transform.rotation = Quaternion.identity;
     }
 }
