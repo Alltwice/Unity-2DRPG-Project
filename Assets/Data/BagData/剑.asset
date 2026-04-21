@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b18eb1be99818e64faaf60c838899992, type: 3}
   m_Name: "\u5251"
   m_EditorClassIdentifier: Assembly-CSharp::ConsumableItemSO
-  itemID: 02
+  itemID: 04
   itemName: "\u5251"
   description: "\u7B80\u5355\u7684\u5251"
   icon: {fileID: 21300000, guid: cb3b3a3fb40d24321a5c52c979672d33, type: 3}

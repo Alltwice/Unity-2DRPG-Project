@@ -6,6 +6,7 @@ using UnityEngine;
 public class SavePanelUI : BasePanel
 {
     private const string DefaultLoadSceneName = "MainScene";
+    private const string DefaultStatusMessage = "保存/加载";
 
     [Header("需求组件")]
     [SerializeField] private GameDataSaveLoad saveLoad;
@@ -42,6 +43,7 @@ public class SavePanelUI : BasePanel
     {
         base.Open();
         RefreshSlotsUI();
+        SetStatus(DefaultStatusMessage);
     }
     /// <summary>
     /// 点击存档按钮方法改变槽位状态显示，同时提供一个保护防止越界
