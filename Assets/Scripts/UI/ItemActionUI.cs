@@ -53,12 +53,17 @@ public class ItemActionUI : MonoBehaviour
         panelTransform.position = position + movePosition;
         //通过类型判断显示按钮
         useButton.gameObject.SetActive(itemData != null && itemData.ItemType == ItemType.消耗品);
-        equipButton.gameObject.SetActive(itemData != null && (itemData.ItemType == ItemType.武器 || itemData.ItemType == ItemType.装备));
+        bool isEquipByType = itemData != null && (itemData.ItemType == ItemType.武器 || itemData.ItemType == ItemType.装备);
+        bool isEquipByDefinition = itemData != null && itemData.definition is TestEquipmentItemSO;
+        equipButton.gameObject.SetActive(isEquipByType || isEquipByDefinition);
         dropButton.gameObject.SetActive(true); // 默认所有物品可丢弃，特殊任务物品除外
     }
     private void RequestAction(ActionType actionType)
     {
         GameEvent.TriggerClickUISfx();
+        #region agent log
+        TestDebugSessionLogger.Log("pre-fix", "H1", "ItemActionUI.RequestAction", "item action requested", $"action={actionType}, index={index}, itemNull={item == null}, itemType={(item != null ? item.ItemType.ToString() : "null")}, itemId={(item != null ? item.ItemID : "null")}");
+        #endregion
         if (item == null) return;
 
         switch (actionType)
@@ -68,7 +73,7 @@ public class ItemActionUI : MonoBehaviour
                 Close();
                 break;
             case ActionType.Equip:
-                GameEvent.TriggerItemEquipped(item);
+                GameEvent.TriggerItemEquipped(item, index);
                 Close();
                 break;
             case ActionType.Drop:

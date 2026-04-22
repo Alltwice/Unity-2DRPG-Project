@@ -10,16 +10,24 @@ public class PlayerHealth : MonoBehaviour
     public Vector2 attackObject;
     public PlayerDefence playerDefence;
     public PlayerDodge playerDodge;
+    private TestPlayerStatModifiers statModifiers;
     public int finallDamage;
+    // 当前版本取消“装备提高生命上限”，生命上限固定为基础值。
+    public int EffectiveMaxHealth => Mathf.Max(1, baseData.MaxHealth);
+    public float EffectiveDamageReductionPercent => statModifiers != null ? Mathf.Clamp01(statModifiers.DamageReductionPercent) : 0f;
     public void Awake()
     {
-        currentHealth = baseData.MaxHealth;
+        statModifiers = GetComponent<TestPlayerStatModifiers>();
+        if (statModifiers == null)
+            statModifiers = gameObject.AddComponent<TestPlayerStatModifiers>();
+
+        currentHealth = EffectiveMaxHealth;
         playerDefence = GetComponent<PlayerDefence>();
         playerDodge = GetComponent<PlayerDodge>();
     }
     public void Start()
     {
-        GameEvent.TriggerPlayerHealthChange(currentHealth, baseData.MaxHealth);
+        GameEvent.TriggerPlayerHealthChange(currentHealth, EffectiveMaxHealth);
     }
     //һ���ı�����ֵ�ķ���
     public void ReduceHealth(int changeamount, Vector2 attackObject)
@@ -30,6 +38,11 @@ public class PlayerHealth : MonoBehaviour
         }
         this.attackObject = attackObject;
         finallDamage = playerDefence.FinallyDamage(changeamount);
+        // 在格挡减伤之后，再叠加装备提供的百分比减伤。
+        if (finallDamage > 0 && EffectiveDamageReductionPercent > 0f)
+        {
+            finallDamage = Mathf.Max(1, Mathf.RoundToInt(finallDamage * (1f - EffectiveDamageReductionPercent)));
+        }
         currentHealth -= finallDamage;
         GameEvent.TriggerCameraShake(combatData.CameraShakeForce);
         HitStopManager.Instance.HitStop(combatData.HitStopStunTime);
@@ -39,24 +52,24 @@ public class PlayerHealth : MonoBehaviour
             gameObject.SetActive(false);
             GameEvent.TriggerPlayerDeath();
         }
-        else if (currentHealth > baseData.MaxHealth)
+        else if (currentHealth > EffectiveMaxHealth)
         {
-            currentHealth = baseData.MaxHealth;
+            currentHealth = EffectiveMaxHealth;
         }
 
         //UI���ݸ��º��ܻ���������
-        GameEvent.TriggerPlayerHealthChange(currentHealth, baseData.MaxHealth);
+        GameEvent.TriggerPlayerHealthChange(currentHealth, EffectiveMaxHealth);
         //�����л���ø÷����л����ܻ�״̬
         GameEvent.TriggerPlayerHited();
     }
     public void HealHealth(int changeamount)
     {
         currentHealth += changeamount;
-        if (currentHealth > baseData.MaxHealth) 
+        if (currentHealth > EffectiveMaxHealth) 
         {
-            currentHealth = baseData.MaxHealth;
+            currentHealth = EffectiveMaxHealth;
         }
-        GameEvent.TriggerPlayerHealthChange(currentHealth, baseData.MaxHealth);
+        GameEvent.TriggerPlayerHealthChange(currentHealth, EffectiveMaxHealth);
     }
 
     /// <summary>
@@ -64,7 +77,13 @@ public class PlayerHealth : MonoBehaviour
     /// </summary>
     public void SyncHealthOnly(int targetHealth)
     {
-        currentHealth = Mathf.Clamp(targetHealth, 0, baseData.MaxHealth);
-        GameEvent.TriggerPlayerHealthSyncOnly(currentHealth, baseData.MaxHealth);
+        currentHealth = Mathf.Clamp(targetHealth, 0, EffectiveMaxHealth);
+        GameEvent.TriggerPlayerHealthSyncOnly(currentHealth, EffectiveMaxHealth);
+    }
+
+    public void RecalculateAndClamp()
+    {
+        currentHealth = Mathf.Clamp(currentHealth, 0, EffectiveMaxHealth);
+        GameEvent.TriggerPlayerHealthChange(currentHealth, EffectiveMaxHealth);
     }
 }

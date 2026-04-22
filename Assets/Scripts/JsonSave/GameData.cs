@@ -12,6 +12,7 @@ public class GameData
     public InventoryDto inventory=new InventoryDto();
     public PlayerSnapshotDto player = new PlayerSnapshotDto();
     public List<EnemySnapshotDto> enemies = new List<EnemySnapshotDto>();
+    public List<EquippedItemDto> equipments = new List<EquippedItemDto>();
 }
 [Serializable]
 ///<summary>
@@ -51,5 +52,13 @@ public class EnemySnapshotDto
     public float posY;
     public bool isActive;
     public bool isDead;
+}
+
+[Serializable]
+public class EquippedItemDto
+{
+    public string slot;
+    public string itemId;
+    public int rarity;
 }
 

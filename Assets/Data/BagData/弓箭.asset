@@ -1,0 +1,36 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 11e74ad216cbd5446b5b2bd87b45afea, type: 3}
+  m_Name: "\u5F13\u7BAD"
+  m_EditorClassIdentifier: Assembly-CSharp::TestEquipmentItemSO
+  itemID: 04
+  itemName: "\u5F13"
+  description: "\u5F13\u7BAD 15+\u79FB\u901F 15+\u4F24\u5BB3"
+  icon: {fileID: -5039884926314722745, guid: 1465029b5c3bd34419c669edb05bc346, type: 3}
+  itemType: 1
+  itemRarity: 0
+  prices: 130
+  isStackable: 0
+  maxStack: 0
+  rarityWeights:
+  - rarity: 0
+    weight: 55
+  - rarity: 1
+    weight: 30
+  - rarity: 2
+    weight: 9
+  - rarity: 3
+    weight: 6
+  slot: 0
+  damageReductionPercent: 0
+  damageBonus: 15
+  moveSpeedBonus: 15

@@ -10,6 +10,7 @@ public class PlayerMoveState:PlayerStateMachine
     protected PlayerDefence defence;
     protected PlayerDodge dodge;
     private int faceDirection=1;
+    private TestPlayerStatModifiers statModifiers;
     public Vector2 lastMoveDirection = Vector2.right;
     private Vector2 input;
     public PlayerMoveState(PlayerController playerWarrior)
@@ -20,6 +21,9 @@ public class PlayerMoveState:PlayerStateMachine
         dodge = playerWarrior.dodge;
         am = playerWarrior.am;
         rg = playerWarrior.rg;
+        statModifiers = playerWarrior.GetComponent<TestPlayerStatModifiers>();
+        if (statModifiers == null)
+            statModifiers = playerWarrior.gameObject.AddComponent<TestPlayerStatModifiers>();
     }
 
     public override void OnEnter()
@@ -34,7 +38,8 @@ public class PlayerMoveState:PlayerStateMachine
 
     public override void OnFixedUpdate()
     {
-        rg.linearVelocity = InputManger.Instance.moveInput * playerWarrior.BaseDataSO.MoveSpeed;
+        float effectiveSpeed = playerWarrior.BaseDataSO.MoveSpeed + (statModifiers != null ? statModifiers.MoveSpeedBonus : 0f);
+        rg.linearVelocity = InputManger.Instance.moveInput * Mathf.Max(0f, effectiveSpeed);
         if (InputManger.Instance.moveInput.x > 0 && playerWarrior.transform.localScale.x < 0 || InputManger.Instance.moveInput.x < 0 && playerWarrior.transform.localScale.x > 0)
         {
             faceDirection *= -1;

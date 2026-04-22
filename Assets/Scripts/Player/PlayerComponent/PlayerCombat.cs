@@ -4,6 +4,7 @@ using static Unity.Cinemachine.IInputAxisOwner.AxisDescriptor;
 public class PlayerCombat : MonoBehaviour
 {
     [SerializeField] private PlayerCombatDataSO combatData;
+    private TestPlayerStatModifiers statModifiers;
 
     public PlayerController player;
     private Animator anim;
@@ -26,6 +27,9 @@ public class PlayerCombat : MonoBehaviour
     {
         player = GetComponent<PlayerController>();
         anim = GetComponent<Animator>();
+        statModifiers = GetComponent<TestPlayerStatModifiers>();
+        if (statModifiers == null)
+            statModifiers = gameObject.AddComponent<TestPlayerStatModifiers>();
     }
 
     private void OnEnable()
@@ -99,6 +103,7 @@ public class PlayerCombat : MonoBehaviour
     /// </summary>
     public void Attack()
     {
+        int effectiveDamage = Mathf.Max(0, combatData.Damage + (statModifiers != null ? statModifiers.DamageBonus : 0));
         hits = Physics2D.OverlapBoxAll(attackPoint.position, combatData.AttackRange, 0f, combatData.AttackLayer.value);
         if (hits.Length == 0)
         {
@@ -108,7 +113,7 @@ public class PlayerCombat : MonoBehaviour
         {
             for (int i = 0; i < hits.Length; i++)
             {
-                hits[i].GetComponent<EnemyHealth>()?.ChangeHealth(combatData.Damage, transform.position);
+                hits[i].GetComponent<EnemyHealth>()?.ChangeHealth(effectiveDamage, transform.position);
             }
         }
     }

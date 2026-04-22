@@ -19,6 +19,7 @@ public class InputManger : MonoBehaviour
     public static event Action CanceldDefenceEvent;
     public static event Action RollEvent;
     public static InputManger Instance { get; private set; }
+    private bool bagPressedLock;
 
     private void Awake()
     {
@@ -36,7 +37,20 @@ public class InputManger : MonoBehaviour
         input.Player.Defence.performed += _ => PushDefenceEvent?.Invoke();
         input.Player.Defence.canceled += _ => CanceldDefenceEvent?.Invoke();
         input.Player.Roll.performed += _ => RollEvent?.Invoke();
-        input.Player.Bag.performed += _ => OpenBagEvent.Invoke(PanelType.bagPanel);
+        input.Player.Bag.started += _ =>
+        {
+            if (bagPressedLock)
+            {
+                return;
+            }
+
+            bagPressedLock = true;
+            OpenBagEvent?.Invoke(PanelType.bagPanel);
+        };
+        input.Player.Bag.canceled += _ =>
+        {
+            bagPressedLock = false;
+        };
         input.Player.SpawnEnemy.performed += _ => TestSpawnEnemy();
         input.Player.SpawnItem.performed += _ => TestSpawnItem();
     }

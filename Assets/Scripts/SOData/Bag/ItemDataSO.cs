@@ -92,4 +92,6 @@ public class ItemDataSO : ScriptableObject
     // 兼容旧逻辑：仍保留该属性，供 UI/调试在未迁移完成前使用。
     public ItemRarity LegacyItemRarity => itemRarity;
     public virtual void UseMethod(GameObject targer, int index) { }
+    public virtual void EquipMethod(GameObject target, int index) { }
+    public virtual void UnequipMethod(GameObject target, TestEquipmentSlot slot) { }
 }

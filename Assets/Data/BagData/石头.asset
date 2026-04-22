@@ -23,11 +23,11 @@ MonoBehaviour:
   maxStack: 3
   rarityWeights:
   - rarity: 0
-    weight: 60
+    weight: 55
   - rarity: 1
     weight: 30
   - rarity: 2
     weight: 9
   - rarity: 3
-    weight: 1
+    weight: 6
   healAmount: 0

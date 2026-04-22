@@ -30,12 +30,14 @@ public class PlayerController : MonoBehaviour
     {
         GameEvent.PlayerHited += ChangeStateUnderAttack;
         GameEvent.ItemUsed += OnItemUse;
+        GameEvent.ItemEquipped += OnItemEquip;
         GameEvent.ItemDropped += OnItemDrop;
     }
     private void OnDisable()
     {
         GameEvent.PlayerHited -= ChangeStateUnderAttack;
         GameEvent.ItemUsed -= OnItemUse;
+        GameEvent.ItemEquipped -= OnItemEquip;
         GameEvent.ItemDropped -= OnItemDrop;
     }
     private void Awake()
@@ -103,6 +105,17 @@ public class PlayerController : MonoBehaviour
             return;
 
         currentUse.definition.UseMethod(this.gameObject, index);
+    }
+
+    public void OnItemEquip(ItemInstance currentEquip, int index)
+    {
+        #region agent log
+        TestDebugSessionLogger.Log("pre-fix", "H1", "PlayerController.OnItemEquip", "item equip event received", $"index={index}, equipNull={currentEquip == null}, defNull={(currentEquip == null || currentEquip.definition == null)}, itemType={(currentEquip != null ? currentEquip.ItemType.ToString() : "null")}, itemId={(currentEquip != null ? currentEquip.ItemID : "null")}");
+        #endregion
+        if (currentEquip == null || currentEquip.definition == null)
+            return;
+
+        currentEquip.definition.EquipMethod(this.gameObject, index);
     }
 
     public void OnItemDrop(ItemInstance currentDrop, int index)

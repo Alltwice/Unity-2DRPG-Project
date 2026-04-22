@@ -7,6 +7,7 @@ public class InventoryPanelUI : BasePanel
 {
     [SerializeField] private InventoryGridVirtualScroll virtualScroll;
     [SerializeField] private InventorySortPanelUI sortPanelUI;
+    [SerializeField] private TestEquipmentPanelUI equipmentPanelUI;
 
     /// <summary>避免 BasePanel.Awake 里首次 Close() 误发 BagClose；仅在玩家打开过背包后再关时收起二级 UI。</summary>
     private bool _wasOpenedForSession;
@@ -25,6 +26,8 @@ public class InventoryPanelUI : BasePanel
     public override void Open()
     {
         base.Open();
+        if (equipmentPanelUI != null)
+            equipmentPanelUI.Open();
         _wasOpenedForSession = true;
     }
 
@@ -35,6 +38,9 @@ public class InventoryPanelUI : BasePanel
             GameEvent.TriggerBagClose();
             _wasOpenedForSession = false;
         }
+
+        if (equipmentPanelUI != null)
+            equipmentPanelUI.Close();
         base.Close();
     }
 

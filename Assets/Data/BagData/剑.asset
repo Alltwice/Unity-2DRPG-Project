@@ -9,25 +9,28 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b18eb1be99818e64faaf60c838899992, type: 3}
+  m_Script: {fileID: 11500000, guid: 11e74ad216cbd5446b5b2bd87b45afea, type: 3}
   m_Name: "\u5251"
-  m_EditorClassIdentifier: Assembly-CSharp::ConsumableItemSO
-  itemID: 04
+  m_EditorClassIdentifier: Assembly-CSharp::TestEquipmentItemSO
+  itemID: 03
   itemName: "\u5251"
-  description: "\u7B80\u5355\u7684\u5251"
+  description: "\u5251 \u4F24\u5BB3+30"
   icon: {fileID: 21300000, guid: cb3b3a3fb40d24321a5c52c979672d33, type: 3}
   itemType: 1
   itemRarity: 0
   prices: 200
   isStackable: 0
-  maxStack: 3
+  maxStack: 0
   rarityWeights:
   - rarity: 0
-    weight: 60
+    weight: 55
   - rarity: 1
     weight: 30
   - rarity: 2
     weight: 9
   - rarity: 3
-    weight: 1
-  healAmount: 0
+    weight: 6
+  slot: 0
+  damageReductionPercent: 0
+  damageBonus: 30
+  moveSpeedBonus: 0

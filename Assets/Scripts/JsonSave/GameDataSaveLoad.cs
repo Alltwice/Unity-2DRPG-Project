@@ -53,6 +53,8 @@ public class GameDataSaveLoad : MonoBehaviour
                 PlayerSnapshotDto playerSnapshot = PlayerConnectJson.BuildFromPlayer(playerObj);
                 if (playerSnapshot != null)
                     data.player = playerSnapshot;
+
+                data.equipments = TestEquipmentConnectJson.BuildFromPlayer(playerObj);
             }
             else
             {
@@ -98,6 +100,10 @@ public class GameDataSaveLoad : MonoBehaviour
         else
         {
             PlayerConnectJson.ApplyToPlayer(data, playerObj);
+            TestEquipmentConnectJson.ApplyToPlayer(playerObj, data.equipments, catalog);
+            PlayerHealth playerHealth = playerObj.GetComponent<PlayerHealth>();
+            if (playerHealth != null)
+                playerHealth.RecalculateAndClamp();
         }
 
         EnemyConnectJson.ApplyToEnemies(data);
